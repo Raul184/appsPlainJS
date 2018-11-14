@@ -103,7 +103,3 @@ document.querySelector('.btn-hold').addEventListener('click', function(){
 // NEW GAME-------------------------
 // Scores back to 0 / Active player back to 1 / RoundScores back to 0
 document.querySelector('.btn-new').addEventListener('click', init);
-
-//-------------------------------------------------------------------
-//END
-//-------------------------------------------------------------------
