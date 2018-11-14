@@ -57,8 +57,8 @@ function init(){
     document.querySelector('.dice').style.display = 'none';
 }
 
-// DOM EVENTS
-// ROLL THE DICE------------------------------------
+// DOM EVENTS------------------------------------
+// ROLL THE DICE
 document.querySelector('.btn-roll').addEventListener('click', function(){
     if(gamePlaying){
     //1. Need a random number
@@ -90,7 +90,7 @@ document.querySelector('.btn-hold').addEventListener('click', function(){
         //Update UI
         document.querySelector(`#score-${activePl}`).textContent = scores[activePl];
         //check if player wins the game
-        if(scores[activePl] >= 10){ document.querySelector(`#name-${activePl}`).textContent = 'Winner!!';
+        if(scores[activePl] >= 30){ document.querySelector(`#name-${activePl}`).textContent = 'Winner!!';
         document.querySelector(`.player-${activePl}-panel`).classList.add('winner'); //add class winner
         document.querySelector(`.player-${activePl}-panel`).classList.remove('active'); //remove styles from .active one
         gamePlaying = false; //state variable
@@ -103,3 +103,7 @@ document.querySelector('.btn-hold').addEventListener('click', function(){
 // NEW GAME-------------------------
 // Scores back to 0 / Active player back to 1 / RoundScores back to 0
 document.querySelector('.btn-new').addEventListener('click', init);
+
+//-------------------------------------------------------------------
+//END
+//-------------------------------------------------------------------
