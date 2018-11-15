@@ -23,15 +23,7 @@ console.log('works?');
 
 // MODULE 1: DATA MODULE
 const budgetController = function(){
-    const x = 23;
-    const add = function(a){
-      return x + a;
-    }
-    return {
-      publicTest: function(b){
-        return add(b);
-      }
-    }
+
 }();
 
 // MODULE 2: UI MODULE
@@ -39,12 +31,24 @@ const uiController = function(){
 
 }();
 
+
+
+
 // BRIDGE BETWEEN OUR DATA MODULE & UI MODULE ABOVE
-const controller =  function(budget, ui){
-    let secondTest = budget.publicTest(5);
-    return{
-      anotherPublicTest: function(){
-        console.log(secondTest);
-      }
-    }
+const globalController =  function(budget, ui){
+  // Add Input from UI
+  const addItem = function(){
+      console.log('it works');
+  }
+  // 1.ADD button on CLICK-----------------
+    document.querySelector('.add__btn').addEventListener('click', addItem);
+    // 1 ADD functionality on pressed ENTER------------
+    document.addEventListener('keypress', function(e){
+        if(e.keyCode === 13  || e.which === 13){
+            addItem();
+          }
+    })
+
+
+
 }(budgetController, uiController);

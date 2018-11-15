@@ -1,19 +1,18 @@
-// /***************************GENERAL
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600');
+//***************************GENERAL
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-
 .clearfix::after {
     content: "";
     display: table;
     clear: both;
 }
-
 body {
     color: #555;
-    font-family: Open Sans;
+    font-family: Open Sans , sans-serif;
     font-size: 16px;
     position: relative;
     height: 100vh;
@@ -101,7 +100,6 @@ body {
     text-align: center;
     border-radius: 3px;
 }
-
 
 // /************************* BOTTOM PART
 
