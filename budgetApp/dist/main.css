@@ -6,8 +6,8 @@
           box-sizing: border-box;
 }
 
-.clearfix::after {
-  content: "";
+.clearfix:after {
+  content: ' ';
   display: table;
   clear: both;
 }
@@ -188,39 +188,48 @@ body {
 
 /***** LISTS *****/
 .container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   width: 1000px;
-  margin: 60px auto;
+  margin: 10px auto;
 }
 
-.income {
-  float: left;
-  width: 475px;
-  margin-right: 50px;
+.categories {
+  text-align: center;
 }
 
-.expenses {
-  float: left;
-  width: 475px;
-}
-
-h2 {
+.categories h2 {
+  width: 100px;
+  display: inline-block;
   text-transform: uppercase;
   font-size: 18px;
   font-weight: 400;
-  margin-bottom: 15px;
+  margin: 30px;
 }
 
-.icome__title {
+.categories .icome__title {
   color: #28B9B5;
 }
 
-.expenses__title {
+.categories .expenses__title {
   color: #FF5049;
 }
 
 .item {
+  position: relative;
+  width: 40%;
+  max-width: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-left: 60px;
   padding: 13px;
   border-bottom: 1px solid #e7e7e7;
+}
+
+.item .blue {
+  color: #28B9B5;
 }
 
 .item:first-child {
@@ -232,19 +241,21 @@ h2 {
 }
 
 .item__description {
-  float: left;
+  width: 40%;
+  text-align: center;
+  color: #FF5049;
 }
 
 .item__value {
-  float: left;
-  -webkit-transition: -webkit-transform 0.3s;
-  transition: -webkit-transform 0.3s;
-  transition: transform 0.3s;
-  transition: transform 0.3s, -webkit-transform 0.3s;
+  width: 30%;
+  -webkit-transition: -webkit-transform 0.5s;
+  transition: -webkit-transform 0.5s;
+  transition: transform 0.5s;
+  transition: transform 0.5s, -webkit-transform 0.5s;
+  text-align: right;
 }
 
 .item__percentage {
-  float: left;
   margin-left: 20px;
   -webkit-transition: -webkit-transform 0.3s;
   transition: -webkit-transform 0.3s;
@@ -258,19 +269,15 @@ h2 {
   text-align: center;
 }
 
-.income .item__value,
-.income .item__delete--btn {
+.item__value,
+.item__delete--btn {
   color: #28B9B5;
 }
 
-.expenses .item__value,
-.expenses .item__percentage,
-.expenses .item__delete--btn {
+.item__value,
+.item__percentage,
+.item__delete--btn {
   color: #FF5049;
-}
-
-.item__delete {
-  float: left;
 }
 
 .item__delete--btn {
@@ -282,6 +289,8 @@ h2 {
   vertical-align: middle;
   line-height: 1;
   display: none;
+  position: absolute;
+  right: 10px;
 }
 
 .item__delete--btn:focus {

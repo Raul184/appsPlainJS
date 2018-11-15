@@ -62,7 +62,8 @@ const uiController = function () {
           inputType: '.add__type',
           inputDescription: '.add__description',
           inputValue: '.add__value',
-          inputButton: '.add__btn'
+          inputButton: '.add__btn',
+          container: '.container'
       };
 
       return{
@@ -77,8 +78,28 @@ const uiController = function () {
                     description : document.querySelector(domStrings.inputDescription).value,
                     value : document.querySelector(domStrings.inputValue).value
                 }; //Object Returned
+           },
+           addListItem : function (obj, type) {
+              let html , replaceHtml, element;
+                // HTML string
+                  if( type === 'inc'){
+                      element = domStrings.container;
+                      html = `<div class=' item ' id=' income-%id% '><div class=' item__description blue '>%description%</div>
+                      <div class=' item__value blue '>%value%</div><button class=' item__delete--btn blue '>
+                      <iclass=' ion-ios-close-outline '></i></button></div>` ;
+                    } else if( type === 'exp'){
+                      element = domStrings.container;
+                      html = `<div class="item" id="expense-%id%"><div class=" item__description">%description%</div>
+                      <div class="item__value">%value%</div><div class="item__percentage">21%</div><button
+                      class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div>` ;
+                    }
+                //Populate inputs from user
+                  replaceHtml = html.replace('%id%', obj.id);
+                  replaceHtml = replaceHtml.replace('%description%', obj.description);
+                  replaceHtml = replaceHtml.replace('%value%', obj.value);
+                //Put REPLACED STRINGS back into the DOM
+                  document.querySelector(element).insertAdjacentHTML('beforeend', replaceHtml);
            }
-
     }; // RETURN UICONTROLLER
 }(); //UICONTROLLER
 
@@ -94,6 +115,7 @@ const globalController =  function(budget, ui){
               // 2 Storage Input
               inputInStock = budget.addItem(input.type, input.description, input.value);
               //3 Add item to UI
+              ui.addListItem(inputInStock, input.type);
           }
 
           return{
