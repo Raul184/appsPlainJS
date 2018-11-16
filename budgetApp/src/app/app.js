@@ -56,14 +56,14 @@ const budgetController = function(){
             console.log(data); //check data is ALWAYS storaged
             let expenses, totalExp;
             expenses = data.allItems.exp.map(exP => { return exP.value});
-            totalExp = expenses.reduce((acc, value) => {return acc += Number(value)}, 0);
+            totalExp = expenses.reduce((acc, value) => {return acc += value}, 0);
             return totalExp;
         },
         //3 CALCULATE Income from DATABASE method
         calculatorInc: function(){
             let income, totalInc, result;
             income = data.allItems.inc.map(inC => { return inC.value});
-            totalInc = income.reduce((acc, value) => { return acc +=  Number(value)}, 0);
+            totalInc = income.reduce((acc, value) => { return acc += value}, 0);
             return totalInc;
         },
         // 4 CALCULATE TOTALS
@@ -99,7 +99,7 @@ const uiController = function () {
                 return {
                     type : document.querySelector(domStrings.inputType).value, //inc or exp
                     description : document.querySelector(domStrings.inputDescription).value,
-                    value : document.querySelector(domStrings.inputValue).value
+                    value : parseFloat(document.querySelector(domStrings.inputValue).value)  //turn it into a number
                 }; //Obj
            },
            // 2. ADD INPUT METHOD
@@ -160,7 +160,8 @@ const globalController =  function(budget, ui){
               let input, inputInStock;
             // 1 Get input
               input = ui.getInput();
-              console.log(input);
+
+              if ( input.description  != " "  &&  !isNaN(input.value)  &&  input.value > 0 ){
               // 2 Storage Input
               inputInStock = budget.addItem(input.type, input.description, input.value);
               //3 Add item to UI
@@ -169,8 +170,8 @@ const globalController =  function(budget, ui){
               ui.clearFields();
               //5 Update UI with Inc & Budget totals at TOP section
               ui.updateBudget(budget.calculatorInc(), budget.calculatorExp());
-          }
-
+              }
+        }
           return{
               init: function(){
                   console.log('Application initiated');
