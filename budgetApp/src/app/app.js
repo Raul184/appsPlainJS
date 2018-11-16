@@ -65,6 +65,12 @@ const budgetController = function(){
             income = data.allItems.inc.map(inC => { return inC.value});
             totalInc = income.reduce((acc, value) => { return acc +=  Number(value)}, 0);
             return totalInc;
+        },
+        // 4 CALCULATE TOTALS
+        calculatorTotal: function(){
+            let result;
+
+            return result;
         }
       } //return for budgetController
 }();
@@ -79,7 +85,8 @@ const uiController = function () {
           incomeList: '.incomeList',
           expensesList: '.expensesList',
           budgetIncome: '.budget__income--value',
-          budgetExpenses: '.budget__expenses--value'
+          budgetExpenses: '.budget__expenses--value',
+          budgetTotal: '.budget__value'
       };
 
       return{
@@ -134,11 +141,13 @@ const uiController = function () {
            },
            // 4. UPDATE INC & EXP on UI interface
            updateBudget: function(a, b) {
-             let updateInc , updateExp;
+             let updateInc , updateExp, updateTotal;
              updateInc = document.querySelector(domStrings.budgetIncome);
              updateExp = document.querySelector(domStrings.budgetExpenses);
+             // updateTotal = document.querySelector(domStrings.budgetTotal);
              updateInc.textContent = a;
              updateExp.textContent = b;
+             // updateTotal.textContent = c;
            }
     }; // RETURN UICONTROLLER
 }(); //UICONTROLLER
