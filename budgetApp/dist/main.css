@@ -67,19 +67,17 @@ body {
   letter-spacing: 2px;
 }
 
-.budget__income,
-.budget__expenses {
+.budget__income {
+  margin-bottom: 10px;
+  background-color: #28B9B5;
   padding: 12px;
   text-transform: uppercase;
 }
 
-.budget__income {
-  margin-bottom: 10px;
-  background-color: #28B9B5;
-}
-
 .budget__expenses {
   background-color: #FF5049;
+  padding: 12px;
+  text-transform: uppercase;
 }
 
 .budget__income--text,
@@ -111,7 +109,7 @@ body {
   border-radius: 3px;
 }
 
-/***** FORM *****/
+/***** ADD INPUT FORM *****/
 .add {
   padding: 14px;
   border-bottom: 1px solid #e7e7e7;
@@ -186,15 +184,6 @@ body {
   outline: none;
 }
 
-/***** LISTS *****/
-.container {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  width: 1000px;
-  margin: 10px auto;
-}
-
 .categories {
   text-align: center;
 }
@@ -208,45 +197,69 @@ body {
   margin: 30px;
 }
 
-.categories .icome__title {
-  color: #28B9B5;
+.categories .blue {
+  color: #28B9B5 !important;
 }
 
-.categories .expenses__title {
-  color: #FF5049;
+.categories .red {
+  color: #FF5049 !important;
 }
 
-.item {
+.container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 1000px;
+  margin: 10px auto;
+}
+
+.container .incomeList {
+  width: 50%;
+  max-width: 50%;
+  margin-right: 20px;
+}
+
+.container .incomeList .blue {
+  color: #28B9B5 !important;
+}
+
+.container .incomeList,
+.container .expensesList {
+  width: 50%;
+  max-width: 50%;
+}
+
+.container .incomeList .item,
+.container .expensesList .item {
   position: relative;
-  width: 40%;
+  width: 100%;
   max-width: auto;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  margin-left: 60px;
   padding: 13px;
   border-bottom: 1px solid #e7e7e7;
 }
 
-.item .blue {
-  color: #28B9B5;
-}
-
-.item:first-child {
+.container .incomeList .item:first-child,
+.container .expensesList .item:first-child {
   border-top: 1px solid #e7e7e7;
 }
 
-.item:nth-child(even) {
+.container .incomeList .item:nth-child(even),
+.container .expensesList .item:nth-child(even) {
   background-color: #f7f7f7;
 }
 
-.item__description {
+.container .incomeList .item__description,
+.container .expensesList .item__description {
   width: 40%;
   text-align: center;
   color: #FF5049;
 }
 
-.item__value {
+.container .incomeList .item__value,
+.container .expensesList .item__value {
   width: 30%;
   -webkit-transition: -webkit-transform 0.5s;
   transition: -webkit-transform 0.5s;
@@ -255,7 +268,8 @@ body {
   text-align: right;
 }
 
-.item__percentage {
+.container .incomeList .item__percentage,
+.container .expensesList .item__percentage {
   margin-left: 20px;
   -webkit-transition: -webkit-transform 0.3s;
   transition: -webkit-transform 0.3s;
@@ -269,18 +283,15 @@ body {
   text-align: center;
 }
 
-.item__value,
-.item__delete--btn {
-  color: #28B9B5;
-}
-
-.item__value,
-.item__percentage,
-.item__delete--btn {
+.container .incomeList .item__value,
+.container .incomeList .item__percentage,
+.container .expensesList .item__value,
+.container .expensesList .item__percentage {
   color: #FF5049;
 }
 
-.item__delete--btn {
+.container .incomeList .item__delete--btn,
+.container .expensesList .item__delete--btn {
   font-size: 22px;
   background: none;
   border: none;

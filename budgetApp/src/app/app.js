@@ -63,7 +63,8 @@ const uiController = function () {
           inputDescription: '.add__description',
           inputValue: '.add__value',
           inputButton: '.add__btn',
-          container: '.container'
+          incomeList: '.incomeList',
+          expensesList: '.expensesList'
       };
 
       return{
@@ -83,15 +84,15 @@ const uiController = function () {
               let html , replaceHtml, element;
                 // HTML string
                   if( type === 'inc'){
-                      element = domStrings.container;
+                      element = domStrings.incomeList;
                       html = `<div class=' item ' id=' income-%id% '><div class=' item__description blue '>%description%</div>
-                      <div class=' item__value blue '>%value%</div><button class=' item__delete--btn blue '>
-                      <iclass=' ion-ios-close-outline '></i></button></div>` ;
+                      <div class=' item__value blue '>%value%</div><button class="item__delete--btn blue"><i class="ion-ios-close-outline">
+                      </i></button></div>` ;
                     } else if( type === 'exp'){
-                      element = domStrings.container;
+                      element = domStrings.expensesList;
                       html = `<div class="item" id="expense-%id%"><div class=" item__description">%description%</div>
-                      <div class="item__value">%value%</div><div class="item__percentage">21%</div><button
-                      class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div>` ;
+                      <div class="item__value">%value%</div><div class="item__percentage">21%</div><button class="item__delete--btn red">
+                      <i class="ion-ios-close-outline"></i></button></div>` ;
                     }
                 //Populate inputs from user
                   replaceHtml = html.replace('%id%', obj.id);

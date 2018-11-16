@@ -24,7 +24,7 @@ body {
 .red-focus:focus { border: 1px solid #FF5049 !important; }
 
 // /******************************** TOP PART
-
+// BACKGROUND IMAGE ON TOP SECTION
 .top {
     height: 40vh;
     background-image: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url(../src/img/back.png);
@@ -32,7 +32,7 @@ body {
     background-position: center;
     position: relative;
 }
-
+// BUDGET ON CENTER TOP
 .budget {
     position: absolute;
     width: 350px;
@@ -41,14 +41,14 @@ body {
     transform: translate(-50%, -50%);
     color: #fff;
 }
-
+// BUDGET TITLE
 .budget__title {
     font-size: 18px;
     text-align: center;
     margin-bottom: 10px;
     font-weight: 300;
 }
-
+// BUDGET TOTAL
 .budget__value {
     font-weight: 300;
     font-size: 46px;
@@ -56,20 +56,17 @@ body {
     margin-bottom: 25px;
     letter-spacing: 2px;
 }
-
-.budget__income,
-.budget__expenses {
-    padding: 12px;
-    text-transform: uppercase;
-}
-
+// BUDGET INCOME & EXPENSES BELOW
 .budget__income {
     margin-bottom: 10px;
     background-color: #28B9B5;
+    padding: 12px;
+    text-transform: uppercase;
 }
-
 .budget__expenses {
     background-color: #FF5049;
+    padding: 12px;
+    text-transform: uppercase;
 }
 
 .budget__income--text,
@@ -100,10 +97,7 @@ body {
     text-align: center;
     border-radius: 3px;
 }
-
-// /************************* BOTTOM PART
-
-/***** FORM *****/
+/***** ADD INPUT FORM *****/
 .add {
     padding: 14px;
     border-bottom: 1px solid #e7e7e7;
@@ -138,6 +132,7 @@ body {
 }
 .add__description { width: 400px;}
 .add__value { width: 100px;}
+// ADD BUTTON
 .add__btn {
     font-size: 35px;
     background: none;
@@ -149,6 +144,7 @@ body {
     line-height: 1.1;
     margin-left: 10px;
 }
+// ADD BUTTON ON 'ACTIVE' & FOCUS
 .add__btn:active { transform: translateY(2px); }
 // FOCUS-------------------------------
 .add__type:focus,
@@ -158,14 +154,7 @@ body {
     border: 1px solid #28B9B5;
 }
 .add__btn:focus { outline: none; }
-
-/***** LISTS *****/
-.container {
-    display: flex;
-    width: 1000px;
-    margin: 10px auto;
-}
-// H2
+// INCOME & EXPENSES CATEGORY MIDDLE SECTION
 .categories{
   text-align: center;
   h2 {
@@ -176,74 +165,83 @@ body {
       font-weight: 400;
       margin: 30px;
   }
-  .icome__title { color: #28B9B5; }
-  .expenses__title { color: #FF5049; }
+  .blue { color: #28B9B5 !important; }
+  .red { color: #FF5049 !important; }
 }
-
-// ITEMS TO BE DISPLAYED WITH JS
-.item {
-    position: relative;
-    width: 40%;
-    max-width: auto;
+// CONTAINER KEEPING INCOME & EXPENSES LISTS ADDED WITH JS
+.container {
     display: flex;
-    margin-left: 60px;
-    padding: 13px;
-    border-bottom: 1px solid #e7e7e7;
-    .blue{color: #28B9B5;}
-}
-.item:first-child { border-top: 1px solid #e7e7e7; }
-.item:nth-child(even) { background-color: #f7f7f7; }
-
-// DESCRIPTION WITHIN ITEM DIV
-.item__description {
-    width: 40%;
-    text-align: center;
-    color: #FF5049;
-}
-// VALUE WITHIN ITEM DIV
-.item__value {
-    width: 30%;
-    transition: transform 0.5s;
-    text-align: right;
-}
-// % WITHIN ITEM DIV
-.item__percentage {
-    margin-left: 20px;
-    transition: transform 0.3s;
-    font-size: 11px;
-    background-color: #FFDAD9;
-    padding: 3px;
-    border-radius: 3px;
-    width: 32px;
-    text-align: center;
-}
-.item__value,
-.item__delete--btn {
-    color: #28B9B5;
-}
-
-.item__value,
-.item__percentage,
-.item__delete--btn {
-    color: #FF5049;
-}
-
-.item__delete {
-
-}
-// DELETE BUTTON ON ITEMS
-.item__delete--btn {
-    font-size: 22px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    display: inline-block;
-    vertical-align: middle;
-    line-height: 1;
-    display: none;
-    position: absolute;
-    right: 10px;
-}
+    width: 1000px;
+    margin: 10px auto;
+      // INCOME LIST
+    .incomeList{
+      width: 50%;
+      max-width: 50%;
+      margin-right: 20px;
+      .blue{
+        color: #28B9B5 !important;
+      }
+    }
+      // EXPENSES LIST
+    .incomeList ,
+    .expensesList{
+      width: 50%;
+      max-width: 50%;
+      // ITEMS TO BE DISPLAYED WITH JS
+      .item {
+          position: relative;
+          width: 100%;
+          max-width: auto;
+          display: flex;
+          // margin-left: 60px;
+          padding: 13px;
+          border-bottom: 1px solid #e7e7e7;
+      }
+      // background colors for odd & even childs of .item Dad
+      .item:first-child { border-top: 1px solid #e7e7e7; }
+      .item:nth-child(even) { background-color: #f7f7f7; }
+      // DESCRIPTION FOR EXPENSES ITEMS
+      .item__description {
+          width: 40%;
+          text-align: center;
+          color: #FF5049;
+      }
+      // VALUE FOR EXPENSES ITEMS
+      .item__value {
+          width: 30%;
+          transition: transform 0.5s;
+          text-align: right;
+      }
+      // % FOR EXPENSES ITEMS
+      .item__percentage {
+          margin-left: 20px;
+          transition: transform 0.3s;
+          font-size: 11px;
+          background-color: #FFDAD9;
+          padding: 3px;
+          border-radius: 3px;
+          width: 32px;
+          text-align: center;
+      }
+      .item__value,
+      .item__percentage{
+          color: #FF5049;
+      }
+      // DELETE BUTTON FOR EXPENSES ITEMS
+      .item__delete--btn {
+          font-size: 22px;
+          background: none;
+          border: none;
+          cursor: pointer;
+          display: inline-block;
+          vertical-align: middle;
+          line-height: 1;
+          display: none;
+          position: absolute;
+          right: 10px;
+      }
+    }
+} //EXPENSESLIST ENDS HERE
 // FOCUS & ACTIVE
 .item__delete--btn:focus { outline: none; }
 .item__delete--btn:active { transform: translateY(2px); }
@@ -252,10 +250,8 @@ body {
 .item:hover .item__value { transform: translateX(-20px); }
 .item:hover .item__percentage { transform: translateX(-20px); }
 
-
 .unpaid {
     background-color: #FFDAD9 !important;
     cursor: pointer;
     color: #FF5049;
-
 }
