@@ -36,7 +36,8 @@ const budgetController = function(){
                inc: 0
           }
       }
-      return{ //Goes Public
+      return{
+        //1 ADD into DATABASE method
         addItem: function (type, des, val){
             var item, iD;
             //1.  iD assignator
@@ -50,8 +51,20 @@ const budgetController = function(){
             data.allItems[type].push(item);
             return item;
         },
-        testing: function(){
-            console.log(data);
+        //2 CALCULATE Expenses from DATABASE method
+        calculatorExp: function(){
+            console.log(data); //check data is ALWAYS storaged
+            let expenses, totalExp;
+            expenses = data.allItems.exp.map(exP => { return exP.value});
+            totalExp = expenses.reduce((acc, value) => {return acc += Number(value)}, 0);
+            return totalExp;
+        },
+        //3 CALCULATE Income from DATABASE method
+        calculatorInc: function(){
+            let income, totalInc, result;
+            income = data.allItems.inc.map(inC => { return inC.value});
+            totalInc = income.reduce((acc, value) => { return acc +=  Number(value)}, 0);
+            return totalInc;
         }
       } //return for budgetController
 }();
@@ -64,25 +77,28 @@ const uiController = function () {
           inputValue: '.add__value',
           inputButton: '.add__btn',
           incomeList: '.incomeList',
-          expensesList: '.expensesList'
+          expensesList: '.expensesList',
+          budgetIncome: '.budget__income--value',
+          budgetExpenses: '.budget__expenses--value'
       };
 
       return{
-        //OPTION , DOM STRINGS READIBILITY PURPOSES
+        //optional
             getDomStrings :  function() {
                 return domStrings;
             },
         // 1. Get INPUT Method
             getInput : function() {
-                return { //+ 1 value //Object best option
+                return {
                     type : document.querySelector(domStrings.inputType).value, //inc or exp
                     description : document.querySelector(domStrings.inputDescription).value,
                     value : document.querySelector(domStrings.inputValue).value
-                }; //Object Returned
+                }; //Obj
            },
+           // 2. ADD INPUT METHOD
            addListItem : function (obj, type) {
               let html , replaceHtml, element;
-                // HTML string
+                // 2.1  HTML string
                   if( type === 'inc'){
                       element = domStrings.incomeList;
                       html = `<div class=' item ' id=' income-%id% '><div class=' item__description blue '>%description%</div>
@@ -94,12 +110,35 @@ const uiController = function () {
                       <div class="item__value">%value%</div><div class="item__percentage">21%</div><button class="item__delete--btn red">
                       <i class="ion-ios-close-outline"></i></button></div>` ;
                     }
-                //Populate inputs from user
+                //  2.2 Populate inputs from user
                   replaceHtml = html.replace('%id%', obj.id);
                   replaceHtml = replaceHtml.replace('%description%', obj.description);
                   replaceHtml = replaceHtml.replace('%value%', obj.value);
-                //Put REPLACED STRINGS back into the DOM
+                //  2.3 Put REPLACED STRINGS back into the DOM
                   document.querySelector(element).insertAdjacentHTML('beforeend', replaceHtml);
+           },
+           // 3. UI CLEAR INPUT Method
+           clearFields: function() {
+                let fields, fieldsCreatedArr;
+                // 3.1 fields selected
+                fields = document.querySelectorAll(domStrings.inputDescription + ', ' + domStrings.inputValue); //Nodes List
+                console.log(fields);
+                  // 3.2 fields Converted into an Array
+                fieldsCreatedArr = Array.prototype.slice.call(fields);
+                 // 3.3 Erase every value when methos is called upon
+                 fieldsCreatedArr.forEach(function (current, index, arr){
+                      current.value = ' ';
+                 });
+                    // 3.4 Keep focus on input fields for User
+                  fieldsCreatedArr[0].focus();
+           },
+           // 4. UPDATE INC & EXP on UI interface
+           updateBudget: function(a, b) {
+             let updateInc , updateExp;
+             updateInc = document.querySelector(domStrings.budgetIncome);
+             updateExp = document.querySelector(domStrings.budgetExpenses);
+             updateInc.textContent = a;
+             updateExp.textContent = b;
            }
     }; // RETURN UICONTROLLER
 }(); //UICONTROLLER
@@ -117,6 +156,10 @@ const globalController =  function(budget, ui){
               inputInStock = budget.addItem(input.type, input.description, input.value);
               //3 Add item to UI
               ui.addListItem(inputInStock, input.type);
+              //4 Empty item just added to UI
+              ui.clearFields();
+              //5 Update UI with Inc & Budget totals at TOP section
+              ui.updateBudget(budget.calculatorInc(), budget.calculatorExp());
           }
 
           return{
