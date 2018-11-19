@@ -18,7 +18,18 @@ const budgetController = function(){
           this.id = id;
           this.description = description;
           this.value = value;
+          this.percentage = -1;
       };
+      // METHOD ATTACHED to Expense obj prototype
+      Expense.prototype.calcPercentage = function(totalIncome){
+          if( totalIncome > 0){
+              this.percentage = Math.round((this.value / totalIncome) * 100);
+          } else { this.percentage = -1;}
+      };
+      Expense.prototype.getPercentage = function (){
+          return this.percentage;
+      };
+      //-----------------------------------------------
       const Income = function(id, description, value){
           this.id = id;
           this.description = description;
@@ -82,12 +93,24 @@ const budgetController = function(){
             data.budget = data.totals.inc - data.totals.exp;
             return data.budget;
         },
-        // 6 PERCENTAGE
+        // 6 total PERCENTAGE
         percentageCalculator: function(){
             if(data.totals.inc > 0 ){
                 data.percentage = Math.round((data.totals.exp / data.totals.inc) * 100);
                 return `${data.percentage}%` ;
             } else { data.percentage = -1;}
+        },
+        // 7 Individual Percentages
+        singlePercentages: function(){
+          data.allItems.exp.forEach(function(current) {
+              current.calcPercentage(data.totals.inc);
+          });
+        },
+        retrieveSinglePercentages: function(){
+            let allPercentages = data.allItems.exp.map(function(current){
+                return current.getPercentage();
+            });
+            return allPercentages;
         }
       } //return for budgetController
 }();
@@ -158,15 +181,28 @@ const uiController = function () {
            },
            // 4. UPDATE INC & EXP on UI interface
            updateBudget: function(a, b, c, d) {
-             let updateInc , updateExp, updateTotal, percentage;
-             updateInc = document.querySelector(domStrings.budgetIncome);
-             updateExp = document.querySelector(domStrings.budgetExpenses);
-             updateTotal = document.querySelector(domStrings.budgetTotal);
-             percentage = document.querySelector(domStrings.percentage);
-             updateInc.textContent = a;
-             updateExp.textContent = b;
-             updateTotal.textContent = c;
-             percentage.textContent = d;
+             document.querySelector(domStrings.budgetIncome).textContent = a;
+             document.querySelector(domStrings.budgetExpenses).textContent = b;
+             document.querySelector(domStrings.budgetTotal).textContent = c;
+             document.querySelector(domStrings.percentage).textContent = d;
+           },
+           // 5 UPDATE INDIVIDUAL % FOR EACH EXPENSE
+           displayPercentages: function(percentages){
+                let allPercent = document.querySelectorAll('.item__percentage'); //nodeList
+
+                const nodeListForEach = function (list, callback){
+                      for (let i = 0 ;   i  < list.length;  i++){
+                          callback(list[i], i);
+                      }
+                };
+
+                nodeListForEach( allPercent, function(current , index){
+                      if(percentages[index] > 0){
+                      current.textContent = percentages[index] + '%';
+                    } else {
+                                current.textContent = '%';
+                              }
+                });
            }
     }; // RETURN UICONTROLLER
 }(); //UICONTROLLER
@@ -190,7 +226,18 @@ const globalController =  function(budget, ui){
               ui.clearFields();
               //5 Update UI with Inc & Budget totals at TOP section
               ui.updateBudget(budget.calculatorInc(), budget.calculatorExp(), budget.calculatorTotal(), budget.percentageCalculator());
+              // 6 single percentages
+              updatePercentages();
               }
+        };
+// 3
+        const updatePercentages = function(){
+            // calculate them
+            budget.singlePercentages();
+            // read them
+            let singlePercentDisplay = budget.retrieveSinglePercentages();
+            // UI
+            ui.displayPercentages(singlePercentDisplay);
         };
 // 2
         const deleteItem = function(e){
@@ -206,6 +253,8 @@ const globalController =  function(budget, ui){
             document.querySelector(`#${typeItem}-${itemId}`).style.display = 'none';
             // 3 update & show new budget
             ui.updateBudget(budget.calculatorInc(), budget.calculatorExp(), budget.calculatorTotal(), budget.percentageCalculator());
+            // 4 update single percentages
+            updatePercentages();
         }
           return{
               init: function(){
