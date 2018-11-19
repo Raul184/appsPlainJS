@@ -34,7 +34,9 @@ const budgetController = function(){
           totals : {
                exp: 0,
                inc: 0
-          }
+          },
+          budget: 0,
+          percentage: 0
       }
       return{
         //1 ADD into DATABASE method
@@ -53,24 +55,29 @@ const budgetController = function(){
         },
         //2 CALCULATE Expenses from DATABASE method
         calculatorExp: function(){
-            console.log(data); //check data is ALWAYS storaged
-            let expenses, totalExp;
+            let expenses;
             expenses = data.allItems.exp.map(exP => { return exP.value});
-            totalExp = expenses.reduce((acc, value) => {return acc += value}, 0);
-            return totalExp;
+            data.totals.exp = expenses.reduce((acc, value) => {return acc += value}, 0);
+            return data.totals.exp;
         },
         //3 CALCULATE Income from DATABASE method
         calculatorInc: function(){
-            let income, totalInc, result;
+            let income;
             income = data.allItems.inc.map(inC => { return inC.value});
-            totalInc = income.reduce((acc, value) => { return acc += value}, 0);
-            return totalInc;
+            data.totals.inc = income.reduce((acc, value) => { return acc += value}, 0);
+            return data.totals.inc;
         },
         // 4 CALCULATE TOTALS
         calculatorTotal: function(){
-            let result;
-
-            return result;
+            data.budget = data.totals.inc - data.totals.exp;
+            return data.budget;
+        },
+        // 5 PERCENTAGE
+        percentageCalculator: function(){
+            if(data.totals.inc > 0 ){
+                data.percentage = Math.round((data.totals.exp / data.totals.inc) * 100);
+                return `${data.percentage}%` ;
+            } else { data.percentage = -1;}
         }
       } //return for budgetController
 }();
@@ -86,7 +93,8 @@ const uiController = function () {
           expensesList: '.expensesList',
           budgetIncome: '.budget__income--value',
           budgetExpenses: '.budget__expenses--value',
-          budgetTotal: '.budget__value'
+          budgetTotal: '.budget__value',
+          percentage: '.budget__expenses--percentage'
       };
 
       return{
@@ -129,9 +137,8 @@ const uiController = function () {
                 let fields, fieldsCreatedArr;
                 // 3.1 fields selected
                 fields = document.querySelectorAll(domStrings.inputDescription + ', ' + domStrings.inputValue); //Nodes List
-                console.log(fields);
                   // 3.2 fields Converted into an Array
-                fieldsCreatedArr = Array.prototype.slice.call(fields);
+                fieldsCreatedArr = Array.from(fields);  //ES6
                  // 3.3 Erase every value when methos is called upon
                  fieldsCreatedArr.forEach(function (current, index, arr){
                       current.value = ' ';
@@ -140,14 +147,16 @@ const uiController = function () {
                   fieldsCreatedArr[0].focus();
            },
            // 4. UPDATE INC & EXP on UI interface
-           updateBudget: function(a, b) {
-             let updateInc , updateExp, updateTotal;
+           updateBudget: function(a, b, c, d) {
+             let updateInc , updateExp, updateTotal, percentage;
              updateInc = document.querySelector(domStrings.budgetIncome);
              updateExp = document.querySelector(domStrings.budgetExpenses);
-             // updateTotal = document.querySelector(domStrings.budgetTotal);
+             updateTotal = document.querySelector(domStrings.budgetTotal);
+             percentage = document.querySelector(domStrings.percentage);
              updateInc.textContent = a;
              updateExp.textContent = b;
-             // updateTotal.textContent = c;
+             updateTotal.textContent = c;
+             percentage.textContent = d;
            }
     }; // RETURN UICONTROLLER
 }(); //UICONTROLLER
@@ -169,7 +178,7 @@ const globalController =  function(budget, ui){
               //4 Empty item just added to UI
               ui.clearFields();
               //5 Update UI with Inc & Budget totals at TOP section
-              ui.updateBudget(budget.calculatorInc(), budget.calculatorExp());
+              ui.updateBudget(budget.calculatorInc(), budget.calculatorExp(), budget.calculatorTotal(), budget.percentageCalculator());
               }
         }
           return{
