@@ -161,7 +161,7 @@ const uiController = function () {
                 //  2.2 Populate inputs from user
                   replaceHtml = html.replace('%id%', obj.id);
                   replaceHtml = replaceHtml.replace('%description%', obj.description);
-                  replaceHtml = replaceHtml.replace('%value%', obj.value);
+                  replaceHtml = replaceHtml.replace('%value%', (obj.value).toLocaleString('en'));
                 //  2.3 Put REPLACED STRINGS back into the DOM
                   document.querySelector(element).insertAdjacentHTML('beforeend', replaceHtml);
            },
@@ -181,9 +181,9 @@ const uiController = function () {
            },
            // 4. UPDATE INC & EXP on UI interface
            updateBudget: function(a, b, c, d) {
-             document.querySelector(domStrings.budgetIncome).textContent = a;
-             document.querySelector(domStrings.budgetExpenses).textContent = b;
-             document.querySelector(domStrings.budgetTotal).textContent = c;
+             document.querySelector(domStrings.budgetIncome).textContent = a.toLocaleString('en', {maximumSignificantDigits : 2});
+             document.querySelector(domStrings.budgetExpenses).textContent = b.toLocaleString('en', {maximumSignificantDigits : 2});
+             document.querySelector(domStrings.budgetTotal).textContent = c.toLocaleString('en', {maximumSignificantDigits : 2});
              document.querySelector(domStrings.percentage).textContent = d;
            },
            // 5 UPDATE INDIVIDUAL % FOR EACH EXPENSE
@@ -258,7 +258,11 @@ const globalController =  function(budget, ui){
         }
           return{
               init: function(){
-                  console.log('Application initiated');
+                  //date
+                  let now = new Date();
+                  let month = now.getMonth();
+                  let year = now.getFullYear();
+                  document.querySelector('.budget__title--month').textContent = `${month}/${year}`;
                   // Strings Availability
                   let dom = ui.getDomStrings();
                   // EVENT LISTENERS
