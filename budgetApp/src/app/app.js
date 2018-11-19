@@ -181,8 +181,8 @@ const uiController = function () {
            },
            // 4. UPDATE INC & EXP on UI interface
            updateBudget: function(a, b, c, d) {
-             document.querySelector(domStrings.budgetIncome).textContent = a.toLocaleString('en', {maximumSignificantDigits : 2});
-             document.querySelector(domStrings.budgetExpenses).textContent = b.toLocaleString('en', {maximumSignificantDigits : 2});
+             document.querySelector(domStrings.budgetIncome).textContent = `+ ${a.toLocaleString('en', {maximumSignificantDigits : 2})}` ;
+             document.querySelector(domStrings.budgetExpenses).textContent =`- ${b.toLocaleString('en', {maximumSignificantDigits : 2})}` ;
              document.querySelector(domStrings.budgetTotal).textContent = c.toLocaleString('en', {maximumSignificantDigits : 2});
              document.querySelector(domStrings.percentage).textContent = d;
            },
