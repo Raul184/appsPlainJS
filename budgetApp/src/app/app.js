@@ -75,38 +75,38 @@ const budgetController = function(){
                 }
         },
         //3 CALCULATE Expenses from DATABASE method
-        calculatorExp: function(){
+        calcExp: function(){
             let expenses;
             expenses = data.allItems.exp.map(exP => { return exP.value});
             data.totals.exp = expenses.reduce((acc, value) => {return acc += value}, 0);
             return data.totals.exp;
         },
         //4 CALCULATE Income from DATABASE method
-        calculatorInc: function(){
+        calcInc: function(){
             let income;
             income = data.allItems.inc.map(inC => { return inC.value});
             data.totals.inc = income.reduce((acc, value) => { return acc += value}, 0);
             return data.totals.inc;
         },
         // 5 CALCULATE TOTALS
-        calculatorTotal: function(){
+        calcTotal: function(){
             data.budget = data.totals.inc - data.totals.exp;
             return data.budget;
         },
         // 6 total PERCENTAGE
-        percentageCalculator: function(){
+        percentageCalc: function(){
             if(data.totals.inc > 0 ){
                 data.percentage = Math.round((data.totals.exp / data.totals.inc) * 100);
                 return `${data.percentage}%` ;
             } else { data.percentage = -1;}
         },
         // 7 Individual Percentages
-        singlePercentages: function(){
+        singlePercents: function(){
           data.allItems.exp.forEach(function(current) {
               current.calcPercentage(data.totals.inc);
           });
         },
-        retrieveSinglePercentages: function(){
+        retrieveSP: function(){
             let allPercentages = data.allItems.exp.map(function(current){
                 return current.getPercentage();
             });
@@ -225,7 +225,7 @@ const globalController =  function(budget, ui){
               //4 Empty item just added to UI
               ui.clearFields();
               //5 Update UI with Inc & Budget totals at TOP section
-              ui.updateBudget(budget.calculatorInc(), budget.calculatorExp(), budget.calculatorTotal(), budget.percentageCalculator());
+              ui.updateBudget(budget.calcInc(), budget.calcExp(), budget.calcTotal(), budget.percentageCalc());
               // 6 single percentages
               updatePercentages();
               }
@@ -233,9 +233,9 @@ const globalController =  function(budget, ui){
 // 3
         const updatePercentages = function(){
             // calculate them
-            budget.singlePercentages();
+            budget.singlePercents();
             // read them
-            let singlePercentDisplay = budget.retrieveSinglePercentages();
+            let singlePercentDisplay = budget.retrieveSP();
             // UI
             ui.displayPercentages(singlePercentDisplay);
         };
@@ -252,18 +252,19 @@ const globalController =  function(budget, ui){
             // 2 delete from UI
             document.querySelector(`#${typeItem}-${itemId}`).style.display = 'none';
             // 3 update & show new budget
-            ui.updateBudget(budget.calculatorInc(), budget.calculatorExp(), budget.calculatorTotal(), budget.percentageCalculator());
+            ui.updateBudget(budget.calcInc(), budget.calcExp(), budget.calcTotal(), budget.percentageCalc());
             // 4 update single percentages
             updatePercentages();
         }
           return{
               init: function(){
-                  //date
+                  //date----------
                   let now = new Date();
+                  let day = now.getDate();
                   let month = now.getMonth();
                   let year = now.getFullYear();
-                  document.querySelector('.budget__title--month').textContent = `${month}/${year}`;
-                  // Strings Availability
+                  document.querySelector('.budget__title--month').textContent = `${day}/${month}/${year}`;
+                  // Strings Availability---------
                   let dom = ui.getDomStrings();
                   // EVENT LISTENERS
                   // 1.Input-takers
@@ -277,7 +278,6 @@ const globalController =  function(budget, ui){
                   document.querySelector('.container').addEventListener('click', deleteItem);
             } //init ENDS
           }
-
 }(budgetController, uiController);
 //INIT
 globalController.init();
