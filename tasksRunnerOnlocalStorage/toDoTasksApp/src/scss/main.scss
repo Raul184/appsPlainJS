@@ -1,5 +1,6 @@
 body{
   box-sizing: border-box;
+  font-family: monospace, sans-serif;
   .container{
     // xybsc
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
@@ -25,7 +26,8 @@ body{
       line-height: 0.3;
       color: grey;
       #task{
-        position: absolute;
+        font-size: 16px;
+        font-family: monospace;
         width: 100%;
         border: none;
         border-bottom: 2px solid lightgrey;
@@ -37,32 +39,36 @@ body{
       }
     } //input field ENDS
     .btn{//Submit button below input field
-      margin-top: 40px;
-      margin-left: -20px;
+      display: block;
+      margin-left: 50%;
+      transform: translateX(-50%);
       padding: 5px 20px;
       background-color: #2AA599;
-      text-transform: uppercase;
       font-size: 16px;
       color: white;
+      text-transform: uppercase;
       border: none;
       box-shadow: 2px 2px 2px 1px #2AA599 ;
+      margin-top: 40px;
     }
   } //row Ends here
     .card-action{
+      padding: 10px 20px;
       #task-title{
-        font-family: inherit;
         font-size: 20px;
         font-weight: 400;
-        color: black;
-        padding: 20px 40px;
+        color: black!important;
+        padding: 20px 20px;
       }
       .input-field{
         width: 100%;
         position: relative;
         line-height: 0.3;
-        color: grey;
+        font-size: 18px;
+        color: black!important;
         #filter{
-          position: absolute;
+          font-size: 18px;
+          color: black!important;
           width: 100%;
           border: none;
           border-bottom: 2px solid lightgrey;
@@ -74,14 +80,16 @@ body{
         }
       }
         .collection{
-          margin-top: 70px;
+          padding: 20px;
+          display: block;
             .btn{
+              width: 120px;
+              margin-left: 50%;
+              transform: translateX(-50%);
               font-size: 16px;
               color: white;
               text-decoration: none;
               background-color: black;
-              padding: 5px 20px;
-              margin-left: -20px;
               box-shadow: 2px 2px 2px 1px black;
             }
         } //ul collection ends here

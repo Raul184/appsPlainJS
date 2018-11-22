@@ -1,6 +1,7 @@
 body {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  font-family: monospace, sans-serif;
 }
 
 body .container {
@@ -35,7 +36,8 @@ body .container .row .input-field {
 }
 
 body .container .row .input-field #task {
-  position: absolute;
+  font-size: 16px;
+  font-family: monospace;
   width: 100%;
   border: none;
   border-bottom: 2px solid lightgrey;
@@ -48,35 +50,43 @@ body .container .row .input-field label {
 }
 
 body .container .row .btn {
-  margin-top: 40px;
-  margin-left: -20px;
+  display: block;
+  margin-left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
   padding: 5px 20px;
   background-color: #2AA599;
-  text-transform: uppercase;
   font-size: 16px;
   color: white;
+  text-transform: uppercase;
   border: none;
   -webkit-box-shadow: 2px 2px 2px 1px #2AA599;
           box-shadow: 2px 2px 2px 1px #2AA599;
+  margin-top: 40px;
+}
+
+body .container .card-action {
+  padding: 10px 20px;
 }
 
 body .container .card-action #task-title {
-  font-family: inherit;
   font-size: 20px;
   font-weight: 400;
-  color: black;
-  padding: 20px 40px;
+  color: black !important;
+  padding: 20px 20px;
 }
 
 body .container .card-action .input-field {
   width: 100%;
   position: relative;
   line-height: 0.3;
-  color: grey;
+  font-size: 18px;
+  color: black !important;
 }
 
 body .container .card-action .input-field #filter {
-  position: absolute;
+  font-size: 18px;
+  color: black !important;
   width: 100%;
   border: none;
   border-bottom: 2px solid lightgrey;
@@ -89,16 +99,19 @@ body .container .card-action .input-field label {
 }
 
 body .container .card-action .collection {
-  margin-top: 70px;
+  padding: 20px;
+  display: block;
 }
 
 body .container .card-action .collection .btn {
+  width: 120px;
+  margin-left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
   font-size: 16px;
   color: white;
   text-decoration: none;
   background-color: black;
-  padding: 5px 20px;
-  margin-left: -20px;
   -webkit-box-shadow: 2px 2px 2px 1px black;
           box-shadow: 2px 2px 2px 1px black;
 }

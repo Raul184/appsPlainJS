@@ -4,7 +4,6 @@
     <meta charset="utf-8">
     <title>to Do Tasks List</title>
   <link rel="stylesheet" href="/dist/main.css">
-      <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
       <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
   </head>
   <body>
@@ -17,8 +16,8 @@
           <div class="row">
             <form action="" id="task-form">
               <div class="input-field col s12">
-                <input type="text" name="task" id="task">
-                <label for="task">New Task</label>
+                <input type="text" name="task" id="task" placeholder=" New Task">
+                <label for="task"></label>
               </div>
               <input type="submit" value="Add Task" class="btn">
             </form>
@@ -27,8 +26,8 @@
         <div class="card-action"> <!--Section 2-->
             <h5 id="task-title">Tasks</h5>
             <div class="input-field col s12">
-                <input type="text" name="filter" id="filter">
-                <label for="filter">Filter Tasks</label>
+                <input type="text" name="filter" id="filter" placeholder="Filter Tasks">
+                <label for="filter"></label>
             </div>
             <ul class="collection">
               <a href="" class="clear-tasks btn black">Clear Tasks</a>
@@ -43,12 +42,6 @@
 
 
 
-<script
-		     src="https://code.jquery.com/jquery-3.3.1.js"
-			  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-			  crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/
-materialize.min.js"></script>
 <script type="text/javascript" src="src/app/app.js"></script>
   </body>
 </html>
