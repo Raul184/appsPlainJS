@@ -1,6 +1,48 @@
 console.log('works?');
-// 1.  MODULE UI
-const uiController = function(){
+// 3. DATABASE MODULE
+const datab = function(){
+    return{
+// 0. STORE DATA using LocalStorageAPI
+          storeTaskInLocalStorage: function(b) {
+              let tasks;
+              if(localStorage.getItem('tasks') === null){//empty
+                  tasks = []; //prepare to stock
+              } else{
+                tasks = JSON.parse(localStorage.getItem('tasks'));
+              }
+              tasks.push(b); //storage them in array...
+              localStorage.setItem('tasks', JSON.stringify(tasks));//..as strings
+          }
+// 1. GET Tasks storaged in localStorage API
+          getTasks: function() {
+            let tasks;
+            if(localStorage.getItem('tasks') === null){//empty
+                tasks = []; //prepare to stock in an EmptyArray
+            } else{   //there are stuff, stock them
+              tasks = JSON.parse(localStorage.getItem('tasks'));
+            }
+            tasks.forEach(function(current){ //Check for whatever left task and put them back
+              //Create a li element
+              const li = document.createElement('li');
+              //Add a class
+              li.classList.add('collection-item');
+              //Create text and append
+              li.appendChild(document.createTextNode(domStrings.taskInput.value));
+              //Create delete-link element
+              const link = document.createElement('a');
+              // Add class
+              link.classList.add('delete-item');
+              // Add Icon
+              link.innerHTML = '<i class= "fa fa-remove"></i>';
+              li.appendChild(link);
+              // Now , append Li to ul
+              domStrings.taskList.appendChild(li);
+            });
+          }
+    }
+}();
+// 1.  MODULE UI------------------------------
+const uiController = function(d){
 // DOM selectors
     let domStrings = {
        form : document.querySelector('#task-form'), //form
@@ -9,7 +51,7 @@ const uiController = function(){
        filter : document.querySelector('#filter'), //input for filter
        taskInput : document.querySelector('#task') //add/subm task btn
   };
-  return{
+  return{ //RETURN
     getDomStrings: function() {
       return domStrings;
     },
@@ -33,6 +75,8 @@ const uiController = function(){
           li.appendChild(link);
           // Now , append Li to ul
           domStrings.taskList.appendChild(li);
+          // // Once , input is represent in UI , I'll storage so it don't get lost after closing browser
+          d.storeTaskInLocalStorage(domStrings.taskInput.value);
           // Clear input
           domStrings.taskInput.value = ' ';
         }
@@ -61,15 +105,17 @@ const uiController = function(){
           });
       }
   }
-}(); //UI controller ends
+}(datab); //UI controller ends
 
-
-// 2.  MODULE GController----------------------------
-const globalController =  function(ui) {
+// 2.  MODULE GController--------------------------------------
+const globalController =  function(ui, db) {
 // 1 Add a task Function
     const addTask = (e) => {
         ui.getInput();
         e.preventDefault();
+    }
+    const tasksGetter = () => {
+        db.getTasks();
     }
 // 2 Remove a task Function
     const removeTask = (e) => {
@@ -86,12 +132,14 @@ const globalController =  function(ui) {
         // 1 DOM
             let dom = ui.getDomStrings();
          // 2 EventListeners
+            // localStorage on UI
+            documnet.addEventListener('DOMContentLoaded', tasksGetter);
             dom.form.addEventListener('submit', addTask); // +  a task
-            dom.taskList.addEventListener('click', removeTask);// - a task
-            dom.clearBtn.addEventListener('click', clearAll);// - Alltasks
-            dom.filter.addEventListener('keyup', filterTasks);// check for
+            dom.taskList.addEventListener('click', removeTask);//- 1task
+            dom.clearBtn.addEventListener('click', clearAll);// - Altasks
+            dom.filter.addEventListener('keyup', filterTasks);// checkFor
      }
    }
-}(uiController);
+}(uiController, datab);
 // INIT
 globalController.init();
