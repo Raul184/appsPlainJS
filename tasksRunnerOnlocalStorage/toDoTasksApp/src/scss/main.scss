@@ -1,3 +1,90 @@
 body{
   box-sizing: border-box;
+  .container{
+    // xybsc
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    border-left: 1px solid lightgrey;
+    border-top: 1px solid lightgrey;
+    width: 50%;
+    margin: 0 auto;
+    .row{
+      margin: 20px;
+      padding: 40px 0px;
+    .card-content{
+      border-bottom: 1px solid grey;
+    }
+    //first heading
+    .card-title{
+      font-size: 20px;
+      color: grey;
+      padding: 20px 40px;
+    } //input field
+    .input-field{
+      width: 100%;
+      position: relative;
+      line-height: 0.3;
+      color: grey;
+      #task{
+        position: absolute;
+        width: 100%;
+        border: none;
+        border-bottom: 2px solid lightgrey;
+      } //label for input field above
+      label{
+        position: relative;
+        padding-bottom: 5px;
+        font-size: 16px;
+      }
+    } //input field ENDS
+    .btn{//Submit button below input field
+      margin-top: 40px;
+      margin-left: -20px;
+      padding: 5px 20px;
+      background-color: #2AA599;
+      text-transform: uppercase;
+      font-size: 16px;
+      color: white;
+      border: none;
+      box-shadow: 2px 2px 2px 1px #2AA599 ;
+    }
+  } //row Ends here
+    .card-action{
+      #task-title{
+        font-family: inherit;
+        font-size: 20px;
+        font-weight: 400;
+        color: black;
+        padding: 20px 40px;
+      }
+      .input-field{
+        width: 100%;
+        position: relative;
+        line-height: 0.3;
+        color: grey;
+        #filter{
+          position: absolute;
+          width: 100%;
+          border: none;
+          border-bottom: 2px solid lightgrey;
+        } //label for input field above
+        label{
+          position: relative;
+          padding-bottom: 5px;
+          font-size: 16px;
+        }
+      }
+        .collection{
+          margin-top: 70px;
+            .btn{
+              font-size: 16px;
+              color: white;
+              text-decoration: none;
+              background-color: black;
+              padding: 5px 20px;
+              margin-left: -20px;
+              box-shadow: 2px 2px 2px 1px black;
+            }
+        } //ul collection ends here
+    } //card Action 2 ends here
+  } //container ENDS
 }
