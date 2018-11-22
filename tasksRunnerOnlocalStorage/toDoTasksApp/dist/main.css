@@ -50,11 +50,10 @@ body .container .row .input-field label {
 }
 
 body .container .row .btn {
-  display: block;
   margin-left: 50%;
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
-  padding: 5px 20px;
+  padding: 8px 20px;
   background-color: #2AA599;
   font-size: 16px;
   color: white;
@@ -63,6 +62,13 @@ body .container .row .btn {
   -webkit-box-shadow: 2px 2px 2px 1px #2AA599;
           box-shadow: 2px 2px 2px 1px #2AA599;
   margin-top: 40px;
+}
+
+body .container .row .btn:hover {
+  color: #2AA599;
+  font-weight: 600;
+  font-size: 18px;
+  background-color: white;
 }
 
 body .container .card-action {
@@ -76,7 +82,7 @@ body .container .card-action #task-title {
   padding: 20px 20px;
 }
 
-body .container .card-action .input-field {
+body .container .card-action .input-filter {
   width: 100%;
   position: relative;
   line-height: 0.3;
@@ -84,7 +90,7 @@ body .container .card-action .input-field {
   color: black !important;
 }
 
-body .container .card-action .input-field #filter {
+body .container .card-action .input-filter #filter {
   font-size: 18px;
   color: black !important;
   width: 100%;
@@ -92,26 +98,47 @@ body .container .card-action .input-field #filter {
   border-bottom: 2px solid lightgrey;
 }
 
-body .container .card-action .input-field label {
-  position: relative;
-  padding-bottom: 5px;
-  font-size: 16px;
-}
-
 body .container .card-action .collection {
   padding: 20px;
   display: block;
+  list-style: none;
 }
 
-body .container .card-action .collection .btn {
-  width: 120px;
-  margin-left: 50%;
-  -webkit-transform: translateX(-50%);
-          transform: translateX(-50%);
-  font-size: 16px;
-  color: white;
-  text-decoration: none;
+body .container .card-action .collection .collection-item {
+  padding: 20px;
+  -webkit-box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+          box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+body .container .card-action .collection .collection-item .delete-item {
+  width: 20px;
+  float: right;
+  text-align: center;
+}
+
+body .container .card-action .collection .delete-item:hover {
+  color: red;
+  font-size: 20px;
+}
+
+body .container .card-action .clear-tasks-btn {
+  display: block;
+  width: 110px;
+  margin: 0 auto;
+  padding: 8px 20px;
   background-color: black;
   -webkit-box-shadow: 2px 2px 2px 1px black;
           box-shadow: 2px 2px 2px 1px black;
+  font-size: 16px;
+  color: white;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+body .container .card-action .clear-tasks-btn:hover {
+  color: red;
+  font-weight: 600;
+  font-size: 18px;
+  background-color: white;
+  width: 125px;
 }

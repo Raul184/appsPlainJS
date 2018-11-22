@@ -44,11 +44,8 @@ const uiController = function(){
 // 2.  MODULE GController----------------------------
 const globalController =  function(ui) {
     const addTask = function(e){
-      console.log(e)
-        let input;
     // 1 Get task input from UI
-        input = ui.getInput();
-        console.log(input);
+        ui.getInput();
         e.preventDefault();
     }
     return{

@@ -39,10 +39,9 @@ body{
       }
     } //input field ENDS
     .btn{//Submit button below input field
-      display: block;
       margin-left: 50%;
       transform: translateX(-50%);
-      padding: 5px 20px;
+      padding: 8px 20px;
       background-color: #2AA599;
       font-size: 16px;
       color: white;
@@ -50,6 +49,12 @@ body{
       border: none;
       box-shadow: 2px 2px 2px 1px #2AA599 ;
       margin-top: 40px;
+    } //HOVER ON ADD TASK BUTTON
+    .btn:hover{
+      color: #2AA599;
+      font-weight: 600;
+      font-size: 18px;
+      background-color: white;
     }
   } //row Ends here
     .card-action{
@@ -60,7 +65,7 @@ body{
         color: black!important;
         padding: 20px 20px;
       }
-      .input-field{
+      .input-filter{
         width: 100%;
         position: relative;
         line-height: 0.3;
@@ -72,27 +77,45 @@ body{
           width: 100%;
           border: none;
           border-bottom: 2px solid lightgrey;
-        } //label for input field above
-        label{
-          position: relative;
-          padding-bottom: 5px;
-          font-size: 16px;
         }
-      }
+      } //input filter ends
         .collection{
           padding: 20px;
           display: block;
-            .btn{
-              width: 120px;
-              margin-left: 50%;
-              transform: translateX(-50%);
-              font-size: 16px;
-              color: white;
-              text-decoration: none;
-              background-color: black;
-              box-shadow: 2px 2px 2px 1px black;
+          list-style: none;
+          .collection-item{ //JS appended
+          padding: 20px;
+          box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+          .delete-item{
+            width: 20px;
+            float: right;
+            text-align: center;
             }
+          } //HOVER ON DELETE TASK BUTTON
+          .delete-item:hover{
+            color: red;
+            font-size: 20px;
+          }
         } //ul collection ends here
+        .clear-tasks-btn{
+          display: block;
+          width: 110px;
+          margin: 0 auto;
+          padding: 8px 20px;
+          background-color: black;
+          box-shadow: 2px 2px 2px 1px black;
+          font-size: 16px;
+          color: white;
+          text-decoration: none;
+          text-transform: uppercase;
+        } //HOVER ON CLEAR TASKS BUTTON
+        .clear-tasks-btn:hover{
+          color: red;
+          font-weight: 600;
+          font-size: 18px;
+          background-color: white;
+          width: 125px;
+        }
     } //card Action 2 ends here
   } //container ENDS
 }
