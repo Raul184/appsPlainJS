@@ -22,24 +22,24 @@ const uiController = function(){
     dom.minimum.textContent = scores.min;
     dom.maximum.textContent = scores.max;
   return {
-      domStrings : function(){
+      getDomStrings : function(){
         return dom;
       },
-      gameScores : function(){
+      getGameScores : function(){
         return scores;
       }
     }
-};
-uiController();
+}();
 //----------------------------------------------
 const db = function(ui){
     return{
       setMessage : function (mes, color){
-          let input = ui.domStrings();
+          let input = ui.getDomStrings();
           input.message.style.color = color;
           input.message.textContent = mes;
       },
       gameOver : function (won, message){
+          let input = ui.getDomStrings();
           let color;
           won === true ? color = 'green' : 'red';
           input.guessInput.disabled = true; //disable element if user wins
@@ -47,43 +47,43 @@ const db = function(ui){
           input.guessInput.style.borderColor = color;
           // set text color
           input.message.style.color = color;
-          setMessage(message);
+          db.setMessage(message);
       }
     }
-}
-db(uiController);
+}(uiController);
 //---------------------------------------------------
 const globalController = function(ui, db){
-  return{
+    let input = ui.getDomStrings();
+    let scores = ui.getGameScores();
+    return{
       init: function(){
-          let input = ui.domStrings();
-          let scores = ui.gameScores();
           // EventListeners
           input.guessBtn.addEventListener('click', function(){
+              console.log('does it work?');
               let guessNum = parseInt(input.guessInput.value); //number
               // validate
               if( isNaN(guessNum) || guessNum < scores.min || guessNum > scores.max){
-                  db.setMessage(`Please input a number between ${min} and ${max}`, 'red');
+                  db.setMessage(`Please input a number between ${scores.min} and ${scores.max}`, 'red');
               }//check if won
               if(guessNum === scores.winningNum){
                 //Game over
-                  db.gameOver(true, `${winningNum} is correct! , You  win!!`);
+                  db.gameOver(true, `${scores.winningNum} is correct! , You  win!!`);
               }else{
                   //substract 1
                   scores.guessesLeft -= 1;
                   if( scores.guessesLeft === 0){
-                      db.gameOver(false, `Game Over , sorry , you lost. The winning number was: ${winningNum}`);
+                      db.gameOver(false, `Game Over , sorry , you lost. The winning number was: ${scores.winningNum}`);
                   }else {
                       //Game  continues
                       input.guessInput.style.borderColor = 'red';
                       // clear Input
                       input.guessInput.value = ' ';
                       // message
-                      db.setMessage(`${guessedNum} is not correct, you still got ${guessesLeft} chances left`, 'red');
+                      db.setMessage(`${guessNum} is not correct, you still got ${scores.guessesLeft} chances left`, 'red');
                   }
               }
           });
       }
   }
-}
-globalController(uiController, db);
+}(uiController, db);
+globalController.init();
