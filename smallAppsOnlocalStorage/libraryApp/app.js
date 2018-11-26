@@ -41,7 +41,7 @@ UI.prototype.showAlert = (message, className) =>{
     }, 3000);
 }
 // DELETE
-UI.prototype.deleteBook = function (target){
+UI.prototype.deleteBook = function(target){
     if(target.className === 'delete'){
         target.parentElement.parentElement.remove();
     }
@@ -82,6 +82,9 @@ document.getElementById('book-form').addEventListener('submit', function(e){
 document.getElementById('book-list').addEventListener('click', function(e){
   // INSTANCES created ON UI
     const ui = new UI();
+    //delete that book
     ui.deleteBook(e.target);
+    //show alert
+    ui.showAlert('Book removed', 'success');
     e.preventDefault();
 });
