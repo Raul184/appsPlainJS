@@ -1,4 +1,4 @@
-console.log('ES6?');
+// 1. CLASS for BOOKs input
 class Book {
   constructor(title, author, ispn){
     this.title = title;
@@ -6,7 +6,7 @@ class Book {
     this.ispn = ispn;
   }
 }
-
+// 2. UI CLASS
 class UI {
   addBookToList(book){
     const list = document.getElementById('book-list');
@@ -45,8 +45,23 @@ class UI {
     document.getElementById('isbn').value = ' ';
   }
 }
+// 3. LOCAL STORAGE CLASS
+class Store {
+  getBooks(){ //from local storage
+
+  }
+  displayBooks(){ //ui
+
+  }
+  addBook(){ // + localStorage
+
+  }
+  removeBook(){
+    
+  }
+}
 // EVENT LISTENERS
-// 1. FORM
+// 1. form
 document.getElementById('book-form').addEventListener('submit', function(e){
     // FORM
     const title = document.getElementById('title').value,
