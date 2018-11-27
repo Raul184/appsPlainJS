@@ -13,7 +13,7 @@ console.log('works?');
 //---------------------------------------------------------------------
 // GLOBAL SCOPE
 // MODULE 1: DATA MODULE
-const budgetController = function(){
+const budgetController = (function(){
       const Expense = function(id, description, value){
           this.id = id;
           this.description = description;
@@ -113,10 +113,10 @@ const budgetController = function(){
             return allPercentages;
         }
       } //return for budgetController
-}();
+})();
 
 // MODULE 2: UI MODULE
-const uiController = function () {
+const uiController = (function () {
       let domStrings = {
           inputType: '.add__type',
           inputDescription: '.add__description',
@@ -205,11 +205,11 @@ const uiController = function () {
                 });
            }
     }; // RETURN UICONTROLLER
-}(); //UICONTROLLER
+})(); //UICONTROLLER
 
 
 // BRIDGE BETWEEN              DATA  & UI  MODULES ABOVE
-const globalController =  function(budget, ui){
+const globalController =  (function(budget, ui){
   // 1
           // Add Input from UI
           const addItem = function(){
@@ -278,6 +278,6 @@ const globalController =  function(budget, ui){
                   document.querySelector('.container').addEventListener('click', deleteItem);
             } //init ENDS
           }
-}(budgetController, uiController);
+})(budgetController, uiController);
 //INIT
 globalController.init();

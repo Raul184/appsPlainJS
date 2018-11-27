@@ -1,4 +1,4 @@
-// 1. CLASS for BOOKs input------------------------------------------------------------
+// 1. CLASS for BOOKs input-----------------------------------------
 class Book {
   constructor(title, author, ispn){
     this.title = title;
@@ -6,8 +6,9 @@ class Book {
     this.isbn = ispn;
   }
 }
-// 2. UI CLASS------------------------------------------------------------
+// 2. UI CLASS--------------------------------------------------------
 class UI {
+  // 1
   addBookToList(book){
     const list = document.getElementById('book-list');
     const row = document.createElement('tr');
@@ -19,6 +20,7 @@ class UI {
         `;
     list.appendChild(row);
   }
+  // 2
   showAlert(message , className){
     const div = document.createElement('div');
     // + class
@@ -34,11 +36,13 @@ class UI {
         document.querySelector('.alert').remove(); //remove div
     }, 3000);
   }
+  // 3
   deleteBook(target){
     if(target.className === 'delete'){
         target.parentElement.parentElement.remove();
     }
   }
+  // 4
   clearFields(){
     document.getElementById('title').value = ' ';
     document.getElementById('author').value = ' ';
@@ -46,8 +50,9 @@ class UI {
   }
 }
 
-// 3. LOCAL STORAGE CLASS------------------------------------------------------------
+// 3. LOCAL STORAGE CLASS-----------------------------------------------
 class Store {
+
   static getBooks(){ //from local storage
     let books;
     //check
@@ -88,7 +93,7 @@ class Store {
   }
 }
 
-// EVENT LISTENERS------------------------------------------------------------
+// EVENT LISTENERS---------------------------------------------------
 // 1. form
 document.getElementById('book-form').addEventListener('submit', function(e){
     // FORM
