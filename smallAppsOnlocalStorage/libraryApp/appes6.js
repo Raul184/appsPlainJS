@@ -47,17 +47,29 @@ class UI {
 }
 // 3. LOCAL STORAGE CLASS
 class Store {
-  getBooks(){ //from local storage
+  static getBooks(){ //from local storage
+    let books;
+    //check
+    if(localStorage.getItem('books') === null) { //if empty
+      books = [];
+    } else{
+      books = JSON.parse(localStorage.getItem('books')); //parse the str and returns a jsObj so I can storage it on localStorage
+    }
+    return books;
+  }
+  static displayBooks(){ //ui
 
   }
-  displayBooks(){ //ui
-
+  static addBook(){ // + localStorage
+    const books = Store.getBooks(); //static method
+    console.log(books);
+    console.log('explained');
+    books.push(book);
+    // and set it in localStorage
+    localStorage.setItem('books', JSON.stringify(books)); //just accept strings so I got to use stringify
   }
-  addBook(){ // + localStorage
+  static removeBook(){
 
-  }
-  removeBook(){
-    
   }
 }
 // EVENT LISTENERS
@@ -77,6 +89,8 @@ document.getElementById('book-form').addEventListener('submit', function(e){
     }else{
       // APPEND method for UI
       ui.addBookToList(book);
+      //add to storage
+      Store.addBook(book);
       // CLEAR input fields
       ui.clearFields();
       //CONFIRM input
