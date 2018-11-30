@@ -1,5 +1,5 @@
 var UIModule = (function(){
-    
+
     //classes used to select HTML elements
     var DOMElements = {
         //indicators - test control
@@ -14,52 +14,52 @@ var UIModule = (function(){
         modal
     };
 
-    
+
     return {
-        
+
     //get DOM elements
-        
+
         getDOMElements(){},
-        
+
     //Indicators - Test Control
-    
+
         updateTimeLeft: function(){},
-        
+
     //results
-        
-        updateResults: function(){}, 
-        
-        fillModal: function(){}, 
-        
+
+        updateResults: function(){},
+
+        fillModal: function(){},
+
         showModal: function(){},
-        
+
     //user input
-    
-        inputFocus: function(){}, 
-        
+
+        inputFocus: function(){},
+
         isNameEmpty: function(){},
-        
-        flagNameInput: function(){},   
-    
-        spacePressed: function(){}, 
-        
-        enterPressed: function(){}, 
-        
-        emptyInput: function(){},  
-    
+
+        flagNameInput: function(){},
+
+        spacePressed: function(){},
+
+        enterPressed: function(){},
+
+        emptyInput: function(){},
+
         getTypedWord: function(){},
-        
+
     //test words
-    
-        fillContent: function(){}, 
-        
-        formatWord: function(wordObject, wordHTML){}, 
-        
-        setActiveWord: function(index){}, 
-        
-        deactivateCurrentWord: function(){}, 
-        
+
+        fillContent: function(){},
+
+        formatWord: function(wordObject, wordHTML){},
+
+        setActiveWord: function(index){},
+
+        deactivateCurrentWord: function(){},
+
         scroll: function(){}
-        
+
     }
 })();
