@@ -1,11 +1,11 @@
-var dataModule = (function(){
-
-    var appData = {
+const dataModule = (function(){
+    // PRIVATE
+    let appData = {
         indicators: {
-            testStarted: false,
-            testEnded: false,
-            totalTestTime: 0,
-            timeLeft: 0
+            testStarted: false, //test must starts by User action
+            testEnded: false, //no start, no end
+            totalTestTime: 0, //to be set manually
+            timeLeft: 0   //to be updated with a function
         },
         results: {
             wpm: 0,
@@ -25,29 +25,26 @@ var dataModule = (function(){
         },
     };
 
-
-
     //word constructor
 //    {
 //      value: {correct: '', user: '' , isCorrect: false },
 //      characters: {correct: [], user: [], totalCorrect: 0, totalTest: 0 }
 //    }
 
-    var word = function(index){};
-
+    let word = function(index){};
     //update method
     word.prototype.update = function(value){};
-
+    // PUBLIC
     return {
-    //indicators - test Control
+    //INDICATORS - test Control
 
         setTestTime: function(x){},//sets the total test time to x
 
         initializeTimeLeft(){},//initializes time left to the total test time
 
-        startTest: function(){},//starts the test
+        startTest: function(){},//starts the test (TRUE)
 
-        endTest: function(){},//ends the test
+        endTest: function(){},//ends the test (true)
 
         getTimeLeft: function(){},//return the remaining test time
 
@@ -59,7 +56,7 @@ var dataModule = (function(){
 
         testStarted(){},//checks if the test has started
 
-    //results
+    //RESULTS
 
         calculateWpm: function(){},//calculates wpm and wpmChange and updates them in appData
 

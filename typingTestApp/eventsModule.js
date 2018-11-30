@@ -13,6 +13,25 @@ var eventsModule = (function(dModule, uModule, cModule, wModule){
     return {
         //init function, initializes the test before start
         init: function(duration, textNumber){
+          // provide text on dataM
+          
+          // provide text on uiM
+
+          // set time for test
+
+          // time updates dataM
+
+          // time updates uiM
+
+          // highlight words runs dataM
+
+          // activeWord UImodule
+
+          // fortmatActiveWord UIModule
+
+          // focus on Text input from user
+
+          // eventListeners
             addEventListeners();
         }
     };
