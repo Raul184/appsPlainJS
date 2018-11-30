@@ -1,5 +1,6 @@
 const dataModule = (function(){
     // PRIVATE
+    // const lineReturn = '|';
     // 1
     let appData = {
         indicators: {
@@ -68,15 +69,25 @@ const dataModule = (function(){
         calculateAccuracy: function(){},//calculates accuracy and accuracyChange and updates them in appData
 
     //TEXT PROVIDED , WORDS
+        // Provide text
+        textProvider: function(textSelector, wordsArrConverter){
+          let result = wordsArrConverter.split(' ');  //split by words ,arr
+          appData.words.testWords = result;   //Text ready and storaged
+        },
 
-        fillListOfTestWords(textNumber){},// fills words ON TEXT PROVIDED
-
-        getListofTestWords(){},// get list of words ON TEXT PROVIDED
+        getListofWordsTest(){
+          return appData.words.testWords;
+        },// get list of words ON TEXT PROVIDED
 
         moveToNewWord: function(){},// increments the currentWordIndex - updates the current word (appData.words.currentWord) by creating a new instance of the word class - updates numOfCorrectWords, numOfCorrectCharacters and numOfTestCharacters
 
         updateCurrentWord: function(value){},// updates current word using user input
-
+        // getLineReturn(){
+        //   return lineReturn;
+        // }
+        returnData(){
+          console.log(appData);
+        }
     }
 
 })();

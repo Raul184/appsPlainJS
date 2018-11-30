@@ -9,7 +9,8 @@ const UIModule = (function(){
         //user input
         textInput,nameInput,
         //test words
-        content,activeWord,
+        content: document.getElementById('content'),
+        activeWord,
         //modal
         modal
     };
@@ -50,7 +51,13 @@ const UIModule = (function(){
         getTypedWord: function(){},
 
     //TEXT PROVIDED , WORDS
-        fillContent: function(){},
+        fillContent: function(arrStr){
+          //arr of characters/word
+          let result = arrStr.map(splitArr(str){
+            return str.split(' ');
+          })
+          DOMstrings.content.textContent = result;
+        },
 
         formatWord: function(wordObject, wordHTML){},
 
