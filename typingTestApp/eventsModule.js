@@ -14,7 +14,7 @@ var eventsModule = (function(dModule, uModule, cModule, wModule){
         //init function, initializes the test before start
         init: function(duration, textNumber){
           // provide text on dataM
-          
+
           // provide text on uiM
 
           // set time for test
@@ -35,6 +35,5 @@ var eventsModule = (function(dModule, uModule, cModule, wModule){
             addEventListeners();
         }
     };
-
 
 })(dataModule, UIModule, certificateModule, wordsModule);

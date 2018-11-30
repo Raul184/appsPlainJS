@@ -1,9 +1,9 @@
-var UIModule = (function(){
-
-    //classes used to select HTML elements
-    var DOMElements = {
+// FUNCTIONAL DESIGN
+const UIModule = (function(){
+    // PRIVATE
+    const DOMstrings = {//dom Strings
         //indicators - test control
-        timeLeft, //HTML element displaying time left
+        timeLeft : document.getElementById('timeLeft'),
         //test results
         wpm,wpmChange,cpm,cpmChange,accuracy,accuracyChange,
         //user input
@@ -14,18 +14,17 @@ var UIModule = (function(){
         modal
     };
 
-
     return {
-
+      // PUBLIC
     //get DOM elements
 
         getDOMElements(){},
 
-    //Indicators - Test Control
+    //INDICATORS - Test Control
 
         updateTimeLeft: function(){},
 
-    //results
+    //RESULTS
 
         updateResults: function(){},
 
@@ -33,7 +32,7 @@ var UIModule = (function(){
 
         showModal: function(){},
 
-    //user input
+    //USER INPUT
 
         inputFocus: function(){},
 
@@ -43,14 +42,14 @@ var UIModule = (function(){
 
         spacePressed: function(){},
 
+
         enterPressed: function(){},
 
         emptyInput: function(){},
 
         getTypedWord: function(){},
 
-    //test words
-
+    //TEXT PROVIDED , WORDS
         fillContent: function(){},
 
         formatWord: function(wordObject, wordHTML){},

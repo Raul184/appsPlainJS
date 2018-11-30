@@ -1,5 +1,6 @@
 const dataModule = (function(){
     // PRIVATE
+    // 1
     let appData = {
         indicators: {
             testStarted: false, //test must starts by User action
@@ -18,22 +19,24 @@ const dataModule = (function(){
             numOfCorrectCharacters: 0 ,
             numOfTestCharacters: 0
         },
-        words: {
+        // CURRENT WORD BEING TYPED + CORRECT one on TEX PROVIDED
+        words: { //INDEX to track User progress (active word being typed live)
             currentWordIndex: 0,
             testWords: [],
             currentWord: {}
         },
     };
-
-    //word constructor
+    // CURRENT WORD BEING TYPED + CORRECT one on TEX PROVIDED
+    //word constructor FOR NEWWORD TYPED BY USER & MATCH BY MACHINE WITH THE TEXT PROVIDED
 //    {
 //      value: {correct: '', user: '' , isCorrect: false },
 //      characters: {correct: [], user: [], totalCorrect: 0, totalTest: 0 }
 //    }
-
+    // 2
     let word = function(index){};
-    //update method
+    //update NEWWORD
     word.prototype.update = function(value){};
+//-------------------------
     // PUBLIC
     return {
     //INDICATORS - test Control
@@ -64,11 +67,11 @@ const dataModule = (function(){
 
         calculateAccuracy: function(){},//calculates accuracy and accuracyChange and updates them in appData
 
-    //test words
+    //TEXT PROVIDED , WORDS
 
-        fillListOfTestWords(textNumber){},// fills words.testWords
+        fillListOfTestWords(textNumber){},// fills words ON TEXT PROVIDED
 
-        getListofTestWords(){},// get list of test words: words.testWords
+        getListofTestWords(){},// get list of words ON TEXT PROVIDED
 
         moveToNewWord: function(){},// increments the currentWordIndex - updates the current word (appData.words.currentWord) by creating a new instance of the word class - updates numOfCorrectWords, numOfCorrectCharacters and numOfTestCharacters
 
