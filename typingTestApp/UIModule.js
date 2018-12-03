@@ -77,8 +77,8 @@ const UIModule = (function(){
           result = result.map(addSpanTags);
           //span[chars + span]</span>
           // result = result.map(addWordSpanTags);
-          // bundle all together
           result = result.map(joinAll);
+          // bundle all together
           result.join(' ');
           console.log(result);
           DOMstrings.content.innerHTML = result;
