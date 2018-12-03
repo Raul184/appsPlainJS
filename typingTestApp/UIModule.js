@@ -81,6 +81,9 @@ const UIModule = (function(){
           // bundle all together
           result.join(' ');
           console.log(result);
+          // enter feature
+          result = result.split('<span>|</span>').join('<span>&crarr;</span>');
+
           DOMstrings.content.innerHTML = result;
         },
 
