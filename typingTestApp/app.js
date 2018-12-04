@@ -1,3 +1,2 @@
-// select test time & text
-eventsModule.init(60, 1);
+eventsModule.init(30, 2);
 dataModule.returnData();

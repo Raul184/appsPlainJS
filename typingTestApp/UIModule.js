@@ -1,8 +1,9 @@
-const UIModule = (function(){
-// PRIVATE
-    const dom = {
+var UIModule = (function(){
+
+    //classes used to select HTML elements
+    var DOMElements = {
         //indicators - test control
-        timeLeft:  document.getElementById('timeLeft'),
+        timeLeft: document.getElementById('timeLeft'), //HTML element displaying time left
         //test results
         wpm: document.getElementById('wpm'),
         wpmChange: document.getElementById('wpmChange'),
@@ -11,133 +12,159 @@ const UIModule = (function(){
         accuracy: document.getElementById('accuracy'),
         accuracyChange: document.getElementById('accuracyChange'),
         //user input
-        textInput: document.getElementById('input'),
+        textInput: document.querySelector('#input'),
         nameInput: document.querySelector('.form-group'),
         //test words
-        content: document.getElementById('content'),
+        content:document.getElementById('content'),
         activeWord:'',
         //modal
-        modal: document.getElementById('myModal')
+        modal:$('#myModal')
     };
-// TEXT FORMATTED---------------
-    const splitArray = function(string){
+
+    var splitArray = function(string){
         return string.split('');
     };
 
-    const addSpace = function(array){
+    var addSpace = function(array){
         array.push(' ');
         return array;
     };
 
-    const addSpanTags = function(array){
+    var addSpanTags = function(array){
         return array.map(function(currentCharacter){
             return '<span>' + currentCharacter + '</span>';
         });
     };
 
-    const addWordSpanTags = function(array){
+    var addWordSpanTags = function(array){
         array.push('</span>');
         array.unshift('<span>');
         return array;
     };
 
-    const joinEachWord = function(array){
+    var joinEachWord = function(array){
         return array.join('');
     };
-//---------------
-//RIGHT OR WRONG characters
-let userValue;
-    const classAsignator = function(currentChar, index){
-      if( index < userValue.length){
-        return (currentChar == userValue[index]) ? 'correctChar' : 'wrongChar' ;
-      }
-    };
-//----------------
+
+    var userValue;
+    var returnCharClass = function(currentCharacter, index){
+                return (index < userValue.length)? (currentCharacter == userValue[index]? 'correctCharacter': 'wrongCharacter') : '0'
+            };
+
     return {
+
     //get DOM elements
-        getDomElements: function(){
-          return dom
-        },
-    //INDICATORS
-        // LEFT time updater
-        updateTimeLeft: function(x){
-          dom.timeLeft.innerHTML = x;
+
+        getDOMElements: function(){
+            return {
+                textInput: DOMElements.textInput
+            };
         },
 
-    //RESULTS
+    //Indicators - Test Control
+
+        updateTimeLeft: function(x){
+            DOMElements.timeLeft.innerHTML = x;
+        },
+
+    //results
+
         updateResults: function(){},
 
         fillModal: function(){},
 
         showModal: function(){},
 
-    //INPUT
+    //user input
 
         inputFocus: function(){
-          dom.textInput.focus();
+            DOMElements.textInput.focus();
         },
 
         isNameEmpty: function(){},
 
         flagNameInput: function(){},
 
-        spacePressed: function(){},
+        spacePressed: function(event){
+            return event.data == " ";
+        },
 
         enterPressed: function(){},
 
-        emptyInput: function(){},
+        emptyInput: function(){
+            DOMElements.textInput.value = "";
+        },
 
         getTypedWord: function(){
-          console.log(dom.textInput.value);
-          return dom.textInput.value;
+            console.log(DOMElements.textInput.value);
+            return DOMElements.textInput.value;
         },
 
-    //WORDS
-// 1 FORMAT & DISPLAY TEXTS PROVIDED
+    //test words
+
         fillContent: function(array, lineReturn){
             //['word1,', 'word2']
-            let text = array.map(splitArray);
-            console.log(text);
-    //[['w', 'o', 'r', 'd', '1', ',' ], ['w', 'o', 'r', 'd', '2']]
-            text = text.map(addSpace);
-    //[['w', 'o', 'r', 'd', '1', ',', ' ' ], ['w', 'o', 'r', 'd', '2', ' ']]
-            text = text.map(addSpanTags);
-            //[['<span>w</span>', '<span>o</span>', '<span>r</span>',
-            text = text.map(addWordSpanTags);
+            var content = array.map(splitArray);
+//            console.log(content);
+            //[['w', 'o', 'r', 'd', '1', ',' ], ['w', 'o', 'r', 'd', '2']]
+            content = content.map(addSpace);
+//            console.log(content);
+            //[['w', 'o', 'r', 'd', '1', ',', ' ' ], ['w', 'o', 'r', 'd', '2', ' ']]
+            content = content.map(addSpanTags);
 
-            text = text.map(joinEachWord);
-            text = text.join('');
-    //<span><span>w</span><span>o</span><span>r</span><span>d</span><span>1</span><span>,</span><span> </span></span><span><span>w</span>...
-            text = text.split(`<span>${lineReturn}</span> `).join('<span>&crarr;</span>');
+            content = content.map(addWordSpanTags);
+
+            content = content.map(joinEachWord);
+//            console.log(content);
+            content = content.join('');
+            //split, join
+            content = content.split('<span>' + lineReturn + '</span>').join('<span>&crarr;</span>');
+
+
             //fill content
-            dom.content.innerHTML = text;
+            DOMElements.content.innerHTML = content;
         },
-// 2 LOCATE ACTIVE WORD
+
+        formatWord: function(wordObject){
+            var activeWord = DOMElements.activeWord;
+
+            //highlight current word
+            activeWord.className = 'activeWord';
+
+            //format individual characters
+            var correctValue = wordObject.value.correct;
+            userValue = wordObject.value.user;
+
+            //correct value 'word1 '
+            //user value 'wwrd'
+            var classes = Array.prototype.map.call(correctValue, returnCharClass);
+
+            //get active word
+            var activeWord = DOMElements.activeWord;
+
+            //HTML collection
+            var characters = activeWord.children;
+
+            //add classes to children
+            for(var i = 0; i < characters.length; i ++){
+                characters[i].removeAttribute('class');
+                characters[i].className = classes[i];
+            }
+
+
+        },
+
         setActiveWord: function(index){
-          dom.activeWord = dom.content.children[index];
-        },
-// 3 FORMAT ACTIVE WORD
-        // wordObject >> Data Module >> Public Method
-        formatWord: function(wordObj){
-          //highlight current word
-          dom.activeWord.className = 'activeWord';
-          //format wrong-typed characters
-          let correctValue = wordObj.value.correct;//provided vs
-          userValue = wordObj.value.userInput; //input by user
-          // apply map to the typed Strings to categorize wrong&rigth ones
-          const classestyle = Array.prototype.map.call(correctValue ,     classAsignator);
-          //find active word CHILDREN
-          let foundActive = dom.activeWord;
-          let characters = foundActive.children;//HTML collection
-          // highlight the rigth/wrong ones
-          for (let i = 0;  i < characters.length; i++){
-            characters[i].removeAttribute('class'); //clean
-            characters[i].className = classestyle[i];
-          }
+            DOMElements.activeWord = DOMElements.content.children[index];
         },
 
-        deactivateCurrentWord: function(){},
+        deactivateCurrentWord: function(){
+            DOMElements.activeWord.removeAttribute('class');
+        },
 
-        scroll: function(){}
+        scroll: function(){
+
+        }
+
     }
 })();

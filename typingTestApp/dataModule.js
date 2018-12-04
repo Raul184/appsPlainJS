@@ -1,148 +1,244 @@
-const dataModule = (function(){
-  let counter = 0;
-// PRIVATE
-    let lineReturn = '|';
-    // DATA BONES
-    const appData = {
-      // 1
+var dataModule = (function(){
+    
+    var lineReturn = '|';
+    
+    //shuffle function
+    var shuffle = function(array){
+        //[1, 2, 3] -> [3, 1, 2]
+        //newArray[]
+        //select random element: 2
+        //newArray[2]
+        //oldArray[1, 3]
+        //select random element: 1
+        //newArray[2, 1]
+        //oldArray[3]
+        //select random element: 3
+        //newArray[2, 1, 3]
+        //oldArray[]
+        var newArray = [];
+        var randomIndex;
+        var randomElement;
+        while(array.length > 0){
+            //take a random element from array and add it to newArray
+            randomIndex = Math.floor(Math.random() * array.length);
+            randomElement = array[randomIndex];
+            newArray.push(randomElement);
+            //delete randomElement from array
+            array.splice(randomIndex, 1);
+        }
+        return newArray;
+    };
+    
+    //capitalize first letter of a string
+    String.prototype.capitalize = function(){
+        var newString = '';
+        var firstCharCap = this.charAt(0).toUpperCase();
+        var remainingChar = this.slice(1);
+        newString = firstCharCap + remainingChar;
+        return newString;
+    };
+    
+    //capitalizeRandom function
+    //array['word1', 'word2', 'word3']
+    //array['Word1', 'word2', 'Word3']
+    var capitalizeRandom = function(arrayOfStrings){
+        return arrayOfStrings.map(function(currentWord){
+            var x = Math.floor(4 * Math.random()); //chances of x equal to 3: 25%
+            return (x == 3)? currentWord.capitalize() : currentWord;
+        })
+    };
+    
+    
+    //addRandomPunctuation function
+    //array['word1', 'word2', 'word3']
+    //array['word1.', 'word2?', 'word3,']
+    var addRandomPunctuation = function(arrayOfStrings){
+        return arrayOfStrings.map(function(currentWord){
+            var randomPunctuation;
+            var items = [lineReturn, '?', ',', ',', ',', ',', '.', '.', '!', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''];
+            var randomIndex = Math.floor(Math.random() * items.length);
+            randomPunctuation = items[randomIndex];
+            
+            return currentWord + randomPunctuation;
+        });
+    };
+    
+    //character call back used to calculate the number of correct characters inside the current word
+    var nbCorrectChar;
+    var charCallback = function(currentElement, index){
+          nbCorrectChar += (currentElement == this.characters.user[index])? 1 : 0;
+      };
+
+    var appData = {
         indicators: {
-            testStarted: false,
-            testEnded: false,
-            totalTestTime: 0,
-            timeLeft: 0
+            testStarted: false, testEnded: false, totalTestTime: 0, timeLeft: 0
         },
-        // 2
         results: {
-            wpm: 0,
-            wpmChange: 0,
-            cpm: 0,
-            cpmChange: 0,
-            accuracy: 0,
-            accuracyChange: 0 ,
-            numOfCorrectWords: 0,
-            numOfCorrectCharacters: 0 ,
-            numOfTestCharacters: 0
+            wpm: 0, wpmChange: 0, cpm: 0, cpmChange: 0, accuracy: 0, accuracyChange: 0 ,   numOfCorrectWords: 0, numOfCorrectCharacters: 0 , numOfTestCharacters: 0
         },
-        // 3
         words: {
-            currentWordIndex: -1, //incrementer f()
-            testWords: [],
-            currentWord: {}
+            currentWordIndex: -1, testWords: [], currentWord: {}
         },
     };
-    // current WORD CONSTRUCTOR
-    let word = function(index){
-        // MATCH user WORDS vs right ones from text provided
+
+
+    
+    //word constructor
+//    {
+//      value: {correct: '', user: '' , isCorrect: false },
+//      characters: {correct: [], user: [], totalCorrect: 0, totalTest: 0 }
+//    }
+
+    var word = function(index){
+        //word values: correct vs user's
         this.value = {
-            correct : appData.words.testWords[index] + ' ',
-            userInput: ' ',
+            correct: appData.words.testWords[index] + ' ',
+            user: '',
             isCorrect: false
         };
-        // MATCH user characters on everyWord input vs right words
+        //characters: correct vs user's
         this.characters = {
-            correct : this.value.correct.split(''),
-            userInput: [],
+            correct: this.value.correct.split(''),
+            user: [],
             totalCorrect: 0,
-            totalCharsWord: this.value.correct.length
+            totalTest: this.value.correct.length
         };
     };
-    //update method
+    
+    //update method: updates the word using the word typed by the user
     word.prototype.update = function(value){
-        // save word type by user
-        this.value.userInput = value;
-        //is word correct ?          value input  vs  correct value from text
-        this.value.isCorrect = (this.value.userInput == this.value.correct) ? true : false ;
-        // Characters
-        this.characters.userInput = this.value.userInput.split('');
-        // are chars correct?
-        //**CALLBACKS lack obj outer environment, point to window outer env
-        comparator = comparator.bind(this);
-        this.characters.correct.forEach(comparator);
-        // COUNTER callback
-        this.characters.totalCorrect = counter;
+        
+        //update the user input
+        this.value.user = value;
+        
+        //update the words status (correct or not) 
+        this.value.isCorrect = (this.value.correct == this.value.user);
+        
+        //update user characters
+        this.characters.user = this.value.user.split('');
+        
+        //calculate the number of correct characters 
+        //correct: ['w', 'o', 'r', 'd']
+        //user: ['w', 'o', 'o', 'w', 'w', 'w', 'w', 'w', 'w', 'w']
+        nbCorrectChar = 0;
+        
+        var charCallback2 = charCallback.bind(this);
+        this.characters.correct.forEach(charCallback2);
+        
+        this.characters.totalCorrect = nbCorrectChar;
+        
     };
-    // comparator for update function
-    let comparator = function(current, index){
-      (current == this.characters.userInput[index]) ? counter++ : ' ' ;
-    }
-//------------------------------
+        
     return {
-// PUBLIC GETTERS
-    //INDICATORS
-        setTestTime: function(x){//sets the total test time to x
-          appData.indicators.totalTestTime = x;
+    //indicators - test Control
+        //sets the total test time to x
+        setTestTime: function(x){
+            appData.indicators.totalTestTime = x;
         },
-        initializeTimeLeft: function(){ //m0
-          let left = appData.indicators;
-          left.timeLeft = left.totalTestTime
+
+        //initializes time left to the total test time
+        initializeTimeLeft: function(){
+            appData.indicators.timeLeft = appData.indicators.totalTestTime;
         },
+
         startTest: function(){},//starts the test
-
-        testStarted: function(){},//checks if the test has started
-
-        timeLeft: function(){},//checks if there is time left to continue
 
         endTest: function(){},//ends the test
 
-        testEnded: function(){
-          return appData.indicators.testEnded;
-        },//checks if the test has already ended
-
-        getTimeLeft: function(){//return the remaining test time
-          return appData.indicators.timeLeft;
+        //return the remaining test time
+        getTimeLeft: function(){
+            return appData.indicators.timeLeft;
         },
+        
         reduceTime: function(){},// reduces the time by one sec
 
-        //RESULTS
+        timeLeft: function(){},//checks if there is time left to continue the test
+        
+        //checks if the test has already ended
+        testEnded: function(){
+            return appData.indicators.testEnded;
+        },
+
+        testStarted: function(){},//checks if the test has started
+        
+    //results
+        
         calculateWpm: function(){},//calculates wpm and wpmChange and updates them in appData
 
         calculateCpm: function(){},//calculates cpm and cpmChange and updates them in appData
-
+        
         calculateAccuracy: function(){},//calculates accuracy and accuracyChange and updates them in appData
 
-        // WORDS
-        // fills database
-        textsProvider: function(textNumber, words){
+    //test words
+        
+        // fills words.testWords
+        fillListOfTestWords: function(textNumber, words){
             var result = words.split(" ");
+            
+            if(textNumber == 0){
+                //shuffle words
+                result = shuffle(result);
+                //capitalise random strings
+                result = capitalizeRandom(result);
+                //add a random punctuation
+                result = addRandomPunctuation(result);
+            }
+            
+            
             appData.words.testWords = result;
         },
-        // texts array
+
+        // get list of test words: words.testWords
         getListofTestWords: function(){
             return appData.words.testWords;
         },
-        //Words follower and matcher
+
+        // increments the currentWordIndex - updates the current word (appData.words.currentWord) by creating a new instance of the word class - updates numOfCorrectWords, numOfCorrectCharacters and numOfTestCharacters
         moveToNewWord: function(){
-            appData.words.currentWordIndex ++ ;
-            let index = appData.words.currentWordIndex;
-            let inputWord = new word(index); // every word input
-            appData.words.currentWord = inputWord; //storage
-        },
-        //provide CURRENT WORD index
-        getCurrentWordIndex: function(){
-          return appData.words.currentWordIndex;
-        },
-        getCurrentWord: function(){
-          let extractor = appData.words.currentWord; //word
-          return { //a copy of our private DB obj
-            value: {
-              correct: extractor.value.correct ,
-              userInput: extractor.value.userInput
+            if(appData.words.currentWordIndex > -1){
+                
+                //update the number of correct words
+                
+                //update number of correct characters
+                
+                //update number of test characters
+                
             }
-          }
-        },
-        updateCurrentWord: function(value){
-//MOVING INPUT WORD by user TO DATA BASE
-          appData.words.currentWord.update(value);
+            appData.words.currentWordIndex ++;
+            var currentIndex = appData.words.currentWordIndex;
+            var newWord = new word(currentIndex);
+            appData.words.currentWord = newWord;
         },
 
+        //get the current word index
+        getCurrentWordIndex(){
+            return appData.words.currentWordIndex;  
+        },
+        
+        //get current word
+        getCurrentWord(){
+            var currentWord = appData.words.currentWord;
+            return {
+                value: {
+                    correct: currentWord.value.correct,
+                    user: currentWord.value.user
+                }
+            };
+        },
+        
+        // updates current word using user input
+        updateCurrentWord: function(value){
+            appData.words.currentWord.update(value);
+        },
+        
         getLineReturn(){
             return lineReturn;
         },
-
+        
         returnData(){
             console.log(appData);
         }
-
+        
     }
-
+    
 })();

@@ -1,75 +1,100 @@
-const eventsModule = (function(dModule, uModule, cModule, wModule){
-// PRIVATE
-    const addEventListeners = function(){
-        let domStr = uModule.getDomElements();
-        // console.log(domStr);
+var eventsModule = (function(dModule, uModule, cModule, wModule){
+    var addEventListeners = function(){
+
         //character typing event listener
-        domStr.textInput.addEventListener('input', function(e){
-          //test ended?
-          if(dModule.testEnded()){
-            return ;
-          }
-          //test started?
-          if(!dModule.testStarted()){
-            dModule.startTest();
-          }
-                  //No, so it starts
-
-                  // get typed word: UI Module
-            let typedWord = uModule.getTypedWord(); //to keep permeability
-                  // update current Word : DATA Module
+        uModule.getDOMElements().textInput.addEventListener('input', function(event){
+            
+            //if the test ended, do nothing
+            if(dModule.testEnded()){
+                return;
+            }
+            
+            //if the test has not started yet, start the test and countdown
+            if(!dModule.testStarted()){
+                //start the test
+            }
+            
+            //get typed word: UI module
+            var typedWord = uModule.getTypedWord();
+            
+            //update current word: data module
             dModule.updateCurrentWord(typedWord);
-                  // + active Word
-                  let active = dModule.getCurrentWord();
-                  uModule.formatWord(active);
-                  // pressed 'space' or 'enter'
-            if(uModule.spacePressed() || uModule.enterPressed()){
-                    //empty input
+            
+            //format the active word
+            var currentWord = dModule.getCurrentWord();
+            uModule.formatWord(currentWord);
+            
+            //check if the user pressed space or enter
+            if(uModule.spacePressed(event) || uModule.enterPressed()){
+                
+                //empty text input
+                uModule.emptyInput();
+                
+                //deactivate current word
+                uModule.deactivateCurrentWord();
+                
+                //move to a new word: data Module
+                dModule.moveToNewWord();
 
-                  }
+                //set active Word: UI Module
+                var index = dModule.getCurrentWordIndex();
+                uModule.setActiveWord(index);
+
+                //format the active word: UI Module
+                var currentWord = dModule.getCurrentWord();
+                uModule.formatWord(currentWord);
+                
+                //scroll word into the middle view
+                uModule.scroll();
+            }
         });
         //click on download button event listener
 
     };
 
+                    
     return {
-// PUBLIC
         //init function, initializes the test before start
         init: function(duration, textNumber){
-            // DATA
-            //get texts into: data Module
-            let words = wModule.getWords(textNumber);
-            dModule.textsProvider(textNumber, words);
-            // UI
-            //get texts: UI Module
-            let lineReturn = dModule.getLineReturn();
-            let testWords = dModule.getListofTestWords();
+            
+            //fill the list of test words: data Module
+          
+            var words = wModule.getWords(textNumber);
+            dModule.fillListOfTestWords(textNumber, words);
+            
+            //fill the list of test words: UI Module
+            var lineReturn = dModule.getLineReturn();
+            var testWords = dModule.getListofTestWords();
             uModule.fillContent(testWords, lineReturn);
-
-            // DATA
-            //set the total test time
+            
+            //set the total test time: data Module
             dModule.setTestTime(duration);
+            
             //update time left: data Module
             dModule.initializeTimeLeft();
-
-            // UI
-            //returns time left here to avoid mixin between modules
-            let timeLeft = dModule.getTimeLeft();
+            
             //update time left: UI module
+            var timeLeft = dModule.getTimeLeft();
             uModule.updateTimeLeft(timeLeft);
+            
             //move to a new word: data Module
             dModule.moveToNewWord();
+            
             //set active Word: UI Module
-            let currentWindex = dModule.getCurrentWordIndex();
-            uModule.setActiveWord(currentWindex);
+            var index = dModule.getCurrentWordIndex();
+            uModule.setActiveWord(index);
+            
             //format the active word: UI Module
-            let currentWord = dModule.getCurrentWord();
+            var currentWord = dModule.getCurrentWord();
             uModule.formatWord(currentWord);
+            
             //focus on text input: UI Module
             uModule.inputFocus();
+            
             //add avent listeners
             addEventListeners();
         }
     };
-
+             
+        
 })(dataModule, UIModule, certificateModule, wordsModule);

@@ -9,7 +9,6 @@ body{
 
 .meas_container{
     background-color: rgba(236, 34, 202, 0.5);
-    /* padding: 20px; */
 }
 
 .row{
@@ -86,15 +85,16 @@ body{
 .modal{
     color: black;
 }
+
 .activeWord{
-  color: blue;
-  background-color: greenyellow;
-  border-radius: 5px;
-  /* padding: 5px; */
+    background-color: greenyellow;
+    border-radius: 5px;
 }
-.correctChar{
-  color: mediumblue;
+
+.correctCharacter{
+    color: mediumblue;
 }
-.wrongChar{
-  color: mediumvioletred;
+
+.wrongCharacter{
+    color: mediumvioletred;
 }
