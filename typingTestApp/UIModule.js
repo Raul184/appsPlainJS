@@ -1,24 +1,23 @@
-var UIModule = (function(){
-
-    //classes used to select HTML elements
-    var DOMElements = {
+const UIModule = (function(){
+// PRIVATE
+    const dom = {
         //indicators - test control
-        timeLeft:'', //HTML element displaying time left
+        timeLeft:  document.getElementById('timeLeft'),
         //test results
-        wpm:'',
-        wpmChange:'',
-        cpm:'',
-        cpmChange:'',
-        accuracy:'',
-        accuracyChange:'',
+        wpm: document.getElementById('wpm'),
+        wpmChange: document.getElementById('wpmChange'),
+        cpm: document.getElementById('cpm'),
+        cpmChange: document.getElementById('cpmChange'),
+        accuracy: document.getElementById('accuracy'),
+        accuracyChange: document.getElementById('accuracyChange'),
         //user input
-        textInput:'',
-        nameInput:'',
+        textInput: document.getElementById('input'),
+        nameInput: document.querySelector('.form-group'),
         //test words
-        content:document.getElementById('content'),
+        content: document.getElementById('content'),
         activeWord:'',
         //modal
-        modal:''
+        modal: document.getElementById('myModal')
     };
 
     var splitArray = function(string){
@@ -47,24 +46,24 @@ var UIModule = (function(){
     };
 
     return {
-
     //get DOM elements
+        getDOMElements: function(){
+          return dom;
+        },
+    //INDICATORS
+        // LEFT time updater
+        updateTimeLeft: function(x){
+          dom.timeLeft.innerHTML = x;
+        },
 
-        getDOMElements: function(){},
-
-    //Indicators - Test Control
-
-        updateTimeLeft: function(){},
-
-    //results
-
+    //RESULTS
         updateResults: function(){},
 
         fillModal: function(){},
 
         showModal: function(){},
 
-    //user input
+    //INPUT
 
         inputFocus: function(){},
 
@@ -80,7 +79,7 @@ var UIModule = (function(){
 
         getTypedWord: function(){},
 
-    //test words
+    //WORDS
 
         fillContent: function(array, lineReturn){
             //['word1,', 'word2']
@@ -101,7 +100,7 @@ var UIModule = (function(){
             content = content.split('<span>' + lineReturn + '</span>').join('<span>&crarr;</span>');
 
             //fill content
-            DOMElements.content.innerHTML = content;
+            dom.content.innerHTML = content;
         },
 
         formatWord: function(wordObject, wordHTML){},
