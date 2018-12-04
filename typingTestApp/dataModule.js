@@ -24,19 +24,27 @@ const dataModule = (function(){
         },
         // 3
         words: {
-            currentWordIndex: 0,
+            currentWordIndex: -1, //incrementer f()
             testWords: [],
             currentWord: {}
         },
     };
-    // current WORD CONSTRUCTOR vs right Word from Text provided
-//    {
-//      value: {correct: '', user: '' , isCorrect: false },
-//      characters: {correct: [], user: [], totalCorrect: 0, totalTest: 0 }
-//    }
-
-    const word = function(index){};
-
+    // current WORD CONSTRUCTOR
+    let word = function(index){
+        // MATCH user WORDS vs right ones from text provided
+        this.value = {
+            correct : appData.words.testWords[index] + ' ',
+            userInput: ' ',
+            isCorrect: false
+        };
+        // MATCH user characters on everyWord input vs right words
+        this.characters = {
+            correct : this.value.correct.split(''),
+            userInput: [],
+            totalCorrect: 0,
+            totalCharsWord: this.value.correct.length
+        };
+    };
     //update method
     word.prototype.update = function(value){};
 //------------------------------
@@ -73,17 +81,22 @@ const dataModule = (function(){
         calculateAccuracy: function(){},//calculates accuracy and accuracyChange and updates them in appData
 
         // WORDS
-        // fills words.testWords
-        fillListOfTestWords: function(textNumber, words){
+        // fills database
+        textsProvider: function(textNumber, words){
             var result = words.split(" ");
             appData.words.testWords = result;
         },
-        // get list of test words: words.testWords
+        // texts array
         getListofTestWords: function(){
             return appData.words.testWords;
         },
-
-        moveToNewWord: function(){},// increments the currentWordIndex - updates the current word (appData.words.currentWord) by creating a new instance of the word class - updates numOfCorrectWords, numOfCorrectCharacters and numOfTestCharacters
+        //Words follower and matcher
+        moveToNewWord: function(){
+            appData.words.currentWordIndex ++ ;
+            let index = appData.words.currentWordIndex;
+            let inputWord = new word(index); // every word input
+            appData.words.currentWord = inputWord; //storage
+        },
 
         updateCurrentWord: function(value){},// updates current word using user input
 

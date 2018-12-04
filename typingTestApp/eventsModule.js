@@ -14,7 +14,7 @@ const eventsModule = (function(dModule, uModule, cModule, wModule){
             // DATA
             //get texts into: data Module
             let words = wModule.getWords(textNumber);
-            dModule.fillListOfTestWords(textNumber, words);
+            dModule.textsProvider(textNumber, words);
             // UI
             //get texts: UI Module
             let lineReturn = dModule.getLineReturn();
@@ -33,9 +33,9 @@ const eventsModule = (function(dModule, uModule, cModule, wModule){
             //update time left: UI module
             uModule.updateTimeLeft(timeLeft);
             //move to a new word: data Module
-
+            dModule.moveToNewWord();
             //set active Word: UI Module
-
+            
             //format the active word: UI Module
 
             //focus on text input: UI Module
