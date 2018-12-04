@@ -92,3 +92,9 @@ body{
   border-radius: 5px;
   /* padding: 5px; */
 }
+.correctChar{
+  color: mediumblue;
+}
+.wrongChar{
+  color: mediumvioletred;
+}

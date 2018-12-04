@@ -1,4 +1,5 @@
 const dataModule = (function(){
+  let counter = 0;
 // PRIVATE
     let lineReturn = '|';
     // DATA BONES
@@ -46,7 +47,24 @@ const dataModule = (function(){
         };
     };
     //update method
-    word.prototype.update = function(value){};
+    word.prototype.update = function(value){
+        // save word type by user
+        this.value.userInput = value;
+        //is word correct ?          value input  vs  correct value from text
+        this.value.isCorrect = (this.value.userInput == this.value.correct) ? true : false ;
+        // Characters
+        this.characters.userInput = this.value.userInput.split('');
+        // are chars correct?
+        //**CALLBACKS lack obj outer environment, point to window outer env
+        comparator = comparator.bind(this);
+        this.characters.correct.forEach(comparator);
+        // COUNTER callback
+        this.characters.totalCorrect = counter;
+    };
+    // comparator for update function
+    let comparator = function(current, index){
+      (current == this.characters.userInput[index]) ? counter++ : ' ' ;
+    }
 //------------------------------
     return {
 // PUBLIC GETTERS
@@ -108,7 +126,7 @@ const dataModule = (function(){
           return { //a copy of our private DB obj
             value: {
               correct: extractor.value.correct ,
-              user: extractor.value.user
+              userInput: extractor.value.userInput
             }
           }
         },

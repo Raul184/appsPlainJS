@@ -19,7 +19,7 @@ const UIModule = (function(){
         //modal
         modal: document.getElementById('myModal')
     };
-
+// TEXT FORMATTED---------------
     const splitArray = function(string){
         return string.split('');
     };
@@ -44,11 +44,19 @@ const UIModule = (function(){
     const joinEachWord = function(array){
         return array.join('');
     };
-
+//---------------
+//RIGHT OR WRONG characters
+let userValue;
+    const classAsignator = function(currentChar, index){
+      if( index < userValue.length){
+        return (currentChar == userValue[index]) ? 'correctChar' : 'wrongChar' ;
+      }
+    };
+//----------------
     return {
     //get DOM elements
         getDomElements: function(){
-          return dom;
+          return dom
         },
     //INDICATORS
         // LEFT time updater
@@ -96,11 +104,10 @@ const UIModule = (function(){
             text = text.map(addSpanTags);
             //[['<span>w</span>', '<span>o</span>', '<span>r</span>',
             text = text.map(addWordSpanTags);
-    //[['<span>', '<span>w</span>', '<span>o</span>', '<span>r</span>', '<span>d</span>', '<span>1</span>', '<span>,</span>', '<span> </span>', '</span>']
+
             text = text.map(joinEachWord);
             text = text.join('');
-    //<span><span>w</span><span>o</span><span>r</span><span>d</span><span>1</span><span>,</span><span> </span></span><span><span>w</span><span>o</span><span>r</span><span>d</span><span>2</span><span> </span></span>
-            //split, join
+    //<span><span>w</span><span>o</span><span>r</span><span>d</span><span>1</span><span>,</span><span> </span></span><span><span>w</span>...
             text = text.split(`<span>${lineReturn}</span> `).join('<span>&crarr;</span>');
             //fill content
             dom.content.innerHTML = text;
@@ -115,12 +122,22 @@ const UIModule = (function(){
           //highlight current word
           dom.activeWord.className = 'activeWord';
           //format wrong-typed characters
-
+          let correctValue = wordObj.value.correct;//provided vs
+          userValue = wordObj.value.userInput; //input by user
+          // apply map to the typed Strings to categorize wrong&rigth ones
+          const classestyle = Array.prototype.map.call(correctValue ,     classAsignator);
+          //find active word CHILDREN
+          let foundActive = dom.activeWord;
+          let characters = foundActive.children;//HTML collection
+          // highlight the rigth/wrong ones
+          for (let i = 0;  i < characters.length; i++){
+            characters[i].removeAttribute('class'); //clean
+            characters[i].className = classestyle[i];
+          }
         },
 
         deactivateCurrentWord: function(){},
 
         scroll: function(){}
-
     }
 })();

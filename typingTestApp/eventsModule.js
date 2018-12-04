@@ -2,8 +2,9 @@ const eventsModule = (function(dModule, uModule, cModule, wModule){
 // PRIVATE
     const addEventListeners = function(){
         let domStr = uModule.getDomElements();
+        // console.log(domStr);
         //character typing event listener
-        uModule.getDomElements().textInput.addEventListeners('keypress', function(e){
+        domStr.textInput.addEventListener('input', function(e){
           //test ended?
           if(dModule.testEnded()){
             return ;
@@ -19,7 +20,8 @@ const eventsModule = (function(dModule, uModule, cModule, wModule){
                   // update current Word : DATA Module
             dModule.updateCurrentWord(typedWord);
                   // + active Word
-
+                  let active = dModule.getCurrentWord();
+                  uModule.formatWord(active);
                   // pressed 'space' or 'enter'
             if(uModule.spacePressed() || uModule.enterPressed()){
                     //empty input
@@ -69,6 +71,5 @@ const eventsModule = (function(dModule, uModule, cModule, wModule){
             addEventListeners();
         }
     };
-
 
 })(dataModule, UIModule, certificateModule, wordsModule);
