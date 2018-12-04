@@ -6,12 +6,9 @@ body{
     background-size: cover;
     color: white;
 }
-h1{
-  padding: 20px;
-}
+
 .meas_container{
     background-color: rgba(236, 34, 202, 0.5);
-    padding: 20px;
 }
 
 .row{

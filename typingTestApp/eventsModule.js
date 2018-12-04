@@ -1,41 +1,46 @@
-const eventsModule = (function(dModule, uModule, cModule, wModule){
-    const addEventListeners = function(){
+var eventsModule = (function(dModule, uModule, cModule, wModule){
+    var addEventListeners = function(){
 
         //character typing event listener
 
         //click on download button event listener
 
-        //click on restart button event listener
-
     };
 
-
+                    
     return {
         //init function, initializes the test before start
-        init: function(duration, textSelector){
-          // 1. PROVIDE TEXT for dataModule
-          let wordsArr = wModule.getWords(textSelector);//*get data here so I avoid connexions between data & words module as to meet "Module patter design principles".
-          dModule.textProvider(textSelector, wordsArr);
-          // provide text on uiM
-          let wordsArrII = dModule.getListofWordsTest();
-          uModule.fillContent(wordsArrII);
-          // set time for test
-
-          // time updates dataM
-
-          // time updates uiM
-
-          // highlight words runs dataM
-
-          // activeWord UImodule
-
-          // fortmatActiveWord UIModule
-
-          // focus on Text input from user
-
-          // eventListeners
+        init: function(duration, textNumber){
+            
+            //fill the list of test words: data Module
+          
+            var words = wModule.getWords(textNumber);
+            dModule.fillListOfTestWords(textNumber, words);
+            
+            //fill the list of test words: UI Module
+            var lineReturn = dModule.getLineReturn();
+            var testWords = dModule.getListofTestWords();
+            uModule.fillContent(testWords, lineReturn);
+            
+            //set the total test time
+            
+            //update time left: data Module
+            
+            //update time left: UI module
+            
+            //move to a new word: data Module
+            
+            //set active Word: UI Module
+            
+            //format the active word: UI Module
+            
+            //focus on text input: UI Module
+            
+            
+            //add avent listeners
             addEventListeners();
         }
     };
-
+             
+        
 })(dataModule, UIModule, certificateModule, wordsModule);
