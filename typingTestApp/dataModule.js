@@ -49,29 +49,31 @@ const dataModule = (function(){
     word.prototype.update = function(value){};
 //------------------------------
     return {
-      // PUBLIC GETTERS  ---------------
+// PUBLIC GETTERS
     //INDICATORS
         setTestTime: function(x){//sets the total test time to x
           appData.indicators.totalTestTime = x;
         },
         initializeTimeLeft: function(){ //m0
-          appData.indicators.timeLeft = appData.indicators.totalTestTime
+          let left = appData.indicators;
+          left.timeLeft = left.totalTestTime
         },
         startTest: function(){},//starts the test
 
+        testStarted: function(){},//checks if the test has started
+
+        timeLeft: function(){},//checks if there is time left to continue
+
         endTest: function(){},//ends the test
+
+        testEnded: function(){
+          return appData.indicators.testEnded;
+        },//checks if the test has already ended
 
         getTimeLeft: function(){//return the remaining test time
           return appData.indicators.timeLeft;
         },
-
         reduceTime: function(){},// reduces the time by one sec
-
-        timeLeft: function(){},//checks if there is time left to continue
-
-        testEnded: function(){},//checks if the test has already ended
-
-        testStarted: function(){},//checks if the test has started
 
         //RESULTS
         calculateWpm: function(){},//calculates wpm and wpmChange and updates them in appData
@@ -110,7 +112,10 @@ const dataModule = (function(){
             }
           }
         },
-        updateCurrentWord: function(value){},// updates current word using user input
+        updateCurrentWord: function(value){
+//MOVING INPUT WORD by user TO DATA BASE
+          appData.words.currentWord.update(value);
+        },
 
         getLineReturn(){
             return lineReturn;

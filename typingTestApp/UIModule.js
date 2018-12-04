@@ -47,7 +47,7 @@ const UIModule = (function(){
 
     return {
     //get DOM elements
-        getDOMElements: function(){
+        getDomElements: function(){
           return dom;
         },
     //INDICATORS
@@ -58,7 +58,7 @@ const UIModule = (function(){
 
     //RESULTS
         updateResults: function(){},
-        
+
         fillModal: function(){},
 
         showModal: function(){},
@@ -79,7 +79,10 @@ const UIModule = (function(){
 
         emptyInput: function(){},
 
-        getTypedWord: function(){},
+        getTypedWord: function(){
+          console.log(dom.textInput.value);
+          return dom.textInput.value;
+        },
 
     //WORDS
 // 1 FORMAT & DISPLAY TEXTS PROVIDED

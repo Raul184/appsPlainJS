@@ -1,13 +1,37 @@
 const eventsModule = (function(dModule, uModule, cModule, wModule){
+// PRIVATE
     const addEventListeners = function(){
+        let domStr = uModule.getDomElements();
         //character typing event listener
-        
+        uModule.getDomElements().textInput.addEventListeners('keypress', function(e){
+          //test ended?
+          if(dModule.testEnded()){
+            return ;
+          }
+          //test started?
+          if(!dModule.testStarted()){
+            dModule.startTest();
+          }
+                  //No, so it starts
+
+                  // get typed word: UI Module
+            let typedWord = uModule.getTypedWord(); //to keep permeability
+                  // update current Word : DATA Module
+            dModule.updateCurrentWord(typedWord);
+                  // + active Word
+
+                  // pressed 'space' or 'enter'
+            if(uModule.spacePressed() || uModule.enterPressed()){
+                    //empty input
+
+                  }
+        });
         //click on download button event listener
 
     };
 
-
     return {
+// PUBLIC
         //init function, initializes the test before start
         init: function(duration, textNumber){
             // DATA
