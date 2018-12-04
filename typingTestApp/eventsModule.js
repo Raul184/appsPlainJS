@@ -1,8 +1,7 @@
 const eventsModule = (function(dModule, uModule, cModule, wModule){
     const addEventListeners = function(){
-
         //character typing event listener
-
+        
         //click on download button event listener
 
     };
@@ -35,12 +34,13 @@ const eventsModule = (function(dModule, uModule, cModule, wModule){
             //move to a new word: data Module
             dModule.moveToNewWord();
             //set active Word: UI Module
-            
+            let currentWindex = dModule.getCurrentWordIndex();
+            uModule.setActiveWord(currentWindex);
             //format the active word: UI Module
-
+            let currentWord = dModule.getCurrentWord();
+            uModule.formatWord(currentWord);
             //focus on text input: UI Module
-
-
+            uModule.inputFocus();
             //add avent listeners
             addEventListeners();
         }

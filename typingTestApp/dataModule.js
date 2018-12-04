@@ -97,7 +97,19 @@ const dataModule = (function(){
             let inputWord = new word(index); // every word input
             appData.words.currentWord = inputWord; //storage
         },
-
+        //provide CURRENT WORD index
+        getCurrentWordIndex: function(){
+          return appData.words.currentWordIndex;
+        },
+        getCurrentWord: function(){
+          let extractor = appData.words.currentWord; //word
+          return { //a copy of our private DB obj
+            value: {
+              correct: extractor.value.correct ,
+              user: extractor.value.user
+            }
+          }
+        },
         updateCurrentWord: function(value){},// updates current word using user input
 
         getLineReturn(){

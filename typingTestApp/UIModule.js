@@ -20,28 +20,28 @@ const UIModule = (function(){
         modal: document.getElementById('myModal')
     };
 
-    var splitArray = function(string){
+    const splitArray = function(string){
         return string.split('');
     };
 
-    var addSpace = function(array){
+    const addSpace = function(array){
         array.push(' ');
         return array;
     };
 
-    var addSpanTags = function(array){
+    const addSpanTags = function(array){
         return array.map(function(currentCharacter){
             return '<span>' + currentCharacter + '</span>';
         });
     };
 
-    var addWordSpanTags = function(array){
+    const addWordSpanTags = function(array){
         array.push('</span>');
         array.unshift('<span>');
         return array;
     };
 
-    var joinEachWord = function(array){
+    const joinEachWord = function(array){
         return array.join('');
     };
 
@@ -58,14 +58,16 @@ const UIModule = (function(){
 
     //RESULTS
         updateResults: function(){},
-
+        
         fillModal: function(){},
 
         showModal: function(){},
 
     //INPUT
 
-        inputFocus: function(){},
+        inputFocus: function(){
+          dom.textInput.focus();
+        },
 
         isNameEmpty: function(){},
 
@@ -80,32 +82,38 @@ const UIModule = (function(){
         getTypedWord: function(){},
 
     //WORDS
-
+// 1 FORMAT & DISPLAY TEXTS PROVIDED
         fillContent: function(array, lineReturn){
             //['word1,', 'word2']
-            let content = array.map(splitArray);
-            console.log(content);
+            let text = array.map(splitArray);
+            console.log(text);
     //[['w', 'o', 'r', 'd', '1', ',' ], ['w', 'o', 'r', 'd', '2']]
-            content = content.map(addSpace);
+            text = text.map(addSpace);
     //[['w', 'o', 'r', 'd', '1', ',', ' ' ], ['w', 'o', 'r', 'd', '2', ' ']]
-            content = content.map(addSpanTags);
+            text = text.map(addSpanTags);
             //[['<span>w</span>', '<span>o</span>', '<span>r</span>',
-            content = content.map(addWordSpanTags);
+            text = text.map(addWordSpanTags);
     //[['<span>', '<span>w</span>', '<span>o</span>', '<span>r</span>', '<span>d</span>', '<span>1</span>', '<span>,</span>', '<span> </span>', '</span>']
-            content = content.map(joinEachWord);
-            content = content.join('');
+            text = text.map(joinEachWord);
+            text = text.join('');
     //<span><span>w</span><span>o</span><span>r</span><span>d</span><span>1</span><span>,</span><span> </span></span><span><span>w</span><span>o</span><span>r</span><span>d</span><span>2</span><span> </span></span>
-
             //split, join
-            content = content.split('<span>' + lineReturn + '</span>').join('<span>&crarr;</span>');
-
+            text = text.split(`<span>${lineReturn}</span> `).join('<span>&crarr;</span>');
             //fill content
-            dom.content.innerHTML = content;
+            dom.content.innerHTML = text;
         },
+// 2 LOCATE ACTIVE WORD
+        setActiveWord: function(index){
+          dom.activeWord = dom.content.children[index];
+        },
+// 3 FORMAT ACTIVE WORD
+        // wordObject >> Data Module >> Public Method
+        formatWord: function(wordObj){
+          //highlight current word
+          dom.activeWord.className = 'activeWord';
+          //format wrong-typed characters
 
-        formatWord: function(wordObject, wordHTML){},
-
-        setActiveWord: function(index){},
+        },
 
         deactivateCurrentWord: function(){},
 
