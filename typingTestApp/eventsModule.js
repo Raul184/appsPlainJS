@@ -3,7 +3,7 @@ var eventsModule = (function(dModule, uModule, cModule, wModule){
 
         //character typing event listener
         uModule.getDOMElements().textInput.addEventListener('input', function(event){
-            
+            console.log(event);
             //if the test ended, do nothing
             if(dModule.testEnded()){
                 return;
@@ -51,6 +51,9 @@ var eventsModule = (function(dModule, uModule, cModule, wModule){
         //click on download button event listener
 
     };
+    
+    //scroll active word into middle view on window resize
+    window.addEventListener('resize', uModule.scroll);
 
                     
     return {

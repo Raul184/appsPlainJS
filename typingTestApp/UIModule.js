@@ -18,7 +18,7 @@ var UIModule = (function(){
         content:document.getElementById('content'),
         activeWord:'',
         //modal
-        modal:$('#myModal')
+        modal: document.getElementById('myModal')
     };
 
     var splitArray = function(string){
@@ -111,12 +111,24 @@ var UIModule = (function(){
 //            console.log(content);
             //[['w', 'o', 'r', 'd', '1', ',', ' ' ], ['w', 'o', 'r', 'd', '2', ' ']]
             content = content.map(addSpanTags);
-
+//            console.log(content);
+            //[['<span>w</span>', '<span>o</span>', '<span>r</span>', '<span>d</span>', '<span>1</span>', '<span>,</span>', '<span> </span>'], ['<span>w</span>', '<span>o</span>', '<span>r</span>', '<span>d</span>', '<span>1</span>', '<span> </span>']]
             content = content.map(addWordSpanTags);
-
+//            console.log(content);
+            //[['<span>', '<span>w</span>', '<span>o</span>', '<span>r</span>', '<span>d</span>', '<span>1</span>', '<span>,</span>', '<span> </span>', '</span>'], ['<span>', '<span>w</span>', '<span>o</span>', '<span>r</span>', '<span>d</span>', '<span>1</span>', '<span> </span>', '</span>']]
             content = content.map(joinEachWord);
 //            console.log(content);
             content = content.join('');
+//            console.log(content);
+
+            //<span><span>w</span><span>o</span><span>r</span><span>d</span><span>1</span><span>,</span><span> </span></span><span><span>w</span><span>o</span><span>r</span><span>d</span><span>2</span><span> </span></span>
+
+
+            //replace the line return special code with the HTML entity (line return)
+
+            // <span>|</span>
+            // <span>&crarr;</span>
+//            content = content.replace('<span>|</span>', '<span>&crarr;</span>');
             //split, join
             content = content.split('<span>' + lineReturn + '</span>').join('<span>&crarr;</span>');
 
@@ -163,7 +175,12 @@ var UIModule = (function(){
         },
 
         scroll: function(){
-
+            var activeWord = DOMElements.activeWord;
+            var top1 = activeWord.offsetTop;
+            var top2 = DOMElements.content.offsetTop;
+            var diff = top1 - top2;
+            //scroll the content of the content box
+            DOMElements.content.scrollTop = diff - 40;
         }
 
     }

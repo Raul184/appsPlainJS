@@ -1,7 +1,75 @@
-const dataModule = (function(){
-// PRIVATE
-    let lineReturn = '|';
-    const appData = {
+var dataModule = (function(){
+    
+    var lineReturn = '|';
+    
+    //shuffle function
+    var shuffle = function(array){
+        //[1, 2, 3] -> [3, 1, 2]
+        //newArray[]
+        //select random element: 2
+        //newArray[2]
+        //oldArray[1, 3]
+        //select random element: 1
+        //newArray[2, 1]
+        //oldArray[3]
+        //select random element: 3
+        //newArray[2, 1, 3]
+        //oldArray[]
+        var newArray = [];
+        var randomIndex;
+        var randomElement;
+        while(array.length > 0){
+            //take a random element from array and add it to newArray
+            randomIndex = Math.floor(Math.random() * array.length);
+            randomElement = array[randomIndex];
+            newArray.push(randomElement);
+            //delete randomElement from array
+            array.splice(randomIndex, 1);
+        }
+        return newArray;
+    };
+    
+    //capitalize first letter of a string
+    String.prototype.capitalize = function(){
+        var newString = '';
+        var firstCharCap = this.charAt(0).toUpperCase();
+        var remainingChar = this.slice(1);
+        newString = firstCharCap + remainingChar;
+        return newString;
+    };
+    
+    //capitalizeRandom function
+    //array['word1', 'word2', 'word3']
+    //array['Word1', 'word2', 'Word3']
+    var capitalizeRandom = function(arrayOfStrings){
+        return arrayOfStrings.map(function(currentWord){
+            var x = Math.floor(4 * Math.random()); //chances of x equal to 3: 25%
+            return (x == 3)? currentWord.capitalize() : currentWord;
+        })
+    };
+    
+    
+    //addRandomPunctuation function
+    //array['word1', 'word2', 'word3']
+    //array['word1.', 'word2?', 'word3,']
+    var addRandomPunctuation = function(arrayOfStrings){
+        return arrayOfStrings.map(function(currentWord){
+            var randomPunctuation;
+            var items = [lineReturn, '?', ',', ',', ',', ',', '.', '.', '!', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''];
+            var randomIndex = Math.floor(Math.random() * items.length);
+            randomPunctuation = items[randomIndex];
+            
+            return currentWord + randomPunctuation;
+        });
+    };
+    
+    //character call back used to calculate the number of correct characters inside the current word
+    var nbCorrectChar;
+    var charCallback = function(currentElement, index){
+          nbCorrectChar += (currentElement == this.characters.user[index])? 1 : 0;
+      };
+
+    var appData = {
         indicators: {
             testStarted: false, testEnded: false, totalTestTime: 0, timeLeft: 0
         },
@@ -12,8 +80,16 @@ const dataModule = (function(){
             currentWordIndex: -1, testWords: [], currentWord: {}
         },
     };
-// WORDS SAVER
-    const word = function(index){
+
+
+    
+    //word constructor
+//    {
+//      value: {correct: '', user: '' , isCorrect: false },
+//      characters: {correct: [], user: [], totalCorrect: 0, totalTest: 0 }
+//    }
+
+    var word = function(index){
         //word values: correct vs user's
         this.value = {
             correct: appData.words.testWords[index] + ' ',
@@ -28,38 +104,38 @@ const dataModule = (function(){
             totalTest: this.value.correct.length
         };
     };
-// CHARS CLASSIFICATOR
-    let nbCorrectChar;
-    const charCallback = function(currentElement, index){
-          nbCorrectChar += (currentElement == this.characters.user[index])? 1 : 0;
-      };
-// USER-WORDS CLASSIFICATOR
+    
     //update method: updates the word using the word typed by the user
     word.prototype.update = function(value){
+        
         //update the user input
         this.value.user = value;
-        //update the words status (correct or not)
+        
+        //update the words status (correct or not) 
         this.value.isCorrect = (this.value.correct == this.value.user);
+        
         //update user characters
         this.characters.user = this.value.user.split('');
-        //calculate the number of correct characters
+        
+        //calculate the number of correct characters 
         //correct: ['w', 'o', 'r', 'd']
         //user: ['w', 'o', 'o', 'w', 'w', 'w', 'w', 'w', 'w', 'w']
         nbCorrectChar = 0;
-
-        let charCallback2 = charCallback.bind(this);
+        
+        var charCallback2 = charCallback.bind(this);
         this.characters.correct.forEach(charCallback2);
-
+        
         this.characters.totalCorrect = nbCorrectChar;
-
+        
     };
-//--------------------
+        
     return {
-// PUBLIC GETTERS
-// 1. TIME SET
+    //indicators - test Control
+        //sets the total test time to x
         setTestTime: function(x){
             appData.indicators.totalTestTime = x;
         },
+
         //initializes time left to the total test time
         initializeTimeLeft: function(){
             appData.indicators.timeLeft = appData.indicators.totalTestTime;
@@ -73,30 +149,42 @@ const dataModule = (function(){
         getTimeLeft: function(){
             return appData.indicators.timeLeft;
         },
-
+        
         reduceTime: function(){},// reduces the time by one sec
 
         timeLeft: function(){},//checks if there is time left to continue the test
-
+        
         //checks if the test has already ended
         testEnded: function(){
             return appData.indicators.testEnded;
         },
 
         testStarted: function(){},//checks if the test has started
-
-// 2. RESULTS CALCULATOR
+        
+    //results
+        
         calculateWpm: function(){},//calculates wpm and wpmChange and updates them in appData
 
         calculateCpm: function(){},//calculates cpm and cpmChange and updates them in appData
-
+        
         calculateAccuracy: function(){},//calculates accuracy and accuracyChange and updates them in appData
 
     //test words
-
+        
         // fills words.testWords
         fillListOfTestWords: function(textNumber, words){
             var result = words.split(" ");
+            
+            if(textNumber == 0){
+                //shuffle words
+                result = shuffle(result);
+                //capitalise random strings
+                result = capitalizeRandom(result);
+                //add a random punctuation
+                result = addRandomPunctuation(result);
+            }
+            
+            
             appData.words.testWords = result;
         },
 
@@ -108,13 +196,13 @@ const dataModule = (function(){
         // increments the currentWordIndex - updates the current word (appData.words.currentWord) by creating a new instance of the word class - updates numOfCorrectWords, numOfCorrectCharacters and numOfTestCharacters
         moveToNewWord: function(){
             if(appData.words.currentWordIndex > -1){
-
+                
                 //update the number of correct words
-
+                
                 //update number of correct characters
-
+                
                 //update number of test characters
-
+                
             }
             appData.words.currentWordIndex ++;
             var currentIndex = appData.words.currentWordIndex;
@@ -124,9 +212,9 @@ const dataModule = (function(){
 
         //get the current word index
         getCurrentWordIndex(){
-            return appData.words.currentWordIndex;
+            return appData.words.currentWordIndex;  
         },
-
+        
         //get current word
         getCurrentWord(){
             var currentWord = appData.words.currentWord;
@@ -137,20 +225,20 @@ const dataModule = (function(){
                 }
             };
         },
-
+        
         // updates current word using user input
         updateCurrentWord: function(value){
             appData.words.currentWord.update(value);
         },
-
+        
         getLineReturn(){
             return lineReturn;
         },
-
+        
         returnData(){
             console.log(appData);
         }
-
+        
     }
-
+    
 })();
