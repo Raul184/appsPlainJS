@@ -98,3 +98,7 @@ body{
 .wrongCharacter{
     color: mediumvioletred;
 }
+
+.result{
+    font-size: 20px;
+}

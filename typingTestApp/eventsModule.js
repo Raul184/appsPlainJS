@@ -1,9 +1,32 @@
 var eventsModule = (function(dModule, uModule, cModule, wModule){
     var addEventListeners = function(){
 
+      //enter click event
+        uModule.getDOMElements().textInput.addEventListener('keydown', function(event){
+            console.log(event);
+            //if the test ended, do nothing
+            if(dModule.testEnded()){
+                return;
+            }
+            
+            //check if the user pressed Enter
+            var key = event.keyCode;
+            if(key == 13){
+                uModule.getDOMElements().textInput.value += dModule.getLineReturn() + ' ';
+                
+                //create a new 'input' event
+                var inputEvent = new Event('input');
+                
+                //dispatch it
+                uModule.getDOMElements().textInput.dispatchEvent(inputEvent);
+            }
+            
+        });
+        
+        
         //character typing event listener
         uModule.getDOMElements().textInput.addEventListener('input', function(event){
-            console.log(event);
+            
             //if the test ended, do nothing
             if(dModule.testEnded()){
                 return;
@@ -11,7 +34,55 @@ var eventsModule = (function(dModule, uModule, cModule, wModule){
             
             //if the test has not started yet, start the test and countdown
             if(!dModule.testStarted()){
-                //start the test
+                
+                //start the test: data Module
+                dModule.startTest();
+                
+                //start counter
+                
+                var b = setInterval(function(){
+                //calculate the results: data Module
+                    
+                    var results = {};
+                    //update wpm, wpmChange
+                    [results.wpm, results.wpmChange] = dModule.calculateWpm();
+                    
+                    //update cpm, cpmChange
+                    [results.cpm, results.cpmChange] = dModule.calculateCpm();
+                    
+                    //update accuracy, accuracyChange
+                    [results.accuracy, results.accuracyChange] = dModule.calculateAccuracy();
+                    
+                    //dModule.returnData();
+                    
+                //update results (UI module)
+                    uModule.updateResults(results);
+                    
+                    
+                //check if we have time left
+                    if(dModule.timeLeft()){
+                        
+                        //reduce time by one sec: data Module
+                        var timeLeft = dModule.reduceTime();
+                        
+                        //update time remaining in UI
+                        uModule.updateTimeLeft(timeLeft);
+                    }else{
+                        //end the test: data module
+                        clearInterval(b);
+                        dModule.endTest();
+                    
+                        dModule.returnData();
+                        
+                        //fill modal
+                        uModule.fillModal(results.wpm);
+                        //show modal
+                        uModule.showModal();
+                        
+                    }
+                    
+                    
+                }, 1000);
             }
             
             //get typed word: UI module
@@ -25,7 +96,7 @@ var eventsModule = (function(dModule, uModule, cModule, wModule){
             uModule.formatWord(currentWord);
             
             //check if the user pressed space or enter
-            if(uModule.spacePressed(event) || uModule.enterPressed()){
+            if(uModule.spacePressed(event) || uModule.enterPressed(dModule.getLineReturn())){
                 
                 //empty text input
                 uModule.emptyInput();
@@ -49,6 +120,7 @@ var eventsModule = (function(dModule, uModule, cModule, wModule){
             }
         });
         //click on download button event listener
+        
 
     };
     
