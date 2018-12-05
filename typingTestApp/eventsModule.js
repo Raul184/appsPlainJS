@@ -1,21 +1,21 @@
 const eventsModule = (function(dModule, uModule, cModule, wModule){
+// 1. KEYBOARD event
     const addEventListeners = function(){
-
       uModule.getDOM().textInput.addEventListener('keydown',function(event){
-//if the test ended, do nothing
-            if(dModule.testEnded()){
+        //if the test ended, do nothing
+        if(dModule.testEnded()){
                 return;
-            }
+        }
 //check if the user pressed Enter
-            let key = event.keyCode;
-            if(key == 13){
-                uModule.getDOM().textInput.value +=  ' ';
-                //create a new 'input' event
-                let inputEvent = new Event('input');
-                //dispatch it
-                uModule.getDOM().textInput.dispatchEvent(inputEvent);
-            }
-        }); //KEYDOWN EVENT LISTENER ENDS
+        let key = event.keyCode;
+        if(key == 13){
+           uModule.getDOM().textInput.value +=  ' ';
+           //create a new 'input' event
+           let inputEvent = new Event('input');
+           //dispatch it
+           uModule.getDOM().textInput.dispatchEvent(inputEvent);
+        }
+      }); //KEYDOWN EVENT LISTENER ENDS
 
 //character typing event listener
         uModule.getDOM().textInput.addEventListener('input', function(event){
@@ -25,121 +25,96 @@ const eventsModule = (function(dModule, uModule, cModule, wModule){
             }
 //if the test has not started yet, start the test and countdown
             if(!dModule.testStarted()){
-
 //start the test: data Module
-                dModule.startTest();
-
+              dModule.startTest();
 //start counter
-
-                let b = setInterval(function(){
+              let b = setInterval(function(){
 //calculate the results: data Module
-
-                    const results = {};
+              const results = {};
 //update wpm, wpmChange
-                    [results.wpm, results.wpmChange] = dModule.calculateWpm();
+              [results.wpm, results.wpmChange] = dModule.calculateWpm();
 //update cpm, cpmChange
-                    [results.cpm, results.cpmChange] = dModule.calculateCpm();
+              [results.cpm, results.cpmChange] = dModule.calculateCpm();
 //update accuracy, accuracyChange
-                    [results.accuracy, results.accuracyChange] = dModule.calculateAccuracy();
-
-//dModule.returnData();
+    [results.accuracy, results.accuracyChange] = dModule.calculateAccuracy();
+    //dModule.returnData();
 
 //update results (UI module)
-                    uModule.updateResults(results);
-
+             uModule.updateResults(results);
 //check if we have time left
-                    if(dModule.timeLeft()){
-
+             if(dModule.timeLeft()){
 //reduce time by one sec: data Module
-                        let timeLeft = dModule.reduceTime();
-
+                let timeLeft = dModule.reduceTime();
 //update time remaining in UI
-                        uModule.updateTimeLeft(timeLeft);
-                    }else{
+                uModule.updateTimeLeft(timeLeft);
+             }else{
 //end the test: data module
-                        clearInterval(b);
-                        dModule.endTest();
-
-                        dModule.returnData();
-
-                        //fill modal
-                        uModule.fillModal(results.wpm);
-                        //show modal
-                        uModule.showModal();
-                    }
-                }, 1000);
-            }
-
+                    clearInterval(b);
+                    dModule.endTest();
+                    dModule.returnData();
+//fill modal
+                    uModule.fillModal(results.wpm);
+//show modal
+                    uModule.showModal();
+                   }
+            }, 1000);
+        }
 //get typed word: UI module
-            let typedWord = uModule.getTypedWord();
-
+        let typedWord = uModule.getTypedWord();
 //update current word: data module
-            dModule.updateCurrentWord(typedWord);
-
+        dModule.updateCurrentWord(typedWord);
 //format the active word
-            let currentWord = dModule.getCurrentWord();
-            uModule.formatWord(currentWord);
-
+        let currentWord = dModule.getCurrentWord();
+        uModule.formatWord(currentWord);
 //check if the user pressed space or enter
-            if(uModule.enterPressed()){
+        if(uModule.enterPressed()){
 //empty text input
-                uModule.emptyInput();
+           uModule.emptyInput();
 //deactivate current word
-                uModule.deactivateCurrentWord();
+           uModule.deactivateCurrentWord();
 //move to a new word: data Module
-                dModule.moveToNewWord();
+           dModule.moveToNewWord();
 //set active Word: UI Module
-                let index = dModule.getCurrentWordIndex();
-                uModule.setActiveWord(index);
+           let index = dModule.getCurrentWordIndex();
+           uModule.setActiveWord(index);
 //format the active word: UI Module
-                let currentWord = dModule.getCurrentWord();
-                uModule.formatWord(currentWord);
+           let currentWord = dModule.getCurrentWord();
+           uModule.formatWord(currentWord);
 //scroll word into the middle view
-                uModule.scroll();
-            }
-        });
+           uModule.scroll();
+       }
+    });
 //click on download button event listener
-    };
+  };
 //scroll active word into middle view on window resize
     window.addEventListener('resize', uModule.scroll);
 
     return {
-        //init function, initializes the test before start
+//init function, initializes the test before start
         init: function(duration, textNumber){
-
 //fill the list of test words: data Module
-
             let words = wModule.getWords(textNumber);
             dModule.fillListOfTestWords(textNumber, words);
-
 //fill the list of test words: UI Module
             let testWords = dModule.getListofTestWords();
             uModule.fillContent(testWords);
-
 //set the total test time: data Module
             dModule.setTestTime(duration);
-
 //update time left: data Module
             dModule.initializeTimeLeft();
-
 //update time left: UI module
             let timeLeft = dModule.getTimeLeft();
             uModule.updateTimeLeft(timeLeft);
-
 //move to a new word: data Module
             dModule.moveToNewWord();
-
 //set active Word: UI Module
             let index = dModule.getCurrentWordIndex();
             uModule.setActiveWord(index);
-
 //format the active word: UI Module
             let currentWord = dModule.getCurrentWord();
             uModule.formatWord(currentWord);
-
 //focus on text input: UI Module
             uModule.inputFocus();
-
 //add avent listeners
             addEventListeners();
         }

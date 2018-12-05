@@ -9,6 +9,7 @@ body{
 
 .meas_container{
     background-color: rgba(236, 34, 202, 0.5);
+    padding: 25px;
 }
 h1{
   margin: 20px;
@@ -22,24 +23,24 @@ h1{
 .title{
     font-size: 14px;
 }
-
 .typingIcon{
     height: 50px;
 }
 
 #content{
-    height: 120px;
+    height: 180px;
     background-color: rgba(255,255,255,0.2);
     margin: 10px auto;
     font-size: 30px;
     overflow: hidden;
-    padding: 0 5px;
+    padding: 20px;
     line-height: 40px
 }
 
 .change{
     height: 25px;
     font-size: 16px;
+    padding: 15px;
 }
 
 #input{
@@ -73,8 +74,8 @@ h1{
 
 .scoreDown, .scoreUp{
     border-radius: 5px;
-    padding: 5px;
-    font-size: 12px;
+    padding: 8px;
+    font-size: 15px;
 }
 
 .scoreDown{
