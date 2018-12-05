@@ -58,7 +58,7 @@ const UIModule = (function(){
         [classToAdd, html] = (value >= 0)? ['scoreUp', '+' + value] : ['scoreDown', value];
 
 //add % to the percentage change
-        if(changeElement == DOMElements.accuracyChange){
+        if(changeElement == DOM.accuracyChange){
             html += '%';
         }
 //update the change element
@@ -177,7 +177,7 @@ const UIModule = (function(){
     //test words
         fillContent: function(array, lineReturn){
             //['word1,', 'word2']
-            const content = array.map(splitArray);
+            let content = array.map(splitArray);
 //[['w', 'o', 'r', 'd', '1', ',' ], ['w', 'o', 'r', 'd', '2']]
             content = content.map(addSpace);
 //[['w', 'o', 'r', 'd', '1', ',', ' ' ], ['w', 'o', 'r', 'd', '2', ' ']]
@@ -211,7 +211,7 @@ const UIModule = (function(){
 //user value 'wwrd'
             let classes = Array.prototype.map.call(correctValue, returnCharClass);
 //get active word
-            let activeWord = DOM.activeWord;
+            activeWord = DOM.activeWord;
 //HTML collection
             let characters = activeWord.children;
 //add classes to children

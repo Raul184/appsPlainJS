@@ -10,7 +10,7 @@ const dataModule = (function(){
             timeLeft: 0
         },
         results: {
-            wpm: 0, wpmChange: 0, cpm: 0, cpmChange: 0, accuracy: 0, accuracyChange: 0 ,   correctWords: 0, correctChars: 0 , testCharacters: 0
+            wpm: 0, wpmChange: 0, cpm: 0, cpmChange: 0, accuracy: 0, accuracyChange: 0 ,   correctWords: 0, correctChars: 0 , testChars: 0
         },
         words: {
             currentWordIndex: -1,
@@ -39,7 +39,7 @@ const dataModule = (function(){
         let charCallback = function(currentElement, index){
               nbCorrectChar += (currentElement == this.characters.user[index])? 1 : 0;
           };
-// 4. JIT STORAGE SYSTEM FOR USER-WORDS RIGHTS & WRONG MISTAKES
+// 4. JIT STORAGE SYSTEM FOR USER-WORDS
 //update method: updates the word using the word typed by the user
     word.prototype.update = function(value){
 //update the user input
@@ -58,7 +58,7 @@ const dataModule = (function(){
         this.characters.totalCorrect = nbCorrectChar;
     };
     return {
-// PUBLIC
+// PUBLIC SECTION
     //INDICATORS
 //sets the total test time to x
         setTestTime: function(x){
@@ -101,8 +101,8 @@ const dataModule = (function(){
     //RESULTS
 //calculates wpm and wpmChange and updates them in appData
         calculateWpm: function(){
-            let wpmOld = appData.results.wpm;
-            let numOfCorrectWords = appData.results.correctWords;
+            var wpmOld = appData.results.wpm;
+            var numOfCorrectWords = appData.results.correctWords;
             if(appData.indicators.timeLeft != appData.indicators.totalTestTime){
                 appData.results.wpm = Math.round(60 * numOfCorrectWords/(appData.indicators.totalTestTime - appData.indicators.timeLeft));
             }else{
@@ -114,8 +114,8 @@ const dataModule = (function(){
         },
 //calculates cpm and cpmChange and updates them in appData
         calculateCpm: function(){
-            let cpmOld = appData.results.cpm;
-            let numOfCorrectCharacters = appData.results.correctChars;
+            var cpmOld = appData.results.cpm;
+            var numOfCorrectCharacters = appData.results.correctChars;
             if(appData.indicators.timeLeft != appData.indicators.totalTestTime){
                 appData.results.cpm = Math.round(60 * numOfCorrectCharacters/(appData.indicators.totalTestTime - appData.indicators.timeLeft));
             }else{
@@ -126,9 +126,9 @@ const dataModule = (function(){
         },
 //calculates accuracy and accuracyChange and updates them in appData
         calculateAccuracy: function(){
-            let accuracyOld = appData.results.accuracy;
-            let numOfCorrectCharacters = appData.results.correctChars;
-            let numOfTestCharacters = appData.results.TestChars;
+            var accuracyOld = appData.results.accuracy;
+            var numOfCorrectCharacters = appData.results.correctChars;
+            var numOfTestCharacters = appData.results.testChars;
             if(appData.indicators.timeLeft != appData.indicators.totalTestTime){
                 if(numOfTestCharacters != 0){
                     appData.results.accuracy = Math.round(100 * numOfCorrectCharacters/numOfTestCharacters);
@@ -146,7 +146,15 @@ const dataModule = (function(){
     //TEXTS PROVIDER
 // fills words.testWords
         fillListOfTestWords: function(textNumber, words){
-            let result = words.split(" ");
+            var result = words.split(" ");
+            // if(textNumber == 0){
+            //     //shuffle words
+            //     result = shuffle(result);
+            //     //capitalise random strings
+            //     result = capitalizeRandom(result);
+            //     //add a random punctuation
+            //     result = addRandomPunctuation(result);
+            // }
             appData.words.testWords = result;
         },
 // get list of test words: words.testWords
@@ -166,8 +174,8 @@ const dataModule = (function(){
                 appData.results.testChars += appData.words.currentWord.characters.totalTest;
             }
             appData.words.currentWordIndex ++;
-            let currentIndex = appData.words.currentWordIndex;
-            let newWord = new word(currentIndex);
+            var currentIndex = appData.words.currentWordIndex;
+            var newWord = new word(currentIndex);
             appData.words.currentWord = newWord;
         },
 //get the current word index

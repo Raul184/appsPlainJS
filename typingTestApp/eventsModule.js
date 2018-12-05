@@ -1,24 +1,24 @@
 const eventsModule = (function(dModule, uModule, cModule, wModule){
     const addEventListeners = function(){
 
-uModule.getDOMElements().textInput.addEventListener('keydown',function(event{
-            //if the test ended, do nothing
+      uModule.getDOM().textInput.addEventListener('keydown',function(event){
+//if the test ended, do nothing
             if(dModule.testEnded()){
                 return;
             }
-            //check if the user pressed Enter
+//check if the user pressed Enter
             let key = event.keyCode;
             if(key == 13){
-                uModule.getDOMElements().textInput.value +=  ' ';
+                uModule.getDOM().textInput.value +=  ' ';
                 //create a new 'input' event
                 let inputEvent = new Event('input');
                 //dispatch it
-                uModule.getDOMElements().textInput.dispatchEvent(inputEvent);
+                uModule.getDOM().textInput.dispatchEvent(inputEvent);
             }
         }); //KEYDOWN EVENT LISTENER ENDS
 
 //character typing event listener
-        uModule.getDOMElements().textInput.addEventListener('input', function(event){
+        uModule.getDOM().textInput.addEventListener('input', function(event){
 //if the test ended, do nothing
             if(dModule.testEnded()){
                 return;
