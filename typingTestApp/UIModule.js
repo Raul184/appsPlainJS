@@ -1,9 +1,8 @@
-var UIModule = (function(){
-
-    //classes used to select HTML elements
-    var DOMElements = {
-        //indicators - test control
-        timeLeft: document.getElementById('timeLeft'), //HTML element displaying time left
+const UIModule = (function(){
+// PRIVATE
+    const DOM = {
+        //displaying time left
+        timeLeft: document.getElementById('timeLeft'), //HTML element
         //test results
         wpm: document.getElementById('wpm'),
         wpmChange: document.getElementById('wpmChange'),
@@ -22,59 +21,56 @@ var UIModule = (function(){
         download: document.getElementById('download')
     };
 
-    var splitArray = function(string){
+    const splitArray = function(string){
         return string.split('');
     };
 
-    var addSpace = function(array){
+    const addSpace = function(array){
         array.push(' ');
         return array;
     };
 
-    var addSpanTags = function(array){
+    const addSpanTags = function(array){
         return array.map(function(currentCharacter){
             return '<span>' + currentCharacter + '</span>';
         });
     };
 
-    var addWordSpanTags = function(array){
+    const addWordSpanTags = function(array){
         array.push('</span>');
         array.unshift('<span>');
         return array;
     };
 
-    var joinEachWord = function(array){
+    const joinEachWord = function(array){
         return array.join('');
     };
 
-    var userValue;
-    var returnCharClass = function(currentCharacter, index){
+    let userValue;
+    const returnCharClass = function(currentCharacter, index){
                 return (index < userValue.length)? (currentCharacter == userValue[index]? 'correctCharacter': 'wrongCharacter') : '0'
             };
 
-    var updateChange = function(value, changeElement){
+    let updateChange = function(value, changeElement){
 
-        //determine the class to add to the change element and html content to insert
-        var classToAdd, html;
+//determine the class to add to the change element and html content to insert
+        let classToAdd, html;
         [classToAdd, html] = (value >= 0)? ['scoreUp', '+' + value] : ['scoreDown', value];
 
-        //add % to the percentage change
+//add % to the percentage change
         if(changeElement == DOMElements.accuracyChange){
             html += '%';
         }
-
-        //update the change element
+//update the change element
         changeElement.innerHTML = html;
-
         //style the change element
         changeElement.removeAttribute('class');
         changeElement.className = classToAdd;
-
-        //fade element
+//fade element
         fadeElement(changeElement);
     };
 
-    var fadeElement = function(element){
+    const fadeElement = function(element){
         element.style.opacity = 1;
         setTimeout(function(){
             element.style.opacity = 0.9;
@@ -82,35 +78,31 @@ var UIModule = (function(){
     };
 
     return {
-
-    //get DOM elements
-
-        getDOMElements: function(){
+// PUBLIC
+        getDOM: function(){
             return {
-                textInput: DOMElements.textInput,
-                download: DOMElements.download
+                textInput: DOM.textInput,
+                download: DOM.download
             };
         },
 
     //Indicators - Test Control
-
         updateTimeLeft: function(x){
-            DOMElements.timeLeft.innerHTML = x;
+            DOM.timeLeft.innerHTML = x;
         },
 
     //results
-
         updateResults: function(results){
             //update wpm
-            DOMElements.wpm.innerHTML = results.wpm;
+            DOM.wpm.innerHTML = results.wpm;
             //update cpm
-            DOMElements.cpm.innerHTML = results.cpm;
+            DOM.cpm.innerHTML = results.cpm;
             //update accuracy
-            DOMElements.accuracy.innerHTML = results.accuracy + '%';
+            DOM.accuracy.innerHTML = results.accuracy + '%';
             //update changes
-            updateChange(results.wpmChange, DOMElements.wpmChange);
-            updateChange(results.cpmChange, DOMElements.cpmChange);
-            updateChange(results.accuracyChange, DOMElements.accuracyChange);
+            updateChange(results.wpmChange, DOM.wpmChange);
+            updateChange(results.cpmChange, DOM.cpmChange);
+            updateChange(results.accuracyChange, DOM.accuracyChange);
         },
 
         fillModal: function(wpm){
@@ -144,21 +136,21 @@ var UIModule = (function(){
             html = html.replace('%alt%', results.type);
 
             //insert html before form-group
-            DOMElements.nameInput.insertAdjacentHTML('beforebegin', html);
+            DOM.nameInput.insertAdjacentHTML('beforebegin', html);
 
             //store level in download button
-            DOMElements.download.setAttribute('level', results.level);
+            DOM.download.setAttribute('level', results.level);
 
         },
 
         showModal: function(){
-            DOMElements.modal.modal('show');
+            DOM.modal.modal('show');
         },
 
     //user input
 
         inputFocus: function(){
-            DOMElements.textInput.focus();
+            DOM.textInput.focus();
         },
 
         isNameEmpty: function(){},
@@ -170,100 +162,80 @@ var UIModule = (function(){
         // },
 
         enterPressed: function(){
-            return DOMElements.textInput.value.includes(' ');
+            return DOM.textInput.value.includes(' ');
         },
 
         emptyInput: function(){
-            DOMElements.textInput.value = "";
+            DOM.textInput.value = "";
         },
 
         getTypedWord: function(){
-            console.log(DOMElements.textInput.value);
-            return DOMElements.textInput.value;
+            console.log(DOM.textInput.value);
+            return DOM.textInput.value;
         },
 
     //test words
-
         fillContent: function(array, lineReturn){
             //['word1,', 'word2']
-            var content = array.map(splitArray);
-//            console.log(content);
-            //[['w', 'o', 'r', 'd', '1', ',' ], ['w', 'o', 'r', 'd', '2']]
+            const content = array.map(splitArray);
+//[['w', 'o', 'r', 'd', '1', ',' ], ['w', 'o', 'r', 'd', '2']]
             content = content.map(addSpace);
-//            console.log(content);
-            //[['w', 'o', 'r', 'd', '1', ',', ' ' ], ['w', 'o', 'r', 'd', '2', ' ']]
+//[['w', 'o', 'r', 'd', '1', ',', ' ' ], ['w', 'o', 'r', 'd', '2', ' ']]
             content = content.map(addSpanTags);
-//            console.log(content);
-            //[['<span>w</span>', '<span>o</span>', '<span>r</span>', '<span>d</span>', '<span>1</span>', '<span>,</span>', '<span> </span>'], ['<span>w</span>', '<span>o</span>', '<span>r</span>', '<span>d</span>', '<span>1</span>', '<span> </span>']]
+            //[['<span>w</span>', '<span>o</span>', '<span>r</span>',
             content = content.map(addWordSpanTags);
 //            console.log(content);
-            //[['<span>', '<span>w</span>', '<span>o</span>', '<span>r</span>', '<span>d</span>', '<span>1</span>', '<span>,</span>', '<span> </span>', '</span>'], ['<span>', '<span>w</span>', '<span>o</span>', '<span>r</span>', '<span>d</span>', '<span>1</span>', '<span> </span>', '</span>']]
+            //[['<span>', '<span>w</span>', '<span>o</span>', '<span>r</span>', '<span>d</span>', '<span>1</span>', '<span>,</span>', '<span> </span>', '</span>'], ['<span>', '<span>w</span>'..., '</span>']]
             content = content.map(joinEachWord);
 //            console.log(content);
             content = content.join('');
 //            console.log(content);
 
-            //<span><span>w</span><span>o</span><span>r</span><span>d</span><span>1</span><span>,</span><span> </span></span><span><span>w</span><span>o</span><span>r</span><span>d</span><span>2</span><span> </span></span>
-
-
-            //replace the line return special code with the HTML entity (line return)
-
-            // <span>|</span>
-            // <span>&crarr;</span>
-//            content = content.replace('<span>|</span>', '<span>&crarr;</span>');
+            //<span><span>w</span><span>o</span><span>r</span><span>d</span><span>1</span><span>,</span><span> </span></span><span><span>w</span><span>o</span><span>r</span><span>d</span><span
             //split, join
             content = content.split('<span>' + lineReturn + '</span>').join('<span>&crarr;</span>');
 
 
             //fill content
-            DOMElements.content.innerHTML = content;
+            DOM.content.innerHTML = content;
         },
 
         formatWord: function(wordObject){
-            var activeWord = DOMElements.activeWord;
-
-            //highlight current word
+            let activeWord = DOM.activeWord;
+//highlight current word
             activeWord.className = 'activeWord';
-
-            //format individual characters
-            var correctValue = wordObject.value.correct;
+//format individual characters
+            let correctValue = wordObject.value.correct;
             userValue = wordObject.value.user;
-
-            //correct value 'word1 '
-            //user value 'wwrd'
-            var classes = Array.prototype.map.call(correctValue, returnCharClass);
-
-            //get active word
-            var activeWord = DOMElements.activeWord;
-
-            //HTML collection
-            var characters = activeWord.children;
-
-            //add classes to children
+//correct value 'word1 '
+//user value 'wwrd'
+            let classes = Array.prototype.map.call(correctValue, returnCharClass);
+//get active word
+            let activeWord = DOM.activeWord;
+//HTML collection
+            let characters = activeWord.children;
+//add classes to children
             for(var i = 0; i < characters.length; i ++){
                 characters[i].removeAttribute('class');
                 characters[i].className = classes[i];
             }
-
-
         },
 
         setActiveWord: function(index){
-            DOMElements.activeWord = DOMElements.content.children[index];
+            DOM.activeWord = DOM.content.children[index];
         },
 
         deactivateCurrentWord: function(){
-            DOMElements.activeWord.removeAttribute('class');
+            DOM.activeWord.removeAttribute('class');
         },
 
         scroll: function(){
-            var activeWord = DOMElements.activeWord;
+            var activeWord = DOM.activeWord;
             var top1 = activeWord.offsetTop;
-            var top2 = DOMElements.content.offsetTop;
+            var top2 = DOM.content.offsetTop;
             var diff = top1 - top2;
             //scroll the content of the content box
-            DOMElements.content.scrollTop = diff - 40;
+            DOM.content.scrollTop = diff - 40;
         }
-
     }
 })();

@@ -1,68 +1,62 @@
-var eventsModule = (function(dModule, uModule, cModule, wModule){
-    var addEventListeners = function(){
+const eventsModule = (function(dModule, uModule, cModule, wModule){
+    const addEventListeners = function(){
 
-      //enter click event
-        uModule.getDOMElements().textInput.addEventListener('keydown', function(event){
-            console.log(event);
+uModule.getDOMElements().textInput.addEventListener('keydown',function(event{
             //if the test ended, do nothing
             if(dModule.testEnded()){
                 return;
             }
             //check if the user pressed Enter
-            var key = event.keyCode;
+            let key = event.keyCode;
             if(key == 13){
                 uModule.getDOMElements().textInput.value +=  ' ';
-
                 //create a new 'input' event
-                var inputEvent = new Event('input');
-
+                let inputEvent = new Event('input');
                 //dispatch it
                 uModule.getDOMElements().textInput.dispatchEvent(inputEvent);
             }
+        }); //KEYDOWN EVENT LISTENER ENDS
 
-        });
-        //character typing event listener
+//character typing event listener
         uModule.getDOMElements().textInput.addEventListener('input', function(event){
-            //if the test ended, do nothing
+//if the test ended, do nothing
             if(dModule.testEnded()){
                 return;
             }
-            //if the test has not started yet, start the test and countdown
+//if the test has not started yet, start the test and countdown
             if(!dModule.testStarted()){
 
-                //start the test: data Module
+//start the test: data Module
                 dModule.startTest();
 
-                //start counter
+//start counter
 
-                var b = setInterval(function(){
-                //calculate the results: data Module
+                let b = setInterval(function(){
+//calculate the results: data Module
 
-                    var results = {};
-                    //update wpm, wpmChange
+                    const results = {};
+//update wpm, wpmChange
                     [results.wpm, results.wpmChange] = dModule.calculateWpm();
-
-                    //update cpm, cpmChange
+//update cpm, cpmChange
                     [results.cpm, results.cpmChange] = dModule.calculateCpm();
-
-                    //update accuracy, accuracyChange
+//update accuracy, accuracyChange
                     [results.accuracy, results.accuracyChange] = dModule.calculateAccuracy();
 
-                    //dModule.returnData();
+//dModule.returnData();
 
-                //update results (UI module)
+//update results (UI module)
                     uModule.updateResults(results);
 
-                //check if we have time left
+//check if we have time left
                     if(dModule.timeLeft()){
 
-                        //reduce time by one sec: data Module
-                        var timeLeft = dModule.reduceTime();
+//reduce time by one sec: data Module
+                        let timeLeft = dModule.reduceTime();
 
-                        //update time remaining in UI
+//update time remaining in UI
                         uModule.updateTimeLeft(timeLeft);
                     }else{
-                        //end the test: data module
+//end the test: data module
                         clearInterval(b);
                         dModule.endTest();
 
@@ -76,90 +70,78 @@ var eventsModule = (function(dModule, uModule, cModule, wModule){
                 }, 1000);
             }
 
-            //get typed word: UI module
-            var typedWord = uModule.getTypedWord();
+//get typed word: UI module
+            let typedWord = uModule.getTypedWord();
 
-            //update current word: data module
+//update current word: data module
             dModule.updateCurrentWord(typedWord);
 
-            //format the active word
-            var currentWord = dModule.getCurrentWord();
+//format the active word
+            let currentWord = dModule.getCurrentWord();
             uModule.formatWord(currentWord);
 
-            //check if the user pressed space or enter
+//check if the user pressed space or enter
             if(uModule.enterPressed()){
-
-                //empty text input
+//empty text input
                 uModule.emptyInput();
-
-                //deactivate current word
+//deactivate current word
                 uModule.deactivateCurrentWord();
-
-                //move to a new word: data Module
+//move to a new word: data Module
                 dModule.moveToNewWord();
-
-                //set active Word: UI Module
-                var index = dModule.getCurrentWordIndex();
+//set active Word: UI Module
+                let index = dModule.getCurrentWordIndex();
                 uModule.setActiveWord(index);
-
-                //format the active word: UI Module
-                var currentWord = dModule.getCurrentWord();
+//format the active word: UI Module
+                let currentWord = dModule.getCurrentWord();
                 uModule.formatWord(currentWord);
-
-                //scroll word into the middle view
+//scroll word into the middle view
                 uModule.scroll();
             }
         });
-        //click on download button event listener
-
-
+//click on download button event listener
     };
-
-    //scroll active word into middle view on window resize
+//scroll active word into middle view on window resize
     window.addEventListener('resize', uModule.scroll);
-
 
     return {
         //init function, initializes the test before start
         init: function(duration, textNumber){
 
-            //fill the list of test words: data Module
+//fill the list of test words: data Module
 
-            var words = wModule.getWords(textNumber);
+            let words = wModule.getWords(textNumber);
             dModule.fillListOfTestWords(textNumber, words);
 
-            //fill the list of test words: UI Module
-            var testWords = dModule.getListofTestWords();
+//fill the list of test words: UI Module
+            let testWords = dModule.getListofTestWords();
             uModule.fillContent(testWords);
 
-            //set the total test time: data Module
+//set the total test time: data Module
             dModule.setTestTime(duration);
 
-            //update time left: data Module
+//update time left: data Module
             dModule.initializeTimeLeft();
 
-            //update time left: UI module
-            var timeLeft = dModule.getTimeLeft();
+//update time left: UI module
+            let timeLeft = dModule.getTimeLeft();
             uModule.updateTimeLeft(timeLeft);
 
-            //move to a new word: data Module
+//move to a new word: data Module
             dModule.moveToNewWord();
 
-            //set active Word: UI Module
-            var index = dModule.getCurrentWordIndex();
+//set active Word: UI Module
+            let index = dModule.getCurrentWordIndex();
             uModule.setActiveWord(index);
 
-            //format the active word: UI Module
-            var currentWord = dModule.getCurrentWord();
+//format the active word: UI Module
+            let currentWord = dModule.getCurrentWord();
             uModule.formatWord(currentWord);
 
-            //focus on text input: UI Module
+//focus on text input: UI Module
             uModule.inputFocus();
 
-            //add avent listeners
+//add avent listeners
             addEventListeners();
         }
     };
-
-
 })(dataModule, UIModule, certificateModule, wordsModule);
