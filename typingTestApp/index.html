@@ -8,15 +8,15 @@
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
         <link href="https://fonts.googleapis.com/css?family=Quattrocento+Sans" rel="stylesheet">
-        <link rel="stylesheet" href="styling.css">
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
         <div class="container-fluid">
             <div class="text-center">
+              <header>
+                  <h1>Typing Test</h1>
+              </header>
                 <div class="row">
-                    <header>
-                        <h1>Typing Test</h1>
-                    </header>
                     <div class="col-3 measurement">
                         <div class="meas_container">
                             <div class="typingIcon">
@@ -71,23 +71,23 @@
                         </div>
                     </div>
                 </div>
-                
+
 <!--                test words-->
                 <div id="content" class="text-center"></div>
-                
+
 <!--                text input-->
                 <div>
                     <input type="text" placeholder="type here" class="text-center" id="input">
                 </div>
-                
+
 <!--                keyboard-->
                 <div class="keyboard"></div>
-                
+
 <!--                restart-->
                 <div class="restart">
                     <button type="button" class="btn btn-primary btn-lg" onclick="location.reload()">Restart</button>
                 </div>
-                
+
 <!--                modal-->
                 <div class="modal" id="myModal">
                   <div class="modal-dialog" role="document">
@@ -102,19 +102,19 @@
                           <div class="form-group">
                               <label for="name" class="sr-only">Enter your name: </label>
                               <input type="text" class="form-control" id="name" placeholder="Your full name">
-                          
+
                           </div>
-                        
+
                       </div>
                       <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="button" class="btn btn-info" id="download">Download your certificate</button>
-                    
+
                       </div>
                     </div>
                   </div>
                 </div>
-                
+
             </div>
         </div>
 
