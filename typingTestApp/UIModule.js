@@ -165,12 +165,12 @@ var UIModule = (function(){
 
         flagNameInput: function(){},
 
-        spacePressed: function(event){
-            return event.data == " ";
-        },
+        // spacePressed: function(event){
+        //     return event.data == " ";
+        // },
 
-        enterPressed: function(lineReturn){
-            return DOMElements.textInput.value.includes(lineReturn + ' ');
+        enterPressed: function(){
+            return DOMElements.textInput.value.includes(' ');
         },
 
         emptyInput: function(){
