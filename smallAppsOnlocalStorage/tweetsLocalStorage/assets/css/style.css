@@ -1,0 +1,28 @@
+h1, h2 {
+    text-align: center;
+}
+
+#contenido {
+    margin-top: 40px;
+}
+.borrar-tweet,
+.borrar-tweet:hover {
+    float: right;
+    cursor: pointer;
+    color: red;
+    font-weight: bold;
+}
+#list-tweets{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    list-style: none;
+}
+li{
+  margin: 1rem;
+}
+.delete-button{
+  float: right;
+  color: red;
+  font-weight: 600;
+}

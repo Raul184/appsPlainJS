@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link rel="stylesheet" href="assets/css/normalize.css">
-    <link rel="stylesheet" href="assets/css/skeleton.css">
-    <link rel="stylesheet" href="assets/css/custom.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
     <div id="contenido">
@@ -17,7 +18,7 @@
             <div class="row">
                 <div class="six columns">
                     <label for="tweet">Tweet:</label>
-                    <form action="#" id="formulario">
+                    <form action="#" id="form">
                             <label for="tweet"></label>
                             <textarea id="tweet" class="u-full-width"></textarea>
                             <input type="submit" class="button u-full-width button-primary" value="Agregar">
@@ -25,7 +26,11 @@
                 </div>
                 <div class="six columns">
                     <h2>Mis Tweets</h2>
-                    <div id="lista-tweets"></div>
+                    <div>
+                      <ul id="list-tweets">
+
+                      </ul>
+                     </div>
                 </div>
             </div>
 
