@@ -26,3 +26,7 @@ li{
   color: red;
   font-weight: 600;
 }
+.delete-button:hover{
+  cursor: pointer;
+  font-size: 18px;
+}

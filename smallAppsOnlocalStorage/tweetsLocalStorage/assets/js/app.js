@@ -1,6 +1,31 @@
-// Functions
-const proced = (function(){
+// Data Module
+const data = (function(){
+// Private
   return{
+    // PUBLIC
+    saveLocal: function(item){
+      let stock;
+      if(localStorage.getItem('tweets') === null){
+        stock = []; //set ready to storage
+      } else{
+        stock =  JSON.parse(localStorage.getItem('tweets'));
+        }
+        //stock new one
+        stock.push(item);
+        //dabase only str
+        localStorage.setItem('tweets', JSON.stringify(stock));
+        // localStorage.setItem('tweets', item);
+    }
+  }
+})();
+
+// UI Module
+const UI = (function(){
+  // PRIVATE
+  // DOM
+  const listTweets = document.getElementById('list-tweets');
+  return{
+    // PUBLIC
     agregaTweet: function(e){
       let item = document.getElementById('tweet').value; //input
       if(item.length > 1) {
@@ -16,20 +41,28 @@ const proced = (function(){
       listTweets.appendChild(li);
       }
       document.getElementById('tweet').value = ' ';
+      //localStorage
+      data.saveLocal(item);
+
+      e.preventDefault();
+      return item;
+    },
+    removeTweet: function(e){
+      if(e.target.className === 'delete-button'){
+        console.log('clickaste');
+        e.target.parentElement.remove();
+      }
+
+
       e.preventDefault();
     }
   }
 })();
 
-// DOM var
-const listTweets = document.getElementById('list-tweets');
-
-
-
-
 // Event Listeners IIFE
 const runners = (function (){
     let item = document.getElementById('tweet').value.length;
     // formulario
-    document.getElementById('form').addEventListener('submit',proced.agregaTweet);
+    document.getElementById('form').addEventListener('submit',UI.agregaTweet);
+    document.getElementById('list-tweets').addEventListener('click', UI.removeTweet);
 })();
