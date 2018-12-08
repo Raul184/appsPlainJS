@@ -1,4 +1,5 @@
-// Data Module
+//PATTERN MODULES
+// DATA MODULE
 const data = (function(){
 // PRIVATE
 function storageChecker() {
@@ -58,7 +59,7 @@ function storageChecker() {
   } //return from Module ends here
 })();
 
-// UI Module
+// UI MODULE
 const UI = (function(){
 // PRIVATE
 // DOM
@@ -102,7 +103,7 @@ const UI = (function(){
     }
   }
 })();
-// Event Listeners IIFE MODULE
+// EVENT LISTENERS MODULE
 const runners = (function (){
     let item = document.getElementById('tweet').value.length;
     // formulario
