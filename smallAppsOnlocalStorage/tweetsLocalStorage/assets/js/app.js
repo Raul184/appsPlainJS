@@ -41,6 +41,19 @@ function storageChecker() {
         li.appendChild(link); // a + li
         dom.listTweets.appendChild(li); // ul +li
       });
+    },
+    storageDeletion: function(itemDeleted){
+      let stock, readyToGo;
+      readyToGo = itemDeleted.slice(0, itemDeleted.length -1);
+      stock = storageChecker(); //stock status
+      stock.forEach(function(current, index){
+        if(readyToGo === current){
+          console.log('run');
+          stock.splice(index, 1);   //remove the one which matches
+        }
+      });
+      //refresh database(localStorage) after each item is removed
+      localStorage.setItem('tweets', JSON.stringify(stock));
     }
   } //return from Module ends here
 })();
@@ -58,6 +71,7 @@ const UI = (function(){
       return DOM;
     },
     agregaTweet: function(e){
+      // Get it on UI
       let item = document.getElementById('tweet').value; //input
       if(item.length > 1) {
       // LI
@@ -72,22 +86,22 @@ const UI = (function(){
       DOM.listTweets.appendChild(li);
       }
       document.getElementById('tweet').value = ' ';
-      //localStorage
+      //GET it in localStorage
       data.saveLocal(item);
-
       e.preventDefault();
       return item;
     },
     removeTweet: function(e){
+      // remove from UI
       if(e.target.className === 'delete-button'){
-        console.log('clickaste');
         e.target.parentElement.remove();
+     //remove from localStorage
+        data.storageDeletion(e.target.parentElement.textContent);
       }
       e.preventDefault();
     }
   }
 })();
-
 // Event Listeners IIFE MODULE
 const runners = (function (){
     let item = document.getElementById('tweet').value.length;
