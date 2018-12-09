@@ -2,8 +2,12 @@
 const stock = (function(){
 // Private
   const DOM = {
+    // cart
     addcart: document.getElementById('carrito'),
-    courses: document.getElementById('lista-cursos')
+    //container for All Courses
+    courses: document.getElementById('lista-cursos'),
+    // display courses added to cart
+    cart: document.querySelector('#lista-carrito tbody')
   }
   return{
     getDom: function(){
@@ -21,8 +25,29 @@ const UI = (function (){
   let domStrings = stock.getDom();
   const courseFormatter = function(el){
     const infoCurso = {
-      
+      img: el.querySelector('img').src,
+      title: el.querySelector('h4').textContent,
+      price: el.querySelector('.precio span').textContent,
+      id: el.querySelector('a').getAttribute('data-id')//customized HTML5 id
     }
+    return infoCurso;
+  }
+  const courseAdderUI = function(el){
+// domStrings.cart
+// HTML element creations
+    const row = document.createElement('tr'); //tr
+    row.innerHTML =`
+        <td>
+            <img src="${el.img}"
+        </td>
+        <td>${el.title}</td>
+        <td>${el.price}</td>
+        <td>
+            <a href ="#" class="delete-button" data-id="${el.id}">X</a>
+        </td>
+        `;
+// Appending
+    domStrings.cart.appendChild(row);
   }
   return{
     buyCourse: function(e){
@@ -32,8 +57,10 @@ const UI = (function (){
       if(e.target.classList.contains('agregar-carrito')){
 //select required item/info from course
         const curso = e.target.parentElement.parentElement;
-// format course data
-        courseFormatter(curso);
+// get & format course data
+        let input = courseFormatter(curso);
+// + to cart selected courses
+        courseAdderUI(input);
       };
     }
   }
