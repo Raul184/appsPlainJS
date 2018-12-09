@@ -38,7 +38,7 @@ const UI = (function (){
     const row = document.createElement('tr'); //tr
     row.innerHTML =`
         <td>
-            <img src="${el.img}"
+            <img src="${el.img}" width=100>
         </td>
         <td>${el.title}</td>
         <td>${el.price}</td>
