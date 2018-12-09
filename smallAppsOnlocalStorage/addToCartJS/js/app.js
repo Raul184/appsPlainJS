@@ -17,12 +17,18 @@ const stock = (function(){
 
 // UI Module
 const UI = (function (){
+// Private
   let domStrings = stock.getDom();
+  const courseFormatter = function(el){
+    const infoCurso = {
+      
+    }
+  }
   return{
     buyCourse: function(e){
 // avoid default behavior
       e.preventDefault();
-// trigger just when click on
+// trigger ED just when click on
       if(e.target.classList.contains('agregar-carrito')){
 //select required item/info from course
         const curso = e.target.parentElement.parentElement;
