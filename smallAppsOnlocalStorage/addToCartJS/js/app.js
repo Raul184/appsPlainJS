@@ -7,7 +7,9 @@ const stock = (function(){
     //container for All Courses
     courses: document.getElementById('lista-cursos'),
     // display courses added to cart
-    cart: document.querySelector('#lista-carrito tbody')
+    cart: document.querySelector('#lista-carrito tbody'),
+    // empty cart
+    empty: document.getElementById('vaciar-cart')
   }
   return{
     getDom: function(){
@@ -17,12 +19,12 @@ const stock = (function(){
 })();
 
 
-
-
 // UI Module
 const UI = (function (){
 // Private
+// DOM
   let domStrings = stock.getDom();
+// Courses properly formatted to stock
   const courseFormatter = function(el){
     const infoCurso = {
       img: el.querySelector('img').src,
@@ -32,6 +34,7 @@ const UI = (function (){
     }
     return infoCurso;
   }
+// UI courses added
   const courseAdderUI = function(el){
 // domStrings.cart
 // HTML element creations
@@ -68,6 +71,12 @@ const UI = (function (){
       if(e.target.classList.contains('delete-button')){//run here
         e.target.parentElement.parentElement.remove(); //remove
       }
+    },
+    emptyCart: function(e){
+      //innerHTML vs whileloops to remove from DOM article
+      while(domStrings.cart.firstChild){
+        domStrings.cart.removeChild(domStrings.cart.firstChild);
+      }
     }
   }
 })();
@@ -84,6 +93,8 @@ const listen = (function (){
       dom.courses.addEventListener('click', UI.buyCourse);
       //Remove item from cart
       dom.addcart.addEventListener('click', UI.removeCourse);
+      // Empty cart
+      dom.empty.addEventListener('click', UI.emptyCart);
     }
   }
 })();
