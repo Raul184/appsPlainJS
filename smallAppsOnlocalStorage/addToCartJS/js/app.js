@@ -62,6 +62,12 @@ const UI = (function (){
 // + to cart selected courses
         courseAdderUI(input);
       };
+    },
+    removeCourse: function(e){
+      e.preventDefault();
+      if(e.target.classList.contains('delete-button')){//run here
+        e.target.parentElement.parentElement.remove(); //remove
+      }
     }
   }
 })();
@@ -76,6 +82,8 @@ const listen = (function (){
     init: function(){
       // Event Delegation for Add To Cart button
       dom.courses.addEventListener('click', UI.buyCourse);
+      //Remove item from cart
+      dom.addcart.addEventListener('click', UI.removeCourse);
     }
   }
 })();
