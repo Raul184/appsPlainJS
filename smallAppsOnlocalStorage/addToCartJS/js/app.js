@@ -54,7 +54,7 @@ const stock = (function(){
     }
   }
 })();
-  
+
 
 // UI Module
 const UI = (function (){
