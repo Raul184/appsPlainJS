@@ -30,12 +30,26 @@ const ui = (function (){
             mailValidation(this);
       }
       // if ALL data is filled
-      let errores = document.querySelector('.error'); //3
+
       if(DOM.mail.value !== ''  && DOM.asunto.value !== '' && DOM.message.value !== ''){
-        if(errores.length === 0){
             DOM.enviar.disabled = false;
-        }
       }
+    },
+    sentMail: function(e){
+      const spinnerGif = document.querySelector('#spinner');
+      spinnerGif.style.display = 'block';
+      //mail gif
+      const enviado = document.createElement('img');
+      enviado.src = 'img/mail.gif';
+      enviado.style.display = 'block';
+      //animation
+      setTimeout(function() {
+        spinnerGif.style.display = 'none';
+
+        document.getElementById('loaders').appendChild(enviado);
+      }, 3000);
+
+      e.preventDefault();
     }
   }
 })();
@@ -72,6 +86,7 @@ const ev = (function(){
       dom.mail.addEventListener('blur', ui.validation);
       dom.asunto.addEventListener('blur', ui.validation);
       dom.message.addEventListener('blur', ui.validation);
+      dom.enviar.addEventListener('click', ui.sentMail);
     }
   }
 })();
