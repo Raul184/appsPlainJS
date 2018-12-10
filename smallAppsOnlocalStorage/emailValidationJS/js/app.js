@@ -11,6 +11,14 @@ const ui = (function (){
 // PUBLIC
     getDom: function(){
       return DOM;
+    },
+    validation: function(){
+      // length
+      data.validarLongitud(this);
+      // if ALL data is filled
+      if(DOM.mail.value !== ' '  && DOM.asunto.value !== ' ' && DOM.message.value !== ' '){
+        DOM.enviar.disabled = false;
+      }
     }
   }
 })();
@@ -22,6 +30,15 @@ const data = (function(){
   return{
     inicioApp: function(){
       str.enviar.disabled = true;
+    },
+    validarLongitud: function(campo){
+      if(campo.value.length > 0){
+        campo.style.borderBottomColor= 'green';
+        campo.classList.remove('error');
+      } else{
+        campo.style.borderBottomColor= 'red';
+        campo.classList.add('error');
+      }
     }
   }
 })();
@@ -29,10 +46,15 @@ const data = (function(){
 
 // EVENT Listeners Module
 const ev = (function(){
+  let dom = ui.getDom();
   return{
     init: function(){
       //init y disable submit
       document.addEventListener('DOMContentLoaded', data.inicioApp);
+      //mail validation
+      dom.mail.addEventListener('blur', ui.validation);
+      dom.asunto.addEventListener('blur', ui.validation);
+      dom.message.addEventListener('blur', ui.validation);
     }
   }
 })();
