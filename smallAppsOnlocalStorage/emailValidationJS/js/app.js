@@ -7,6 +7,16 @@ const ui = (function (){
     message: document.getElementById('mensaje'),
     enviar: document.getElementById('enviar')
   }
+  const mailValidation = function(campo){
+    let str = campo.value; //for mail input
+    if(str.indexOf('@') !== -1){
+      campo.style.borderBottomColor = 'green';
+      campo.classList.remove('error');
+    } else{
+      campo.style.borderBottomColor = 'red';
+      campo.classList.add('error');
+    }
+  }
   return{
 // PUBLIC
     getDom: function(){
@@ -15,9 +25,16 @@ const ui = (function (){
     validation: function(){
       // length
       data.validarLongitud(this);
+      // MAIL
+      if(this.type === 'email'){
+            mailValidation(this);
+      }
       // if ALL data is filled
-      if(DOM.mail.value !== ' '  && DOM.asunto.value !== ' ' && DOM.message.value !== ' '){
-        DOM.enviar.disabled = false;
+      let errores = document.querySelector('.error'); //3
+      if(DOM.mail.value !== ''  && DOM.asunto.value !== '' && DOM.message.value !== ''){
+        if(errores.length === 0){
+            DOM.enviar.disabled = false;
+        }
       }
     }
   }
