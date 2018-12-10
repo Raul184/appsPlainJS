@@ -47,8 +47,11 @@ const ui = (function (){
         spinnerGif.style.display = 'none';
 
         document.getElementById('loaders').appendChild(enviado);
+        setTimeout(function() {
+          enviado.remove();
+          document.querySelector('#enviar-mail').reset(); //reset form
+        }, 3000);
       }, 3000);
-
       e.preventDefault();
     }
   }
