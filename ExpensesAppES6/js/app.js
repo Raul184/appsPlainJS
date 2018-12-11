@@ -27,13 +27,16 @@ class Interfaz{
     // class & styles
     if(t === 'error'){
       divMessag.classList.add('error-message');
-    } else{
+    } else if(t === 'cool'){
       divMessag.classList.add('success-message');
     }
     //add Message
     divMessag.appendChild(document.createTextNode(m))
     // location
     dom.primary.insertBefore(divMessag, dom.form);
+    setTimeout(function(){
+      divMessag.remove();
+    }, 1500);
   }
 }
 
@@ -44,8 +47,8 @@ const UI = (function(){
   const DOM = {
     primary: document.querySelector('.primario'),
     form: document.getElementById('agregar-gasto'),
-    expenses: document.getElementById('gasto').value,
-    amountExp: document.getElementById('cantidad').value,
+    expense: document.getElementById('gasto'),
+    amountExp: document.getElementById('cantidad'),
     agrega: document.querySelector('.btn-primary')
   }
   return{
@@ -83,10 +86,14 @@ const EVI = (function(){
       domi.form.addEventListener('submit', function(e){
         e.preventDefault();
         const interface = new Interfaz(); //instantiate UI C
-        if(expenses/expenses === '' || expenses.amount === ''){
-          interface.showMessage('Please fill form out', 'error'); //error
+        if(domi.expense.value === '' || domi.amountExp.value === ''){
+          interface.showMessage('Please check your input', 'error'); //error
+          domi.expense.value = '' ;
+          domi.amountExp.value = '' ;
         }else{
           interface.showMessage('Accounted ', 'cool'); //success
+          domi.expense.value = '' ;
+          domi.amountExp.value = '' ;
         }
         console.log('enviado');
       })
