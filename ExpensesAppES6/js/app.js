@@ -9,6 +9,7 @@ class Presupuesto{
     }
 }
 
+
 class Interfaz{
   insertAmount(amount){
     // Locate
@@ -19,7 +20,6 @@ class Interfaz{
     restante.innerHTML = `${amount}`;
   }
 }
-
 
 
 // UI Module
