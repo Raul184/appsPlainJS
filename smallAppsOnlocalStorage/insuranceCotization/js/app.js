@@ -7,23 +7,34 @@ class Seguro {
 }
 Seguro.prototype.cotizarSeguro = function(info){
   let cantidad;
+  // BY COUNTRY
   const annual = 2000;
   switch(this.marca){
     case '1':
       cantidad = annual * 1.15;
       break;
     case '2':
-      cantidad = annual * 1.15;
+      cantidad = annual * 1.05;
       break;
     case '3':
-      cantidad = annual * 1.15;
+      cantidad = annual * 1.35;
       break;
   }
-  console.log(cantidad);
+  // BY YEAR
+  const difference = new Date().getFullYear() - this.año; //every year  - 3%
+  cantidad -= ((difference * 3) * cantidad)/100;
+  // BY TYPE
+  if(this.tipo === 'basico'){
+    cantidad *= 1,3;
+  } else{
+    cantidad *= 1.5; //completo
+  }
+  return cantidad;
 }
 // To instantiate
 function Interfaz(){}
 
+// ERRORS CHECKER
 Interfaz.prototype.showError = function(message, tipo){
   const div = document.createElement('div');
   if(tipo === 'error'){
@@ -42,6 +53,37 @@ Interfaz.prototype.showError = function(message, tipo){
   },3000)
 }
 
+// RESULTS
+Interfaz.prototype.showResults = function(a, b){
+  const parent = UI.getDom().result;
+  let marca;
+  switch(a.marca){  //show kind
+    case '1':
+      marca = 'Americano';
+      break;
+    case '2':
+      marca = 'Asiatico';
+      break;
+    case '3':
+      marca = 'Europeo';
+      break;
+  }
+  const div = document.createElement('div');
+  div.innerHTML = `
+        <p class = 'header'>Summary</p>
+        <p>Marca: ${marca}</p>
+        <p>Año: ${a.año}</p>
+        <p>Tipo: ${a.tipo}</p>
+        <p>Total: ${b.toFixed(2)}</p>
+        `;
+  const spinner = document.querySelector('#cargando img');
+  spinner.style.display = 'block';
+  setTimeout(function(){
+      spinner.style.display = 'none';
+      parent.appendChild(div);
+  }, 3000)
+}
+
 //-----------------------------------
 // UI Module
 const UI = (function(){
@@ -51,7 +93,8 @@ const UI = (function(){
     const DOM = {
     form: document.getElementById('cotizar-seguro'),
     anio: document.getElementById('anio'),
-    marca: document.getElementById('marca')
+    marca: document.getElementById('marca'),
+    result: document.getElementById('resultado')
   }
   return{
     getDom: function(){
@@ -94,9 +137,14 @@ const listens = (function(){
         if(selectedOption === '' || selectedYear === '' || tipo === ''){
           instanciar.showError("Please, complete all fields" , 'error');
         }else{
+          //clean previous results
+          const resultados = document.querySelector('#resultado div');
+          if (resultados != null){ resultados.remove()}
           const seguro = new Seguro(selectedOption, selectedYear, tipo);
           // CALCULATIONS
           const cantidad = seguro.cotizarSeguro(seguro);
+          // SHOW calculations
+          instanciar.showResults(seguro, cantidad);
         }
       })
     }
