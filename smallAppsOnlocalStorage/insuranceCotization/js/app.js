@@ -5,21 +5,41 @@ class Seguro {
     this.tipo = tipo;
   }
 }
+Seguro.prototype.cotizarSeguro = function(info){
+  let cantidad;
+  const annual = 2000;
+  switch(this.marca){
+    case '1':
+      cantidad = annual * 1.15;
+      break;
+    case '2':
+      cantidad = annual * 1.15;
+      break;
+    case '3':
+      cantidad = annual * 1.15;
+      break;
+  }
+  console.log(cantidad);
+}
 // To instantiate
 function Interfaz(){}
 
 Interfaz.prototype.showError = function(message, tipo){
   const div = document.createElement('div');
   if(tipo === 'error'){
-    div.classList = 'error';
+    div.classList.add('mensaje', 'error');
   } else{
-    div.classList = 'correcto';
+    div.classList.add('mensaje', 'correcto');
   }
   //append text
   div.innerHTML = `${message}`;
   //append to Html element
   const parent = UI.getDom().form;
   parent.insertBefore(div, document.querySelector('.form-group'));
+  //time out for error message
+  setTimeout(function(){
+    document.querySelector('.mensaje').remove();
+  },3000)
 }
 
 //-----------------------------------
@@ -74,8 +94,9 @@ const listens = (function(){
         if(selectedOption === '' || selectedYear === '' || tipo === ''){
           instanciar.showError("Please, complete all fields" , 'error');
         }else{
-          // const seguro = new Seguro(selectedOption, selectedYear, tipo);
-          // console.log(seguro);
+          const seguro = new Seguro(selectedOption, selectedYear, tipo);
+          // CALCULATIONS
+          const cantidad = seguro.cotizarSeguro(seguro);
         }
       })
     }
