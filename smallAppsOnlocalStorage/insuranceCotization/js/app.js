@@ -5,8 +5,24 @@ class Seguro {
     this.tipo = tipo;
   }
 }
+// To instantiate
+function Interfaz(){}
 
+Interfaz.prototype.showError = function(message, tipo){
+  const div = document.createElement('div');
+  if(tipo === 'error'){
+    div.classList = 'error';
+  } else{
+    div.classList = 'correcto';
+  }
+  //append text
+  div.innerHTML = `${message}`;
+  //append to Html element
+  const parent = UI.getDom().form;
+  parent.insertBefore(div, document.querySelector('.form-group'));
+}
 
+//-----------------------------------
 // UI Module
 const UI = (function(){
   //select options
@@ -44,10 +60,23 @@ const listens = (function(){
       //listener on form
       str.form.addEventListener('submit', function(e){
         e.preventDefault();
+        // select values for Marca
         const option = str.marca;
-        // select values
+        // selected values for Marca
         const selectedOption = option.options[option.selectedIndex].value;
-        
+        // select for Years
+        const year = str.anio;
+        const selectedYear = year.options[year.selectedIndex].value;
+        //radio button
+        const tipo = document.querySelector('input[name="tipo"]:checked').value;
+        const instanciar = new Interfaz();
+        // CHECK
+        if(selectedOption === '' || selectedYear === '' || tipo === ''){
+          instanciar.showError("Please, complete all fields" , 'error');
+        }else{
+          // const seguro = new Seguro(selectedOption, selectedYear, tipo);
+          // console.log(seguro);
+        }
       })
     }
   }
