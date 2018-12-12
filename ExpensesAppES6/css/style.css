@@ -48,3 +48,11 @@ h2 {
   background-color: rgba(0,0,190,.6);
   color: white;
 }
+/* LIST */
+ul{
+  list-style: none;
+}
+.expAccounted{
+  text-align: center;
+  color: lightblue;
+}
