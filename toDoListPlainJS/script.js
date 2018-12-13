@@ -52,18 +52,24 @@ const evi = (function(){
 // EVENT DELEGATION
 // 1 INPUT DELETE
       DOM.list.addEventListener('click', function(e){
-        if(e.target.classList.contains('fa-times')){
+        if(e.target.classList.contains('fa-times')){    //Remove Icon
           e.target.parentElement.parentElement.remove();
         }
       });
 // 2 INPUT EDIT
       DOM.list.addEventListener('click', function(e){
-        if(e.target.classList.contains('fa-pencil-square-o')){
+        if(e.target.classList.contains('fa-pencil-square-o')){ //Edit Icon
           console.log('clicked');
-
+          e.target.parentElement.style.display = 'none';  //hide Icons
+          //dom traversing UP next sibling (p)
+          const pI = e.target.parentElement.nextElementSibling; //inputField
+          pI.style.display = 'block';   //Show inputField
+          // ADD edit option
+          let toBeEdited = pI.previousElementSibling.previousElementSibling;
+          pI.value = toBeEdited.textContent;    //edit as User writes
         }
       });
-    }
+    } //Init
   } //IIFE return ends
 })();
 evi.init();
