@@ -11,9 +11,9 @@ class Data {
 
 class UI{
   showInput(obj){
-    console.log('run');
+    console.log('run Show UI input');
     let input = obj;
-    console.log(input);
+    if(input.length != 0){ //NO empty input
     // html Injection
     const li = document.createElement('li'); //li
     const p = document.createElement('p'); //p
@@ -26,6 +26,7 @@ class UI{
     //location
     const ul = document.getElementById('list');
     ul.appendChild(li); //appending
+    }
   }
 }
 
@@ -47,6 +48,7 @@ const evi = (function(){
         uiFace.showInput(output);
         DOM.input.value = '';
       })
+// INPUT DELETE
     }
   }
 })();
