@@ -34,7 +34,8 @@ class UI{
 const evi = (function(){
   const DOM ={
     input: document.getElementById('add-input'),
-    adder: document.getElementById('add-btn')
+    adder: document.getElementById('add-btn'),
+    list: document.getElementById('list')
   }
   return{
     init: function(){
@@ -47,9 +48,22 @@ const evi = (function(){
         let uiFace = new UI();          //instantiate UI Now------
         uiFace.showInput(output);
         DOM.input.value = '';
-      })
-// INPUT DELETE
+      });
+// EVENT DELEGATION
+// 1 INPUT DELETE
+      DOM.list.addEventListener('click', function(e){
+        if(e.target.classList.contains('fa-times')){
+          e.target.parentElement.parentElement.remove();
+        }
+      });
+// 2 INPUT EDIT
+      DOM.list.addEventListener('click', function(e){
+        if(e.target.classList.contains('fa-pencil-square-o')){
+          console.log('clicked');
+
+        }
+      });
     }
-  }
+  } //IIFE return ends
 })();
 evi.init();
