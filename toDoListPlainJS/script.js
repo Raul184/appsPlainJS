@@ -35,7 +35,10 @@ const evi = (function(){
   const DOM ={
     input: document.getElementById('add-input'),
     adder: document.getElementById('add-btn'),
-    list: document.getElementById('list')
+    list: document.getElementById('list'),
+    lable: document.querySelector('label'),
+    hide: document.getElementById('hide'),
+    search: document.querySelector('#search-note input')
   }
   return{
     init: function(){
@@ -76,6 +79,30 @@ const evi = (function(){
             }
           })
         }
+      });
+// 3 HIDE LIST
+      DOM.hide.addEventListener('click', function(){
+        let text = DOM.lable;
+        if(DOM.hide.checked){
+          DOM.list.style.display = 'none';
+          text.textContent = 'Unhide notes';
+        } else{
+          DOM.list.style.display = 'block';
+          text.textContent = 'Hide notes';
+        }
+      });
+// 4 SEARCH TOOL
+      DOM.search.addEventListener('keyup', function(e){
+        let searchChar = e.target.value.toUpperCase(); //key being pressed
+        let stock = DOM.list.querySelectorAll('li'); //NodeList of Li s
+        stock.forEach(current =>{
+          let textP = current.firstElementChild.textContent; // li textParagr
+          if(textP.toUpperCase().indexOf(searchChar) !== -1){
+              current.style.display = 'block';
+          } else{
+              current.style.display = 'none';
+            }
+        })
       });
     } //Init
   } //IIFE return ends

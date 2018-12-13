@@ -127,23 +127,8 @@ form#add input[type='submit'] {
     width: 70px;
     background: #6B8E23;
     color: #fff;
-} 
+}
 
 form#add input[type='submit']:hover {
     background: #7c9f34;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
