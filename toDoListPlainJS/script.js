@@ -59,14 +59,22 @@ const evi = (function(){
 // 2 INPUT EDIT
       DOM.list.addEventListener('click', function(e){
         if(e.target.classList.contains('fa-pencil-square-o')){ //Edit Icon
-          console.log('clicked');
-          e.target.parentElement.style.display = 'none';  //hide Icons
+          const icons = e.target.parentElement;  //hide Icons
+          icons.style.display = 'none'
           //dom traversing UP next sibling (p)
           const pI = e.target.parentElement.nextElementSibling; //inputField
           pI.style.display = 'block';   //Show inputField
           // ADD edit option
           let toBeEdited = pI.previousElementSibling.previousElementSibling;
-          pI.value = toBeEdited.textContent;    //edit as User writes
+          pI.value = toBeEdited.textContent;
+           // edit as User writes = EventListener on 'ENTER' Key
+          pI.addEventListener('keypress', function(e){
+            if(e.keyCode === 13){
+              toBeEdited.textContent = pI.value;  //
+              icons.style.display = 'block';  //Icons back
+              pI.style.display = 'none';   //Close inputField
+            }
+          })
         }
       });
     } //Init
