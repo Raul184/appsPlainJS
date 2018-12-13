@@ -23,7 +23,9 @@ class UI{
       <p><i class="fa fa-pencil-square-o"></i><i class="fa fa-times"></i></p>
       <input class="edit-note" type="text">
       `;
-    console.log(li);
+    //location
+    const ul = document.getElementById('list');
+    ul.appendChild(li); //appending
   }
 }
 
@@ -35,14 +37,15 @@ const evi = (function(){
   }
   return{
     init: function(){
+// INPUT ADD
       DOM.adder.addEventListener('click', function(e){
         e.preventDefault();                          //avoid Default
         let input = DOM.input.value;        // input.value
-        const accs = new Data(input);     // instantiate Data/access/ inputGet
-        let output = accs.value;
-        console.log(output);
-        let uiFace = new UI();          //instantiate UI Now
+        const accs = new Data(input);     // instantiate Data/inputGet------
+        let output = accs.value;      //Class Input  data
+        let uiFace = new UI();          //instantiate UI Now------
         uiFace.showInput(output);
+        DOM.input.value = '';
       })
     }
   }
