@@ -69,7 +69,7 @@ const evi = (function(){
           pI.value = toBeEdited.textContent;
            // edit as User writes = EventListener on 'ENTER' Key
           pI.addEventListener('keypress', function(e){
-            if(e.keyCode === 13){
+            if(e.keyCode === 13 && pI.value.length > 0){
               toBeEdited.textContent = pI.value;  //
               icons.style.display = 'block';  //Icons back
               pI.style.display = 'none';   //Close inputField
