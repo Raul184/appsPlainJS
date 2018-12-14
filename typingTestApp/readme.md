@@ -5,10 +5,6 @@ Typing Test app  written on vanilla Javascript
 	and show on UI.
 
 	Technologies:
-			gulp
-			webpack
-			npm 
-			node modules
 			html
 			css
 			sass
