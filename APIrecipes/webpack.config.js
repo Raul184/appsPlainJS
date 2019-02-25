@@ -1,4 +1,9 @@
+//***Modes  >>   Development & Production mode  + efficient way  >> package.json
+
 const path = require('path'); //built-in module for Absolute path on Output
+
+const HtmlWebpackPlugin = require('html-webpack-plugin'); //HTML plugin
+
 
 //export config-Obj so that Webpack can take it and work with.
 module.exports = {
@@ -9,10 +14,15 @@ module.exports = {
             path: path.resolve(__dirname, './dist'),
             filename: 'js/bundle.js'
       },
-      //* Modes >> Development & Production mode 
-      //mode: 'development' >>>     + efficient way  >> package.json
-      //3. Automation Config on localServer
+      //LocalServer
       devServer:{ 
             contentBase: './dist/'  //line 9 script 
-      }
+      },
+      //4. Plugins  >> Complex processing of my input files
+      plugins: [
+            new HtmlWebpackPlugin({ //Inject it into LocalServer
+                  filename: 'index.html',
+                  template: './src/index.html'   
+            })
+      ]
 };
