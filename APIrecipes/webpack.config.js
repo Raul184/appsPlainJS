@@ -6,9 +6,13 @@ module.exports = {
       entry: './src/js/index.js',
       //2. Output point
       output: {
-            path: path.resolve(__dirname, './dist/js'),
-            filename: 'bundle.js'
+            path: path.resolve(__dirname, './dist'),
+            filename: 'js/bundle.js'
       },
       //* Modes >> Development & Production mode 
       //mode: 'development' >>>     + efficient way  >> package.json
+      //3. Automation Config on localServer
+      devServer:{ 
+            contentBase: './dist/'  //line 9 script 
+      }
 };
