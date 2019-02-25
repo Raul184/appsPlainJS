@@ -1,0 +1,15 @@
+{
+  "name": "apirecipes",
+  "version": "1.0.0",
+  "description": "ApiRecipesOnTheInternet",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "API",
+    "JS"
+  ],
+  "author": "RrChaos",
+  "license": "MIT"
+}
