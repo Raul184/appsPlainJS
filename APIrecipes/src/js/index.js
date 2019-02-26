@@ -3,7 +3,7 @@ import Search from './models/Search';
 //Methods
 import * as SearchVista from './views/SearchView';
 //DOM
-import {elements} from './views/base';
+import {elements, renderLoader} from './views/base';
 
 
 //GLOBAL APP  >>  CONTROLLERS
@@ -25,6 +25,8 @@ const controlSearch = async() => {
             //UI display
             SearchVista.clearInput();
             SearchVista.clearInpList();
+
+            renderLoader(elements.results);
             //Recipes
             await state.search.getResults();
             
