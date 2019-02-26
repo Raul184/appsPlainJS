@@ -26,7 +26,7 @@ const controlSearch = async() => {
             SearchVista.clearInput();
             SearchVista.clearInpList();
 
-            renderLoader(elements.results);
+            renderLoader();
             //Recipes
             await state.search.getResults();
             
