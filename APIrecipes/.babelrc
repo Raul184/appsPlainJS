@@ -1,12 +1,12 @@
 {
-      "preset": [
-            "env", { //line 22 on .json
-                  "target":{
+      "/preset": [
+            ["env", { //line 22 on .json
+                  "targets":{
                         "browsers":[
                               "last 5 versions",
                               "ie>= 8"
                         ]
                   }
-            }                   
+            }]                   
       ]
 }

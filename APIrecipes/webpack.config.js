@@ -8,7 +8,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin'); //HTML plugin
 //export config-Obj so that Webpack can take it and work with.
 module.exports = {
       //1. Entry point
-      entry: ['babel-polyfill', './src/js/index.js'],
+      entry: ['./src/js/index.js'],
       //2. Output point
       output: {
             path: path.resolve(__dirname, './dist'),
@@ -26,15 +26,15 @@ module.exports = {
             })
       ],
       //3. Loaders
-      module: {
-            rules: [
-                  {
-                        test: /\*.js/,
-                        exclude: /node_modules/,
-                        use:{
-                              loader: 'babel-loader'
-                        }
-                  }
-            ]
-      }
+      //module: {
+        //    rules: [
+          //        {
+            //            test: /\.js$/,
+            //            exclude: /node_modules/,
+            //            use:{
+            //                  loader: 'babel-loader'
+            //            }
+            //      }
+         //   ]
+      //}
 };
