@@ -3,14 +3,25 @@ import {elements} from './base';
 //UI methods
 
 //1.Input getter
-export const getInput = () => elements.searchInput.value;
- 
-//2.Results displayer
+export const getInput = () => {elements.searchInput.value };
+
+//2. Input UiCleaner
+export const clearInput = () => { 
+      elements.searchInput.value = '';
+      console.log('done');
+};
+
+//4. Previous Inputs list UiCleaner
+export const clearInpList = () => {
+      elements.resultsInput.innerHTML = '';
+}
+
+//3.Results displayer
 export const renderResults = (arr) => {
       arr.forEach(renderRecipe);
 }
 
-//2. Helper => Results displayer
+//3. Helper => Results displayer
 const renderRecipe = recipe =>{
       const markUp = `<li>
                     <a class="results__link results__link--active" href="#${recipe.recipe_id}">

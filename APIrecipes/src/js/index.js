@@ -1,7 +1,7 @@
 //API Class
 import Search from './models/Search';
 //Methods
-import * as searchView from './views/SearchView';
+import * as SearchVista from './views/SearchView';
 //DOM
 import {elements} from './views/base';
 
@@ -17,19 +17,19 @@ const state = {
 
 const controlSearch = async() => {
       //Get Query from View
-      const query = searchView.getInput();
+      const query = SearchVista.getInput();
       if(query){
             //storage new Instance obj from Search method
             state.search = new Search(query);
-            //UI display
 
+            //UI display
+            SearchVista.clearInput();
+            SearchVista.clearInpList();
             //Recipes
             await state.search.getResults();
             
             //Render results
-            console.log(state.search);
-            console.log(state.search.results);
-            searchView.renderResults(state.search.results)
+            SearchVista.renderResults(state.search.results);
       }
 }
 
