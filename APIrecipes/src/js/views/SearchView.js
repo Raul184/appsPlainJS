@@ -34,5 +34,5 @@ const renderRecipe = recipe =>{
                         </div>
                     </a>
                 </li>`;
-      elements.resultsInput.insertAdjacentElement("beforeend", markUp);
+      elements.results.insertAdjacentElement('beforeend', markUp);
 }

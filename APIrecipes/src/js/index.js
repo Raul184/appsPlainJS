@@ -29,7 +29,6 @@ const controlSearch = async() => {
             renderLoader();
             //Recipes
             await state.search.getResults();
-            
             //Render results
             SearchVista.renderResults(state.search.results);
       }
