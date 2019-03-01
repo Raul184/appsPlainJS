@@ -32,7 +32,7 @@ import {elements as DOM, renderButtons} from './base';
        //results
        recipes.slice(start, end).forEach(renderRecipes);
       //render buttons
-      renderButtons(page, recipes.length, resPerpage);
+      renderButtons(recipes.length, page, resPerpage);
  };
 
 //-- -- -- -- -- -- -- -- ---- -- -- -- -- -- -- -- ---- -- -- -- -- -- -- -- ---- -- -- -- -- -- -- -- --
@@ -44,6 +44,7 @@ import {elements as DOM, renderButtons} from './base';
  //3.2 UI Cleaner for Recipes list 
  export const clearList = () => {
        DOM.leftResults.innerHTML = '';
+       DOM.resultPages.innerHTML = '';
  }
- 
+
 //-- -- -- -- -- -- -- -- ---- -- -- -- -- -- -- -- ---- -- -- -- -- -- -- -- ---- -- -- -- -- -- -- -- --

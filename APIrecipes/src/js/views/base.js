@@ -35,7 +35,7 @@ const maker = (page, type) => `
             </button>
 `;
  //2. HELPER for Buttons on Pagination
-export const renderButtons = (page, numResults, resPpage) => {
+export const renderButtons = (numResults, page, resPpage) => {
        const pages = Math.ceil(numResults / resPpage);
        let button;
        if (page === 1 && pages > 1) {
