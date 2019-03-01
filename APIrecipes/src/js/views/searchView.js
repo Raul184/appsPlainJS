@@ -38,7 +38,7 @@ import {elements as DOM} from './base';
  //2. HELPER for inputRender >> buttons on Pagination
  //Pagination buttons maker
  const maker = (page, type) => {
-      return `<button class="btn-inline results__btn--${type}" data-goto=${type === 'prev' ? page - 1: page + 1}>
+      return `<button class="btn-inline results__btn--${type}" data-id=${type === 'prev' ? page - 1: page + 1}>
                   <svg class="search__icon">
                         <use href="img/icons.svg#icon-triangle-${type === 'prev' ? 'left' : 'right'}"></use>
                   </svg>
