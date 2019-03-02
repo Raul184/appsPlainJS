@@ -33,7 +33,7 @@ export default class Recipe{
       //Recipe-Sorter
       parseIngredients(){
             const unitsLong = ['tablespoons', 'tableSpoon', 'ounces', 'ounce', 'teaspoon', 'teaspoons', 'cups', 'pounds'];
-            const proper = ['tbsp', 'tbsp', 'oz', 'oz', 'tsp', 'tsp', 'cup', 'pound'];
+            const proper = ['tbsp', 'tbsp', 'oz', 'oz', 'tsp', 'tsp', 'cup', 'pound', 'gr', 'kg', 'jars', 'packages'];
       //Uniform Units
             const formatingrd = this.ingredients.map(el =>{
                   let format = el.toLowerCase();
@@ -44,30 +44,29 @@ export default class Recipe{
                   format = format.replace(/ *\([^)]*\) */g, ' ');
       //SPLIT formatted text
                   const arrIng = format.split(' ');
-                  //console.log(arrIng);
-      //return Units position[]
+      //return Units position
                   const units = arrIng.findIndex(el2 => proper.includes(el2)); 
-                  //console.log(units);
+                  
                   let stockIng;
                   if(units > -1)
                   {
             //found units    >      Ex. 4 1/2 cups    >>    counter = [4, 1/2]
                         const counter = arrIng.slice(0, units);
+
                         let count;                     //calculate str and return me a total value in Numbers
                         counter.length === 1 ? count = eval(arrIng[0].replace('-', '+')) : 
                                                count = eval(arrIng.slice(0, units).join('+'));
-                        
                         stockIng = {
                               count,
                               unit: arrIng[units],
-                              format: arrIng.slice(units+ 1).join(' ')
+                              format: arrIng.slice(units+1).join(' ')
                         };
                   }
                   else if(parseInt(arrIng[0], 10))
                   {     
             //if Just a number
                         stockIng = {
-                              count: parseInt(arrIng[0]),
+                              count: parseInt(arrIng[0], 10),
                               unit: '',
                               format: arrIng.slice(0,1).join(' ')         
                         }

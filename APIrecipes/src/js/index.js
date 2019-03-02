@@ -80,6 +80,7 @@ const controlRecipe = async () =>{
 
       //Render recipe
                   console.log(state.recipe);
+                  RecipeView.recipeCleaner();
                   RecipeView.singleRecipe(state.recipe);
             }catch(error)
             {

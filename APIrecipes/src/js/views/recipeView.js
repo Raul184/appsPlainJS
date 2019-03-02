@@ -1,7 +1,14 @@
 //DOM
 import { elements as DOM } from './base';
 
-//HELPER FOR Sinlge Recipe View Method
+
+//-- -- -- -- -- -- -- -- ---- -- -- -- -- -- -- -- ---- -- -- -- -- -- -- -- ---- -- -
+//SINGLE RECIPE CLEANER
+export const recipeCleaner = () => { DOM.oneRecipe.innerHTML = ' '; }
+
+
+//-- -- -- -- -- -- -- -- ---- -- -- -- -- -- -- -- ---- -- -- -- -- -- -- -- ---- -- --
+//HELPER FOR Single Recipe View Method
 const makeDomIngredients = objIng => `
       <li class="recipe__item">
             <svg class="recipe__icon">
@@ -9,11 +16,12 @@ const makeDomIngredients = objIng => `
             </svg>  
             <div class="recipe__count">${objIng.count}</div>  
             <div class="recipe__ingredient">
-                  <span class="recipe__unit">${objIng.units}</span>
+                  <span class="recipe__unit">${objIng.unit}</span>
                   ${objIng.format} 
             </div>  
       </li>
 `;
+
 //SINGLE RECIPE VIEW
 
 export const singleRecipe = one => {
@@ -29,7 +37,7 @@ export const singleRecipe = one => {
                         <svg class="recipe__info-icon">
                            <use href="img/icons.svg#icon-stopwatch"></use> 
                         </svg> 
-                        <span class="recipe__info-data recipe__info-data--minutes">${one.quarters}</span> 
+                        <span class="recipe__info-data recipe__info-data--minutes">${one.time}</span> 
                         <span class="recipe__info-text">minutes</span> 
                   </div> 
                   <div class="recipe__info">
@@ -86,3 +94,4 @@ export const singleRecipe = one => {
       `;
       DOM.oneRecipe.insertAdjacentHTML('afterbegin', markUp);
 };
+ //-- -- -- -- -- -- -- -- ---- -- -- -- -- -- -- -- ---- -- -- -- -- -- -- -- ---- -- -

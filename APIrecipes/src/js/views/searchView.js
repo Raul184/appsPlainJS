@@ -6,7 +6,6 @@ import {elements as DOM, renderButtons} from './base';
 //1.Input getter
  export const getInput = () => DOM.searchInput.value;
 
-
  //-- -- -- -- -- -- -- -- ---- -- -- -- -- -- -- -- ---- -- -- -- -- -- -- -- ---- -- -- -- -- -- -- -- --
 
  //2.HELPER for inputRender
