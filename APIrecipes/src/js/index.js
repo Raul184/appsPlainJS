@@ -6,8 +6,11 @@ import Search from './models/Search';
 import Recipe from './models/Recipe';
 //DOM & GIF
 import { elements as DOM, loaderGif } from './views/base';
-//DOM Methods
+//DOM Search Methods
 import * as SearchView from './views/searchView';
+//DOM Recipe Methods
+import * as RecipeView from './views/recipeView';
+
 
 // Global app controller      >>    Application State (at any given moment)
 const state = {};                   //1. Search Obj.   2. Current recipe   3. Shopping list  4. Liked recipes
@@ -70,13 +73,14 @@ const controlRecipe = async () =>{
                   await state.recipe.getRecipe();
       //SORT recipe data
                   state.recipe.parseIngredients();
-                  
+
       //Calculate servings & cooking time
                   state.recipe.calcTime();
                   state.recipe.calcServings();
 
       //Render recipe
                   console.log(state.recipe);
+                  RecipeView.singleRecipe(state.recipe);
             }catch(error)
             {
                   alert('Recipe not found , sorry!');

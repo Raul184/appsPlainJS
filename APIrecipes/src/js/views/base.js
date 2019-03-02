@@ -4,7 +4,8 @@ export const elements = {
       searchInput: document.querySelector('.search__field'),
       resultsFrame: document.querySelector('.results'),
       leftResults: document.querySelector('.results__list'),
-      resultPages: document.querySelector('.results__pages')
+      resultPages: document.querySelector('.results__pages'),
+      oneRecipe: document.querySelector('.recipe')
 };
 
 //GIF-Loader
