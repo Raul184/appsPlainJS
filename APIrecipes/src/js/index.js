@@ -60,20 +60,22 @@ const controlRecipe = async () =>{
       //Grab id from URL
       const id = window.location.hash.replace('#', ''); //erase # symbol
       if(id){
-            //UI changes
+      //UI changes
 
-            //Create instance of recipe from id
+      //Create instance of recipe from id
             state.recipe = new Recipe(id);
 
-            //Sort recipe data
+      //GET recipe data
             try{
                   await state.recipe.getRecipe();
-
-                  //Calculate servings & cooking time
+      //SORT recipe data
+                  state.recipe.parseIngredients();
+                  
+      //Calculate servings & cooking time
                   state.recipe.calcTime();
                   state.recipe.calcServings();
 
-                  //Render recipe
+      //Render recipe
                   console.log(state.recipe);
             }catch(error)
             {
