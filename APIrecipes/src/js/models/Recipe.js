@@ -5,7 +5,7 @@ export default class Recipe{
       constructor(id){
             this.id = id;
       }
-      //Single-recipe Getter
+//Single-recipe Getter
       async getRecipe(){
             try
             {
@@ -21,19 +21,19 @@ export default class Recipe{
                   console.log(error);
             }
       }
-      //Time-Recipe Making
+//Time-Recipe Making
       calcTime(){
             const quarters = Math.ceil(this.ingredients.length/3);
             this.time = quarters * 15; 
       }
-      //Recipe-Servings
+//Recipe-Servings
       calcServings(){
             this.servings = 4;
       }
-      //Recipe-Sorter
+//Recipe-Sorter
       parseIngredients(){
             const unitsLong = ['tablespoons', 'tableSpoon', 'ounces', 'ounce', 'teaspoon', 'teaspoons', 'cups', 'pounds'];
-            const proper = ['tbsp', 'tbsp', 'oz', 'oz', 'tsp', 'tsp', 'cup', 'pound', 'gr', 'kg', 'jars', 'packages'];
+            const proper = ['tbsp', 'tbsp', 'oz', 'oz', 'tsp', 'tsp', 'cup', 'pound', 'gr', 'kg'];
       //Uniform Units
             const formatingrd = this.ingredients.map(el =>{
                   let format = el.toLowerCase();
@@ -54,8 +54,14 @@ export default class Recipe{
                         const counter = arrIng.slice(0, units);
 
                         let count;                     //calculate str and return me a total value in Numbers
-                        counter.length === 1 ? count = eval(arrIng[0].replace('-', '+')) : 
-                                               count = eval((arrIng.slice(0, units).join('+')));
+                        if(counter.length === 1)
+                        {
+                              count = eval(arrIng[0].replace('-', '+'))
+                        } 
+                        else
+                        {
+                              count = eval((arrIng.slice(0, units).join('+')));
+                        }                       
                         stockIng = {
                               count,
                               unit: arrIng[units],
@@ -84,4 +90,14 @@ export default class Recipe{
             });
             this.ingredients = formatingrd; //reassign formatted context 
       }
+// Servings UPDATER
+      updateServings(type) {
+            //Servings for people
+            const nueServings = type === 'dec' ? this.servings -1 : this.servings + 1;
+            //Ingredients
+            this.ingredients.forEach(current => {
+                  current.count *= (nueServings / this.servings);
+            });
+            this.servings = nueServings;
+      }      
 }

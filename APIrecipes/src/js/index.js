@@ -94,3 +94,15 @@ const controlRecipe = async () =>{
 window.addEventListener('hashchange', controlRecipe);
 //['hashchange', 'load'].forEach(event => window.addEventListener(event, controlRecipe));
 
+//Recipe buttons for Servings
+window.addEventListener('click', e =>{
+      if(e.target.matches('.btn-decrease, .btn-decrease *'))
+      {
+            state.recipe.servings > 1 ? state.recipe.updateServings('dec') : '';
+      } 
+      else if (e.target.matches('.btn-increase, .btn-increase *')) 
+      {
+            state.recipe.updateServings('inc');
+      }
+      console.log(state.recipe);
+});

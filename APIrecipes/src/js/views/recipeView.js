@@ -64,12 +64,12 @@ export const singleRecipe = one => {
                         <span class="recipe__info-text">servings</span>
                         
                         <div class="recipe__info-buttons">
-                              <button class="btn-tiny">
+                              <button class="btn-tiny btn-decrease">
                                     <svg>
                                           <use href="img/icons.svg#icon-circle-with-minus"> </use> 
                                     </svg> 
                               </button> 
-                              <button class="btn-tiny">
+                              <button class="btn-tiny btn-increase">
                                     <svg>
                                           <use href="img/icons.svg#icon-circle-with-plus"> </use> 
                                     </svg> 
@@ -111,3 +111,15 @@ export const singleRecipe = one => {
       DOM.oneRecipe.insertAdjacentHTML('afterbegin', markUp);
 };
  //-- -- -- -- -- -- -- -- ---- -- -- -- -- -- -- -- ---- -- -- -- -- -- -- -- ---- -- -
+//Service/Ingredients UI UPDATER
+export const updateServIngred = recipe => {
+      //update Servings
+      document.querySelector('.recipe__info-data--people').textContent = recipe.servings;
+
+      //update Ingredients
+      const allIngred = Array.from(document.querySelectorAll('.recipe__count'));
+      countElements.forEach((el, i) =>{
+            el.textContent = fractMaker(recipe.ingredients[i].count);
+      });
+}
+
