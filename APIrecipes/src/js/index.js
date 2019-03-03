@@ -5,7 +5,7 @@ import Search from './models/Search';
 //2
 import Recipe from './models/Recipe';
 //DOM & GIF
-import { elements as DOM, loaderGif } from './views/base';
+import { elements as DOM, loaderGif, lightMarker } from './views/base';
 //DOM Search Methods
 import * as SearchView from './views/searchView';
 //DOM Recipe Methods
@@ -64,7 +64,7 @@ const controlRecipe = async () =>{
       const id = window.location.hash.replace('#', ''); //erase # symbol
       if(id){
       //UI changes
-
+            lightMarker(id);
       //Create instance of recipe from id
             state.recipe = new Recipe(id);
 
@@ -82,6 +82,7 @@ const controlRecipe = async () =>{
                   console.log(state.recipe);
                   RecipeView.recipeCleaner();
                   RecipeView.singleRecipe(state.recipe);
+
             }catch(error)
             {
                   alert('Recipe not found , sorry!');

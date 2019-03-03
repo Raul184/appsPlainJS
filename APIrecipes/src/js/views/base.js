@@ -5,7 +5,8 @@ export const elements = {
       resultsFrame: document.querySelector('.results'),
       leftResults: document.querySelector('.results__list'),
       resultPages: document.querySelector('.results__pages'),
-      oneRecipe: document.querySelector('.recipe')
+      oneRecipe: document.querySelector('.recipe'),
+      wholeList: document.querySelectorAll('.results__link')
 };
 
 //GIF-Loader
@@ -52,3 +53,13 @@ export const renderButtons = (numResults, page, resPpage) => {
 
        elements.resultPages.insertAdjacentHTML('afterbegin', button);
  };
+
+// HIGHLIGHTED MARKER
+export const lightMarker = id => {
+      const arrAll = Array.from(elements.wholeList); //bunch of nodes   >> Array
+      arrAll.forEach(el => {  //disable selected Actives
+            el.classList.remove('results__link--active');
+      });
+      document.querySelector(`a[href="#${id}"]`).classList.add('results__link--active'); //current active Checked
+};
+

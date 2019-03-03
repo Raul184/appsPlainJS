@@ -8,7 +8,7 @@ import {Fraction} from 'fractional';
 export const recipeCleaner = () => { DOM.oneRecipe.innerHTML = ' '; }
 
 // FRACTION MAKER
-const fractMaker = count => {
+const fractMaker = count => { // LIBRARY USED >> FRACTIONAL
       if(count){
             const [int, dec] = count.toString().split('.').map(el => parseInt(el, 10));
             if(!dec) return count;
