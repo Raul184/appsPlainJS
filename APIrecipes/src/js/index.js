@@ -4,6 +4,8 @@
 import Search from './models/Search';
 //2
 import Recipe from './models/Recipe';
+// List Purchases
+import List from './models/List';
 //DOM & GIF
 import { elements as DOM, loaderGif, lightMarker } from './views/base';
 //DOM Search Methods
@@ -67,19 +69,17 @@ const controlRecipe = async () =>{
             lightMarker(id);
       //Create instance of recipe from id
             state.recipe = new Recipe(id);
-
       //GET recipe data
             try{
                   await state.recipe.getRecipe();
       //SORT recipe data
                   state.recipe.parseIngredients();
-                  console.log(state.recipe.ingredients);          //TESTING PURPOSES
+                  
       //Calculate servings & cooking time
                   state.recipe.calcTime();
                   state.recipe.calcServings();
 
       //Render recipe
-                  console.log(state.recipe);
                   RecipeView.recipeCleaner();
                   RecipeView.singleRecipe(state.recipe);
 
@@ -106,3 +106,7 @@ window.addEventListener('click', e =>{
       }
       console.log(state.recipe);
 });
+
+// LIST purchases
+window.l = new List();  //instance in window to use List's methods
+

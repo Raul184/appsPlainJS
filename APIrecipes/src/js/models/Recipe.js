@@ -51,16 +51,16 @@ export default class Recipe{
                   if(units > -1)
                   {
             //found units    >      Ex. 4 1/2 cups    >>    counter = [4, 1/2]
-                        const counter = arrIng.slice(0, units);
+                        const counter = arrIng.slice(0, units).split(' ');
 
                         let count;                     //calculate str and return me a total value in Numbers
                         if(counter.length === 1)
                         {
-                              count = eval(arrIng[0].replace('-', '+'))
+                              count = arrIng[0];
                         } 
                         else
                         {
-                              count = eval((arrIng.slice(0, units).join('+')));
+                              count = eval(arrIng.slice(0, units).join('+'));
                         }                       
                         stockIng = {
                               count,
