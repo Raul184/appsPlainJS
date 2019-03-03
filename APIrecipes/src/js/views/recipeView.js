@@ -1,11 +1,27 @@
 //DOM
 import { elements as DOM } from './base';
-
-
+//Fraction.js Library
+import {Fraction} from 'fractional';
 //-- -- -- -- -- -- -- -- ---- -- -- -- -- -- -- -- ---- -- -- -- -- -- -- -- ---- -- -
+
 //SINGLE RECIPE CLEANER
 export const recipeCleaner = () => { DOM.oneRecipe.innerHTML = ' '; }
 
+// FRACTION MAKER
+const fractMaker = count => {
+      if(count){
+            const [int, dec] = count.toString().split('.').map(el => parseInt(el, 10));
+            if(!dec) return count;
+            if(int ===0){
+                  const fr = new Fraction(count);
+                  return `${fr.numerator}/${fr.denominator}`;
+            }else{
+                  const fr = new Fraction(count - int);
+                  return `${int} ${fr.numerator}/${fr.denominator}`;
+            }
+      }
+      return '?';
+};
 
 //-- -- -- -- -- -- -- -- ---- -- -- -- -- -- -- -- ---- -- -- -- -- -- -- -- ---- -- --
 //HELPER FOR Single Recipe View Method
@@ -14,7 +30,7 @@ const makeDomIngredients = objIng => `
             <svg class="recipe__icon">
                   <use href="img/icons.svg#icon-check"></use>  
             </svg>  
-            <div class="recipe__count">${objIng.count}</div>  
+            <div class="recipe__count">${fractMaker(objIng.count)}</div>  
             <div class="recipe__ingredient">
                   <span class="recipe__unit">${objIng.unit}</span>
                   ${objIng.format} 

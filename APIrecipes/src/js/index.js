@@ -73,7 +73,7 @@ const controlRecipe = async () =>{
                   await state.recipe.getRecipe();
       //SORT recipe data
                   state.recipe.parseIngredients();
-
+                  console.log(state.recipe.ingredients);          //TESTING PURPOSES
       //Calculate servings & cooking time
                   state.recipe.calcTime();
                   state.recipe.calcServings();

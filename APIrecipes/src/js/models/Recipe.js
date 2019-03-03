@@ -55,7 +55,7 @@ export default class Recipe{
 
                         let count;                     //calculate str and return me a total value in Numbers
                         counter.length === 1 ? count = eval(arrIng[0].replace('-', '+')) : 
-                                               count = eval(arrIng.slice(0, units).join('+'));
+                                               count = eval((arrIng.slice(0, units).join('+')));
                         stockIng = {
                               count,
                               unit: arrIng[units],
