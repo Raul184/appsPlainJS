@@ -12,12 +12,14 @@ import { elements as DOM, loaderGif, lightMarker } from './views/base';
 import * as SearchView from './views/searchView';
 //DOM Recipe Methods
 import * as RecipeView from './views/recipeView';
+//DOM List Methods
+import * as ListView from './views/listView';
 
 
 // Global app controller      >>    Application State (at any given moment)
 const state = {};                   //1. Search Obj.   2. Current recipe   3. Shopping list  4. Liked recipes
 
-//-- -- -- -- -- -- -- -- ---- -- -- -- -- -- -- -- ---- -- -- -- -- -- -- -- ---- -- -- -- -- -- -- -- --
+//-- -- -- -- -- -- -- -- ---- -- -- -- -- -- -- -- SEARCH CONTROLLER ---- -- -- -- -- --  -- -- -- -- -- -- -- --
 const controlSearch = async () =>{
       //1 Get Query
       const query = SearchView.getInput();
@@ -60,7 +62,7 @@ DOM.resultPages.addEventListener('click', e =>{
             
       }
 });
-//-- -- -- -- -- -- -- -- ---- -- -- -- -- -- -- -- ---- -- -- -- -- -- -- -- ---- -- -- -- -- -- -- -- --
+//-- -- -- -- -- -- -- -- ---- -- -- -- -- -- -- -- ---- --RECIPE CONTROLLER -- -- -- ---- -- -- -- -- -- -- -- --
 const controlRecipe = async () =>{
       //Grab id from URL
       const id = window.location.hash.replace('#', ''); //erase # symbol
@@ -90,9 +92,37 @@ const controlRecipe = async () =>{
             
       }
 }
-//          2. Single recipes Id FINDER FOR RECIPE CONTROLLER
+//EVENT FOR RECIPE CONTROLLER
+//                       Id finder
 window.addEventListener('hashchange', controlRecipe);
 //['hashchange', 'load'].forEach(event => window.addEventListener(event, controlRecipe));
+
+
+//-- -- -- -- -- -- -- -- ---- -- -- -- -- -- -- -- ---- --LIST CONTROLLER -- -- -- ---- -- -- -- -- -- -- -- --
+
+const controlList = () => {
+      //Create List
+      if(!state.list) state.list = new List();
+
+      //Add Ingredients & update UI
+      state.recipe.ingredients.forEach(el => {
+            const item = state.list.addItem(el.count, el.unit. el.format);
+            ListView.itemsRender(item);
+      });
+}
+
+//EVENTs for List Controller
+DOM.shopping.addEventListener('click', e => {
+      const id = e.target.closest('.shopping__item').dataset.itemId;
+
+      //Delete
+      if(e.target.matches('.shopping__delete, .shopping__delete *'))
+      {
+            state.list.itemRemover(id);
+            //UI
+            listView.itemRemover(id);
+      }
+});
 
 //Recipe buttons for Servings
 window.addEventListener('click', e =>{
@@ -104,7 +134,10 @@ window.addEventListener('click', e =>{
       {
             state.recipe.updateServings('inc');
       }
-      console.log(state.recipe);
+      else if (e.target.matches('.recipeBtnAdd , .recipeBtnAdd *'))
+      {
+            controlList();
+      }
 });
 
 // LIST purchases

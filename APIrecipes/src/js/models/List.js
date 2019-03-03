@@ -13,6 +13,8 @@ export default class List {
                   unit,
                   format
             }
+            this.items.push(item);
+            return item;
       }
 //DELETE Method
       deleteItem(id){

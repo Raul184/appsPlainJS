@@ -6,7 +6,8 @@ export const elements = {
       leftResults: document.querySelector('.results__list'),
       resultPages: document.querySelector('.results__pages'),
       oneRecipe: document.querySelector('.recipe'),
-      wholeList: document.querySelectorAll('.results__link')
+      wholeList: document.querySelectorAll('.results__link'),
+      shopping: document.querySelector('.shopping__list')
 };
 
 //GIF-Loader
