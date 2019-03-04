@@ -1,11 +1,13 @@
 //IMPORTS
 
-//API Methods 1
+//SEARCH Model
 import Search from './models/Search';
-//2
+//RECIPE Model
 import Recipe from './models/Recipe';
-// List Purchases
+//LIST Model
 import List from './models/List';
+//LIKES Model
+import Likes from './models/Likes';
 //DOM & GIF
 import { elements as DOM, loaderGif, lightMarker } from './views/base';
 //DOM Search Methods
@@ -106,7 +108,8 @@ const controlList = () => {
 
       //Add Ingredients & update UI
       state.recipe.ingredients.forEach(el => {
-            const item = state.list.addItem(el.count, el.unit. el.format);
+            const item = state.list.addItem(el.count, el.unit, el.format);
+            console.log(item);
             ListView.itemsRender(item);
       });
 }
@@ -118,28 +121,58 @@ DOM.shopping.addEventListener('click', e => {
       //Delete
       if(e.target.matches('.shopping__delete, .shopping__delete *'))
       {
-            state.list.itemRemover(id);
+            state.list.deleteItem(id);
             //UI
             listView.itemRemover(id);
       }
 });
 
-//Recipe buttons for Servings
+// LIST Methods available
+window.l = new List();  //instance in window to use List's methods
+
+//Recipe EVENTS
 window.addEventListener('click', e =>{
-      if(e.target.matches('.btn-decrease, .btn-decrease *'))
-      {
+      if(e.target.matches('.btn-decrease, .btn-decrease *'))      
+      {     //buttons +/-
             state.recipe.servings > 1 ? state.recipe.updateServings('dec') : '';
       } 
-      else if (e.target.matches('.btn-increase, .btn-increase *')) 
-      {
+      else if(e.target.matches('.btn-increase, .btn-increase *')) 
+      {     //Add & - buttons
             state.recipe.updateServings('inc');
       }
-      else if (e.target.matches('.recipeBtnAdd , .recipeBtnAdd *'))
-      {
+      else if(e.target.matches('.recipeBtnAdd , .recipeBtnAdd *')) 
+      {     //List > CONTROLLER
             controlList();
       }
+      else if(e.target.matches('.recipe__love, .recipe__love *'))
+      {     //Like > CONTROLLER
+            controlLike();
+      } 
 });
 
-// LIST purchases
-window.l = new List();  //instance in window to use List's methods
+//-- -- -- -- -- -- -- -- ---- -- -- -- -- -- -- -- ---- --LIKES CONTROLLER -- -- -- ---- -- -- -- -- -- -- -- --
+const controlLike = () => {
+      if(!state.likes) state.likes = new Likes();
+      const currentID = state.recipe.id;        //state obj to manage current recipes
+
+      if(!state.likes.isLiked(currentID)){
+            // + like to state obj
+            const liked = state.likes.addLike(currentID, state.recipe.title, state.recipe.author, state.recipe.img)
+            // Togle like button
+
+            // + like to UI
+            console.log(state.likes);
+      } else
+      {
+            // - like to state obj
+            state.likes.deleteLike(currentID);
+            // Togle like button
+
+            // - like to UI
+            console.log(state.likes);
+      }
+
+};
+
+
 
