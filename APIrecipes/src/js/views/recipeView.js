@@ -40,7 +40,7 @@ const makeDomIngredients = objIng => `
 
 //SINGLE RECIPE VIEW
 
-export const singleRecipe = one => {
+export const singleRecipe = (one, isLiked) => {
       const markUp = `
             <figure class="recipe__fig">
                            <img src="${one.img}" alt="${one.title}" class="recipe__img">
@@ -78,7 +78,7 @@ export const singleRecipe = one => {
                   </div> 
                   <button class="recipe__love">
                         <svg class="header__likes">
-                              <use href="img/icons.svg#icon-heart-outlined"></use> 
+                              <use href="img/icons.svg#icon-heart-${isLiked ? '' : 'outlined'}"></use> 
                         </svg> 
                   </button> 
             </div>

@@ -1,5 +1,5 @@
 //IMPORTS
-
+// ----------- MODELS 
 //SEARCH Model
 import Search from './models/Search';
 //RECIPE Model
@@ -8,15 +8,19 @@ import Recipe from './models/Recipe';
 import List from './models/List';
 //LIKES Model
 import Likes from './models/Likes';
-//DOM & GIF
-import { elements as DOM, loaderGif, lightMarker } from './views/base';
-//DOM Search Methods
-import * as SearchView from './views/searchView';
-//DOM Recipe Methods
-import * as RecipeView from './views/recipeView';
-//DOM List Methods
-import * as ListView from './views/listView';
 
+// ----------- DOM HELPERS
+import { elements as DOM, loaderGif, lightMarker } from './views/base';
+
+// ----------- VIEWS
+//Search
+import * as SearchView from './views/searchView';
+//Recipe 
+import * as RecipeView from './views/recipeView';
+//List
+import * as ListView from './views/listView';
+//Likes
+import * as LikeView from './views/likeView';
 
 // Global app controller      >>    Application State (at any given moment)
 const state = {};                   //1. Search Obj.   2. Current recipe   3. Shopping list  4. Liked recipes
@@ -85,10 +89,11 @@ const controlRecipe = async () =>{
 
       //Render recipe
                   RecipeView.recipeCleaner();
-                  RecipeView.singleRecipe(state.recipe);
+                  RecipeView.singleRecipe(state.recipe); 
 
             }catch(error)
             {
+                  console.log(error);
                   alert('Recipe not found , sorry!');
             }
             
@@ -123,7 +128,7 @@ DOM.shopping.addEventListener('click', e => {
       {
             state.list.deleteItem(id);
             //UI
-            listView.itemRemover(id);
+            ListView.itemRemover(id);
       }
 });
 
@@ -159,19 +164,20 @@ const controlLike = () => {
             // + like to state obj
             const liked = state.likes.addLike(currentID, state.recipe.title, state.recipe.author, state.recipe.img)
             // Togle like button
-
+            LikeView.toggleLikes(true);
             // + like to UI
-            console.log(state.likes);
+            LikeView.renderLikes(liked); 
       } else
       {
             // - like to state obj
             state.likes.deleteLike(currentID);
             // Togle like button
-
+            LikeView.toggleLikes(false);
             // - like to UI
-            console.log(state.likes);
+            LikeView.deleteLikes(currentID);
       }
-
+      LikeView.tooggleLikesMenu(state.likes.getNumLikes());
+      console.log(state.likes.getNumLikes());
 };
 
 

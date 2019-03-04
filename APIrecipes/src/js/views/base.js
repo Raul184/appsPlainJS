@@ -7,7 +7,9 @@ export const elements = {
       resultPages: document.querySelector('.results__pages'),
       oneRecipe: document.querySelector('.recipe'),
       wholeList: document.querySelectorAll('.results__link'),
-      shopping: document.querySelector('.shopping__list')
+      shopping: document.querySelector('.shopping__list'),
+      likesMenu: document.querySelector('.likes__field'),
+      likesPanel: document.querySelector('.likes__list')
 };
 
 //GIF-Loader
@@ -61,6 +63,6 @@ export const lightMarker = id => {
       arrAll.forEach(el => {  //disable selected Actives
             el.classList.remove('results__link--active');
       });
-      document.querySelector(`a[href="#${id}"]`).classList.add('results__link--active'); //current active Checked
+      document.querySelector(`.results__link[href="#${id}"]`).classList.add('results__link--active'); //current active Checked
 };
 
