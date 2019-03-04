@@ -180,5 +180,11 @@ const controlLike = () => {
       console.log(state.likes.getNumLikes());
 };
 
-
+//EVENTS for likes on localStorage
+window.addEventListener('load', () => {
+      state.likes = new Likes(); //instancia
+      state.likes.stockStatus();
+      //Show Stock (name on localStorage => likes)
+      state.likes.likes.forEach(like => LikeView.renderLikes(like));      
+})
 
