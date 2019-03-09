@@ -33,9 +33,9 @@ const data = {
 
 
 //DELETE
-// http.delete('https://jsonplaceholder.typicode.com/users/5')
-//       .then(data => console.log(data) )
-//       .catch(err => console.log(err));
+http.delete('https://jsonplaceholder.typicode.com/users/5')
+      .then(data => console.log(data) )
+      .catch(err => console.log(err));
 
 
 
