@@ -10,9 +10,9 @@ const http = new EasyHTTP;
 //SOLUTION        >> Asynchronous ES6 programming
 
 //GET             >> 10 Ids
-http.get('https://jsonplaceholder.typicode.com/users/1')
-      .then(data => console.log(data) )
-      .catch(err => console.log(err));
+// http.get('https://jsonplaceholder.typicode.com/users')
+//       .then(data => console.log(data) )
+//       .catch(err => console.log(err));
 
 
 //POST            >> +1 = 11Ids.
@@ -21,15 +21,15 @@ const data = {
       'answer': 'Yes or No'
 }
 
-http.post('https://jsonplaceholder.typicode.com/users', data)
-      .then(data => console.log(data))
-      .catch(err => console.log(err));
+// http.post('https://jsonplaceholder.typicode.com/users', data)
+//       .then(data => console.log(data))
+//       .catch(err => console.log(err));
 
 
 //UPDATE
-http.put('https://jsonplaceholder.typicode.com/users/2', data)
-      .then(data => console.log(data))
-      .catch(err => console.log(err));
+// http.put('https://jsonplaceholder.typicode.com/users/2', data)
+//       .then(data => console.log(data))
+//       .catch(err => console.log(err));
 
 
 //DELETE
