@@ -29,6 +29,16 @@ const StorageCtrl = (function() {
         retrieveItems: function(){
             let items = storageStatus();
             return items;
+        },
+        //UPDATE item on localStorage
+        updateItemStorage: function(updatedItem){
+            let items = JSON.parse(localStorage.getItem('items'));
+            items.forEach((el, index) => {
+                if(updatedItem.id === el.id){
+                    items.splice(index, 1, updatedItem); //remove && replace
+                }
+            });
+            localStorage.setItem('items', JSON.stringify(items));
         }
     }
 })();
@@ -62,6 +72,7 @@ const ItemCtrl = (function() {
             let ID;
             if (data.items.length > 0) {
                 ID = data.items[data.items.length - 1].id + 1;
+                console.log(ID);
             } else {
                 ID = 0;
             }
@@ -263,7 +274,6 @@ const UICtrl = (function() {
             //LOOP through
             Array.from(listItems).forEach(liItem => {
                 let itemID = liItem.getAttribute('id');
-
                 if (itemID === `${edited.id}`) {
                     document.getElementById(`${itemID}`).innerHTML = `
                     <strong>${edited.name}: </strong><em>${edited.calories} Calories</em>
@@ -337,18 +347,24 @@ const App = (function(ItemCtrl ,StorageCtrl ,UICtrl) {
         dom.itemList.addEventListener('click', e => {
             if (e.target.classList.contains('edit-item')) {
                 //Get item ID
-                const listId = parseInt(e.target.parentNode.parentNode.id); //pos
-
+                let listId = e.target.parentNode.parentNode.id; //pos
+                listId = parseInt(listId.charAt(5));
+                console.log(listId);
                 //Retrieve Item from Stock
                 const itemToEdit = ItemCtrl.getItemById(listId);
-
+        
                 //Set Current Item
                 ItemCtrl.setCurrentItem(itemToEdit);
 
                 //Get Current Item
                 const currentItem = ItemCtrl.getCurrentItem();
+        
                 //Add Current Item to UI & update State
                 UICtrl.addCurrentItem(currentItem);
+                
+                //Update localStorage
+                StorageCtrl.updateItemStorage(currentItem);
+
                 UICtrl.clearEditState('off');
             };
             e.preventDefault();
@@ -371,7 +387,6 @@ const App = (function(ItemCtrl ,StorageCtrl ,UICtrl) {
 
                 //Update total calories in UI
                 UICtrl.showTotalCalories(totalC);
-
             }
             e.preventDefault();
         });
@@ -409,8 +424,11 @@ const App = (function(ItemCtrl ,StorageCtrl ,UICtrl) {
             //Update total calories in UI
             UICtrl.showTotalCalories(totalC);
 
-            //Clear LIST
+            //Clear LIST from UI
             UICtrl.removeItems();
+
+            //Empty localStorage 
+            localStorage.clear();
         });
     }
 
