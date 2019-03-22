@@ -1,6 +1,36 @@
 //Storage Controller
 const StorageCtrl = (function() {
+    //STOCK STATUS CHECKER
+    const storageStatus = function(){
+        let items;
+        if(localStorage.getItem('items') === null)
+        {
+            items = [];
+        }
+        else
+        {
+            items = JSON.parse(localStorage.getItem('items'));
+        }
+        return items;        
+    }
 
+    return {
+        //SAVE into Stock
+        storeItem: function(nueItem){
+            let items = storageStatus();
+            
+            //Add nueItem
+            items.push(nueItem);
+            
+            //Convert to LocalStorage format
+            localStorage.setItem('items', JSON.stringify(items));
+        },
+        //RETRIEVE items from localStorage
+        retrieveItems: function(){
+            let items = storageStatus();
+            return items;
+        }
+    }
 })();
 
 
@@ -16,11 +46,7 @@ const ItemCtrl = (function() {
 
     //Data State
     const data = {
-        items: [
-            //{ id: 0, name: 'Steak', calories: 1200 },
-            //{ id: 1, name: 'Cookie', calories: 400 },
-            //{ id: 2, name: 'Eggs', calories: 300 }
-        ],
+        items: StorageCtrl.retrieveItems(),
         currentItem: null,
         totalCalories: 0
     }
@@ -54,7 +80,7 @@ const ItemCtrl = (function() {
             let total = 0;
 
             //Calculate total
-            data.items.forEach(item => total += item.calories)
+            data.items.forEach(item => total += JSON.parse(item.calories))
 
             //Update total
             data.totalCalories = total;
@@ -262,8 +288,8 @@ const UICtrl = (function() {
 
 
 //APP Controller
-const App = (function(ItemCtrl, UICtrl) {
-
+const App = (function(ItemCtrl ,StorageCtrl ,UICtrl) {
+    let totalC;
     //DOM
     const dom = UICtrl.getDom();
 
@@ -289,6 +315,9 @@ const App = (function(ItemCtrl, UICtrl) {
 
                 //Update total calories in UI
                 UICtrl.showTotalCalories(totalC);
+
+                //Store in localStorage
+                StorageCtrl.storeItem(nueItem);
 
                 //Clear fields
                 UICtrl.clearInput();
@@ -384,11 +413,17 @@ const App = (function(ItemCtrl, UICtrl) {
             UICtrl.removeItems();
         });
     }
+
+    //LAST-UPDATE from localStorage
+    totalC = ItemCtrl.getTotalCalories();
+    UICtrl.showTotalCalories(totalC);
+    
     return {
         init: function() {
-            console.log('Init'); //test
-            UICtrl.clearEditState('on');
-            listeners(); //events
+            console.log('Init');            //test
+            UICtrl.clearEditState('on');    //Clean UI
+
+            listeners();                    //events
 
             //Fetch Data from ItemController
             const items = ItemCtrl.getItems();
@@ -397,7 +432,7 @@ const App = (function(ItemCtrl, UICtrl) {
             items.length === 0 ? UICtrl.hideList() : UICtrl.displayItems(items);
         }
     }
-})(ItemCtrl, UICtrl);
+})(ItemCtrl, StorageCtrl, UICtrl);
 
 //Init
 App.init();
