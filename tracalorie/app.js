@@ -114,6 +114,12 @@ const ItemCtrl = (function() {
             data.items.splice(index, 1);
         },
 
+        //CLEAR ALL Items button
+        clearAllItems(){
+            data.items = [];
+            data.totalCalories = 0;
+        },
+
         //Tester Function
         logData: function() {
             return data;
@@ -241,6 +247,15 @@ const UICtrl = (function() {
                     `;
                 }
             });
+        },
+
+        //REMOVE ALL ITEMS in list
+        removeItems(){
+            let list = document.querySelectorAll('li');
+
+            list = Array.from(list);
+
+            list.forEach(item => item.remove());
         }
     }
 })();
@@ -351,6 +366,22 @@ const App = (function(ItemCtrl, UICtrl) {
             UICtrl.clearEditState('on');
 
             e.preventDefault();
+        });
+
+        //CLEAR ALL button Event
+        dom.clearBtn.addEventListener('click', () => { 
+
+            //Clear storage
+            ItemCtrl.clearAllItems();
+
+            //Clear UI Totals   &&
+            const totalC = ItemCtrl.getTotalCalories();
+
+            //Update total calories in UI
+            UICtrl.showTotalCalories(totalC);
+
+            //Clear LIST
+            UICtrl.removeItems();
         });
     }
     return {
