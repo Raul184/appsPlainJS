@@ -1,3 +1,7 @@
+//SASS
+import "../styles/style.scss";
+
+
 console.log('I am supposed to update myself automatically');
 const x = 23;
 

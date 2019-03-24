@@ -29,13 +29,46 @@ module.exports = {
     ],
     //loaders
     module: {
-        rules: [ //all of them
+        rules: [ //babel
             {
                 test: /\.js$/ ,
                 exclude: /node_modules/ , 
                 use: {
                     loader: 'babel-loader'
                 }
+            }, //SASS
+            {
+                test: /\.s?css/,
+                use: [
+                    "style-loader", //1
+                    "css-loader",
+                    "sass-loader"
+                ]
+            }, //IMG 
+            {
+                test: /\.(gif|png|jpe?g|svg)/i,
+                use: [
+                    "file-loader",
+                    {
+                        loader: "image-webpack-loader",
+                        options: {
+                            gifsicle: {
+                                interland: false
+                            },
+                            optipng: {
+                                optimizationLevel: 7
+                            },
+                            pngquant: {
+                                quality: "65-90",
+                                speed: 4
+                            },
+                            mozjpeg: {
+                                progressive: true,
+                                quality: 65
+                            }
+                        }
+                    }
+                ]
             }
         ]
     }
