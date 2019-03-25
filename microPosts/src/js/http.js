@@ -27,7 +27,7 @@ class EasyHTTP{
     }
 
     // HTTTP Update request
-    async put(url) {
+    async put(url, data) {
         const response = await fetch(url, {
                   method: 'PUT',
                   headers: {
