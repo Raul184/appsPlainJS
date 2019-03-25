@@ -25,27 +25,46 @@ export const deletePost = (library , id) => {
     .catch(err => console.log(err));
 }
 
+//UPDATE
+export const updatePost = (library , id) => {
+    //Get data from Updated form
+    const data = input();
 
+    library.put(`http://localhost:3000/posts/${id}` , data)
+    .then( data => {
+        //Update last-update just done
+        getPosts(library);
+    })
+    .catch( err => console.log(err));
+}
 
 
 
 
 //SUBMIT
 export const submitPost = library => {
-    const title = document.querySelector('#title').value;
-    const body = document.querySelector('#body').value;
-    //const id = document.querySelector('#id').value;
+    //Get data from Submit form
+    const data = input();
 
-    const data = {
-        title,
-        body
-    }
-
-    //POST request
+    //POST request for data
     library.post('http://localhost:3000/posts' , data)
         .then( data => {
             //Update last one submitted just now
             getPosts(library);
         })
         .catch( err => console.log(err));
+}
+
+
+// FACILITATORS 
+
+const input = () => {
+    const title = document.querySelector('#title').value;
+    const body = document.querySelector('#body').value;
+    const data = {
+        title,
+        body
+    }
+
+    return data;
 }

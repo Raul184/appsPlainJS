@@ -5,7 +5,7 @@ import "../styles/style.scss";
 import {http} from './http';
 
 //Import methods from data Module
-import {getPosts , submitPost , deletePost} from './models/data';
+import {getPosts , submitPost , deletePost , updatePost} from './models/data';
 
 //Import from UI
 import {ui} from './views/ui';
@@ -20,7 +20,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 //ADD a new Post on Submit
 document.querySelector('.post-submit').addEventListener('click', () => {
-    if(document.querySelector('#title').value !== '' && document.querySelector('#body').value !== '')
+    
+    //On update status , id is created
+    const id = document.querySelector('#id').value;
+
+    //Validate Input
+    if(document.querySelector('#title').value !== '' && document.querySelector('#body').value !== '' && id === '')
     {
         //Add new post
         submitPost(http);
@@ -28,6 +33,22 @@ document.querySelector('.post-submit').addEventListener('click', () => {
         ui.cleanerUI();
         //Confirm submitted
         ui.showAlert('Post added', 'alert alert-success')   //Bootstrap className
+    }
+    else
+    { 
+        //check for Id 
+        if(id) 
+        {
+            updatePost(http , id);
+            //Clean ui
+            ui.cleanerUI();
+
+            //Show alert
+            ui.showAlert('Post updated', 'alert alert-success')
+
+            //Back to Submit btn
+            ui.changeFormState('add');
+        }
     }
 });
 
