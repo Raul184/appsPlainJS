@@ -1,8 +1,19 @@
 //SASS
 import "../styles/style.scss";
 
+//Hand-coded Library
+import {http} from './http';
 
-console.log('I am supposed to update myself automatically');
-const x = 23;
+//Import methods from data Module
+import {getPosts} from './models/data';
 
-console.log(`come on polyfill >> ${x}`);
+
+
+
+//GET posts on Load
+document.addEventListener('DOMContentLoaded', () => {
+    //Get request && display
+    let data = getPosts(http);
+});
+
+
