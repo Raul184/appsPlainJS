@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
+    <!-- <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css">
 </head>
+
 <body>
     <div class="container">
         <div id="contenido" class="contenido">
@@ -17,23 +19,23 @@
                     <div class="six columns">
                         <label for="origen">Origen del Nombre:</label>
                         <select class="u-full-width" id="origen">
-                            <option value=''>-- Seleccione --</option>
-                            <option value="argentina">Argentina</option>
-                            <option value="brazil">Brasil</option>
-                            <option value="colombia">Colombia</option>
-                            <option value="costa rica">Costa Rica</option>
-                            <option value="france">Francia</option>
-                            <option value="italy">Italia</option>
-                            <option value="mexico">Mexico</option>
-                            <option value="portugal">Portugal</option>
-                            <option value="spain">España</option>
-                        </select>
+                                <option value=''>-- Seleccione --</option>
+                                <option value="argentina">Argentina</option>
+                                <option value="brazil">Brasil</option>
+                                <option value="colombia">Colombia</option>
+                                <option value="costa rica">Costa Rica</option>
+                                <option value="france">Francia</option>
+                                <option value="italy">Italia</option>
+                                <option value="mexico">Mexico</option>
+                                <option value="portugal">Portugal</option>
+                                <option value="spain">España</option>
+                            </select>
                         <label for="genero">Genero:</label>
                         <select class="u-full-width" id="genero">
                                 <option value=''>-- Seleccione --</option>
                                 <option value="male">Hombre</option>
                                 <option value="female">Mujer</option>
-                        </select>
+                            </select>
                         <label>Nombres a Generar</label>
                         <input type="number" id="numero" class="u-full-width" min="5" max="15" value="5">
                         <input class="button-primary u-full-width" type="submit" value="Generar">
@@ -43,9 +45,11 @@
                         <div id="resultado"></div>
                     </div>
                 </div>
-                
+
             </form>
         </div>
     </div>
-<script type="text/javascript" src="app/bundle.js"></script></body>
+    <script type="text/javascript" src="app/bundle.js"></script>
+</body>
+
 </html>

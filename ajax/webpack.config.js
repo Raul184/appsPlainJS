@@ -11,7 +11,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin'); // html injection-serv
 // --
 
 module.exports = {
-    entry: ['@babel/polyfill', './src/js/index.js'],
+    entry: ['@babel/polyfill', './src/js/app.js'],
     output: {
         path: path.resolve(__dirname, 'dist'),                               //absolute path
         filename: 'app/bundle.js'
