@@ -14,7 +14,7 @@ module.exports = {
     entry: ['@babel/polyfill', './src/js/index.js'],
     output: {
         path: path.resolve(__dirname, 'dist'),                               //absolute path
-        filename: 'app/bundle.js' 
+        filename: 'app/bundle.js'
     },
     //local Server
     devServer: {
@@ -31,8 +31,8 @@ module.exports = {
     module: {
         rules: [ //babel
             {
-                test: /\.js$/ ,
-                exclude: /node_modules/ , 
+                test: /\.js$/,
+                exclude: /node_modules/,
                 use: {
                     loader: 'babel-loader'
                 }
