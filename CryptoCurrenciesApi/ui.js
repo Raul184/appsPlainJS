@@ -9,6 +9,8 @@ class UI {
         this.apiResults = document.querySelector('#resultado');
         //Select Input
         this.select = document.querySelector('#criptomoneda');
+        //Traditional currencies
+        this.traditional = document.querySelector('#moneda');
     }
 
     //Display Error Message -------------------------------
@@ -37,7 +39,7 @@ class UI {
         }, 2000);
     }
 
-    //Display data From REstApi -------------------------------
+    //Display data From REstApi on SELECT HTML tag-------------------------------
     displayer(data){
         
         // Html element 
@@ -60,6 +62,26 @@ class UI {
                 this.select.appendChild(opcion);
             }
         }
+    }
+
+    //DISPLAY COMPARISON between currencies
+    cotizations(traditional, crypto){
+        let price, fullName;
+
+        //Formatting RestApi data 
+        price = crypto.RAW[this.select.value][this.traditional.value];
+
+        fullName = price.FROMSYMBOL;
+
+        const markUp = `
+            <div class="card bg-warning">
+                <div class="card-body text-light">
+                    <p>Price for ${fullName} in ${traditional} is: ${price.PRICE}</p>
+                </div>
+            </div>
+        `;
+
+        this.apiResults.innerHTML = markUp;
     }
 }
 

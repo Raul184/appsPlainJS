@@ -27,5 +27,7 @@ class Crypto {
         const processed = await request.json();
 
         console.log(processed);
+
+        return processed;
     }
 }

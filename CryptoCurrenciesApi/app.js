@@ -6,7 +6,8 @@ const app = (function() {
         //Read Currency Selected
         $currency : document.querySelector('#moneda'),
         //Read Crypto Selected
-        $crypto : document.querySelector('#criptomoneda')
+        $crypto : document.querySelector('#criptomoneda'),
+        $cotizations: document.querySelector('.showCotizations')
     }
     //StartUp Status Check
     console.log('Init');
@@ -31,17 +32,27 @@ const app = (function() {
             // 2 Submit Btn
             DOM.form.addEventListener('submit', e => {
 
-                const selections = DOM.$currency.options[DOM.$currency.selectedIndex].value;
+                //Traditional Currencies
+                let selections = DOM.$currency.options[DOM.$currency.selectedIndex].value;
 
-                const selects = DOM.$crypto.options[DOM.$crypto.selectedIndex].value;
+                //Crypto
+                let selects = DOM.$crypto.options[DOM.$crypto.selectedIndex].value;
 
                 if (selections === '' && selects === '') {
                     //Error Alert
                     ui.alert('Please select currencies', 'alert bg-danger text-center');
                 }
-                else {
+                else 
+                {
                     // Fetch data from RESTapi && Display Data on UI
-                    api.compareCurrencies(DOM.$currency.value, DOM.$crypto.value);
+                    api.compareCurrencies(DOM.$currency.value, DOM.$crypto.value)
+                    .then(cryptoCtzc => ui.cotizations(DOM.$currency.value , cryptoCtzc));
+
+                    //CLEAN UI
+                    setTimeout(() => {
+                        DOM.$crypto.innerHTML = '';
+                    }, 2000);
+                    
                 }
                 e.preventDefault();
             });
