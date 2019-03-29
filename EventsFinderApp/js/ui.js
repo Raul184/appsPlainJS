@@ -47,9 +47,6 @@ class UI{
                               <p class="lead text-info">Evento</p>
                               <p>${evento.description.text.substring(0 , 280)}...</p>
                               <span class="badge badge-primary">
-                                Capacidad:${evento.capacity}
-                              </span>
-                              <span class="badge badge-primary">
                                 Fecha/Hora: ${evento.start.local}
                               </span>
                              <a href="${evento.url}"target="_blank"class="btn btn-primary btn-block mt-4">Comprar Boletos</a>
@@ -59,5 +56,10 @@ class UI{
                 </div>
             `;
         });
+    }
+
+    // 3. CLEAN events
+    cleaner(){
+        this.eventsList.innerHTML = '';
     }
 }

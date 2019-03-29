@@ -35,6 +35,8 @@ const start = (function(){
                 //Make sure there're Events on location   
                 if(events !== undefined)
                 {
+                    //Clean former events in case there're some
+                    ui.cleaner();
                     //Display events in UI
                     ui.displayEvents(events)
                 }
