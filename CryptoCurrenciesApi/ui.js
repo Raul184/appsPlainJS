@@ -71,6 +71,8 @@ class UI {
         //Formatting RestApi data 
         price = crypto.RAW[this.select.value][this.traditional.value];
 
+        console.log(price);
+        
         fullName = price.FROMSYMBOL;
 
         const markUp = `

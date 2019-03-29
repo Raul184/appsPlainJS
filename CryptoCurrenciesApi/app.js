@@ -7,7 +7,7 @@ const app = (function() {
         $currency : document.querySelector('#moneda'),
         //Read Crypto Selected
         $crypto : document.querySelector('#criptomoneda'),
-        $cotizations: document.querySelector('.showCotizations')
+        $spinner: document.querySelector('.contenido-spinner')
     }
     //StartUp Status Check
     console.log('Init');
@@ -44,15 +44,27 @@ const app = (function() {
                 }
                 else 
                 {
-                    // Fetch data from RESTapi && Display Data on UI
-                    api.compareCurrencies(DOM.$currency.value, DOM.$crypto.value)
-                    .then(cryptoCtzc => ui.cotizations(DOM.$currency.value , cryptoCtzc));
 
-                    //CLEAN UI
+                    //Spinner
+                    DOM.$spinner.style.display = 'block';
+                    
                     setTimeout(() => {
-                        DOM.$crypto.innerHTML = '';
+
+                        //Hide Spinner
+                        DOM.$spinner.style.display = 'none';
+                        
+                        // Fetch data from RESTapi && Display Data on UI
+                        
+                        api.compareCurrencies(DOM.$currency.value, DOM.$crypto.value)
+                        .then(crypto => ui.cotizations(DOM.$currency.value , crypto));
+                        
+                        
                     }, 2000);
                     
+                    setTimeout(() => {
+                        //CLEAN UI
+                        DOM.$crypto.innerHTML = '';
+                    }, 2500);
                 }
                 e.preventDefault();
             });
