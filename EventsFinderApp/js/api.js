@@ -29,8 +29,6 @@ class EventBrite{
         //Format
         const format = await response.json();
 
-        console.log(format);
-
         return format.events;
     }
 }

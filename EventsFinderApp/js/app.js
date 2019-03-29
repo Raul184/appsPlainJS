@@ -30,7 +30,20 @@ const start = (function(){
             api.eventsFinder(DOM.city.value, DOM.category.value)
 
             //Display them in UI
-            .then( events => ui.displayEvents(events));
+            .then( events => {
+
+                //Make sure there're Events on location   
+                if(events !== undefined)
+                {
+                    //Display events in UI
+                    ui.displayEvents(events)
+                }
+                else 
+                {
+                    // No Events to Display
+                    console.log('No');
+                }
+            });
         }
         else
         {
