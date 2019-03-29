@@ -24,7 +24,7 @@ class EventBrite{
     async eventsFinder(city, category){
         
         //Request
-        const response = await fetch(`https://www.eventbriteapi.com/v3/events/search/?categories=${category}&location.address=${city}&location.within=10km&expand=venue&token=${this.authToken}`);
+        const response = await fetch(`https://www.eventbriteapi.com/v3/events/search/?sort_by=${this.ordenar}&categories=${category}&location.address=${city}&location.within=10km&expand=venue&token=${this.authToken}`);
 
         //Format
         const format = await response.json();
