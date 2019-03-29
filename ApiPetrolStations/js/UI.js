@@ -63,4 +63,32 @@ class UI {
         //Appending layerGroup to Map
         this.pins.addTo(this.mapa);
     }
+
+    // 4. GET location input in SEARCH
+    getInputLocations(patron , apiSearch){
+
+        //Filter
+        const filter = apiSearch.results.filter( y => y.calle.indexOf(patron) !== -1);
+
+        //Display filtered locations
+        this.showPins(filter);
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

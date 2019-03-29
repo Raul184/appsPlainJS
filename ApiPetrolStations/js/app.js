@@ -5,10 +5,16 @@ const m = (function(){
     const ui = new UI();
     const api = new API();
 
+    //DOM
+    const DOM = {
+        input: document.querySelector('#buscar input') 
+    }
+
     return {
         init(){
             
-            //Events
+            //Events 
+            //for MAP loading
             document.addEventListener('DOMContentLoaded', () => {
                 
                 //Get Gas Stations & display them in UI
@@ -17,6 +23,18 @@ const m = (function(){
 
                 //set PINS location on Map 
                 .then( result => ui.showPins(result));
+            });
+
+            // for SEARCH on MAP
+            DOM.input.addEventListener('input' , () => {
+                
+                // Input
+                if(DOM.input.value.length > 4){
+
+                    //API
+                    api.getStations()
+                        .then(data => ui.getInputLocations(DOM.input.value, data)); // Search in API
+                };
             });
         }
     }
