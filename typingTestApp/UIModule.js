@@ -140,7 +140,7 @@ const UIModule = (function(){
 
             //store level in download button
             DOM.download.setAttribute('level', results.level);
-
+    
         },
 
         showModal: function(){
