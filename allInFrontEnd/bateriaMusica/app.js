@@ -21,8 +21,11 @@ function removeTransition(e){
 
 //ON INIT
 (function init(){
+  //Init
   console.log('init');
+  //Remove play class effects
   const keys = document.querySelectorAll('.key');
   keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+  //Play
   window.addEventListener('keydown', play);
 })();
