@@ -12,7 +12,7 @@
     "browser-sync": "^2.26.3",
     "gulp-autoprefixer": "^6.0.0",
     "gulp-sass": "^4.0.2",
-    "node-sass": "^4.9.4",
+    "node-sass": "^4.13.1",
     "sass": "^1.14.3"
   },
   "dependencies": {
