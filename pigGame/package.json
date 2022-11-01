@@ -16,7 +16,7 @@
     "sass": "^1.14.3"
   },
   "dependencies": {
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.2",
     "webpack": "^4.22.0"
   },
   "scripts": {
